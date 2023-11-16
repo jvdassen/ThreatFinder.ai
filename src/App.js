@@ -23,16 +23,16 @@ function App() {
     };
 
     const getTestDivs = data => {
-        return (<div style={{textAlign: "left"}}>
+        return (<div style={{textAlign: "left", fontSize: "16px"}}>
             {data.map((asset) => (<ul>
-                <li>Identified Asset : {asset["Identified Asset"]}</li>
+                <li>Identified Asset : <b>{asset["Identified Asset"]}</b></li>
                 <li>Category: {asset["Category"]}</li>
                 <li>All possible Threats:</li>
                 <ol type="1">
                 {asset["Threats"].map((threat) => (<>
                     <li></li>
                     <ul>
-                        <li>Threat: {threat["Threat"]}</li>
+                        <li>Threat: <u>{threat["Threat"]}</u></li>
                         <li>Threat Category: {threat["Threat Category"]}</li>
                         <li>Potential Impact: {threat["Potential Impact"]}</li>
                         <li>Description: {threat["Description"]}</li>
@@ -49,6 +49,7 @@ function App() {
                 ThreatsFinder for AI-based Systems
             </h1>
             <input type="file" onChange={handleFileChange}/>
+            <br/>
             <button onClick={handleUpload}>Upload and Identify Threats</button>
             <br/>
             {data && getTestDivs(data)}
