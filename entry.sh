@@ -1,3 +1,5 @@
+#!/bin/bash
+
 cd /app
 npm i
 npm install -g serve
