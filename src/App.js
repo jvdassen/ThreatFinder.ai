@@ -1,4 +1,5 @@
 import './App.css';
+import { getDomain } from './utils/getDomain.js';
 import { useState } from 'react';
 import axios from 'axios';
 import html2pdf from 'html2pdf.js';
@@ -16,7 +17,7 @@ function App() {
             const formData = new FormData();
             formData.append('file', file);
 
-            const response = await axios.post('http://localhost:8080/upload', formData);
+            const response = await axios.post(`${getDomain()}upload`, formData);
             setData(response.data);
         } catch (error) {
             alert(error.response.data);
