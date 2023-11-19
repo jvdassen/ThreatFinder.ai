@@ -6,7 +6,7 @@ import { isProduction } from "./isProduction";
  * @returns {string}
  */
 export const getDomain = () => {
-    const prodUrl = "";
+    const prodUrl = "https://www.csg.uzh.ch/api-threatfinder/";
     const devUrl = process.env.REACT_APP_SERVER_IP
         ? "http://" + process.env.REACT_APP_SERVER_IP + ":8080"
         : "http://localhost:8080";
