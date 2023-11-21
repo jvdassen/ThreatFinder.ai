@@ -7,9 +7,19 @@ import html2pdf from 'html2pdf.js';
 function App() {
     const [data, setData] = useState([]);
     const [file, setFile] = useState(null);
+    const [filter, setFilter] = useState("");
 
     const handleFileChange = (event) => {
         setFile(event.target.files[0]);
+    };
+
+    const handlePropertyChange = (property) => {
+        // Toggle selected property
+        setFilter((prevSelected) =>
+            prevSelected.includes(property)
+                ? prevSelected.filter((p) => p !== property)
+                : [...prevSelected, property]
+        );
     };
 
     const handleUpload = async () => {
@@ -35,19 +45,30 @@ function App() {
                         <li>Category: {asset['Category']}</li>
                         <li>All possible Threats:</li>
                         <ol type="1">
-                            {asset['Threats'].map((threat, index) => (
-                                <li key={index}>
-                                    <ul>
-                                        <li>
-                                            Threat: <u>{threat['Threat']}</u>
-                                        </li>
-                                        <li>Threat Category: {threat['Threat Category']}</li>
-                                        <li>Potential Impact: {threat['Potential Impact']}</li>
-                                        <li>Description: {threat['Description']}</li>
-                                    </ul>
-                                </li>
-                            ))}
+                            {asset['Threats'].map((threat, index) => {
+                                const potentialImpacts = threat['Potential Impact'].split(", ");
+                                const shouldDisplay = filter.length === 0 || filter.some(f => potentialImpacts.includes(f));
+
+                                if (shouldDisplay) {
+                                    return (
+                                        <>
+                                            <li key={index}>
+                                                <ul>
+                                                    <li>Threat: <u>{threat['Threat']}</u></li>
+                                                    <li>Threat Category: {threat['Threat Category']}</li>
+                                                    <li>Potential Impact: {threat['Potential Impact']}</li>
+                                                    <li>Description: {threat['Description']}</li>
+                                                </ul>
+                                            </li>
+                                            <br/>
+                                        </>
+                                    );
+                                } else {
+                                    return null;
+                                }
+                            })}
                         </ol>
+
                     </ul>
                 ))}
             </div>
@@ -67,8 +88,26 @@ function App() {
                 <br />
                 <button onClick={handleUpload}>Upload and Identify Threats</button>
                 <br />
+
+                <div style={{ textAlign: 'left', fontSize: '16px' }}>
+                    <strong>Filter by Properties:</strong>
+                    {['Integrity', 'Availability', 'Authenticity', 'Non-repudiation', 'Confidentiality', 'Authorization'].map(
+                        (property) => (
+                            <label key={property}>
+                                <input
+                                    type="checkbox"
+                                    checked={filter.includes(property)}
+                                    onChange={() => handlePropertyChange(property)}
+                                />
+                                {property}
+                            </label>
+                        )
+                    )}
+                </div>
+
                 {data && (
                     <>
+                        <br/>
                         <button onClick={downloadPDF}>Download as a PDF</button>
                         <div id="pdf-content">{getTestDivs(data)}</div>
                     </>
