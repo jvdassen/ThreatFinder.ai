@@ -3,11 +3,27 @@ import { getDomain } from './utils/getDomain.js';
 import { useState } from 'react';
 import axios from 'axios';
 import html2pdf from 'html2pdf.js';
+import DrawIO from "./DrawIO";
+import { Button, Checkbox, FormControlLabel, Input, styled } from "@mui/material";
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+
+const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+});
 
 function App() {
     const [data, setData] = useState([]);
     const [file, setFile] = useState(null);
     const [filter, setFilter] = useState("");
+    const [threatFinder, setThreatFinder] = useState(true);
 
     const handleFileChange = (event) => {
         setFile(event.target.files[0]);
@@ -15,11 +31,7 @@ function App() {
 
     const handlePropertyChange = (property) => {
         // Toggle selected property
-        setFilter((prevSelected) =>
-            prevSelected.includes(property)
-                ? prevSelected.filter((p) => p !== property)
-                : [...prevSelected, property]
-        );
+        setFilter((prevSelected) => prevSelected.includes(property) ? prevSelected.filter((p) => p !== property) : [...prevSelected, property]);
     };
 
     const handleUpload = async () => {
@@ -60,7 +72,7 @@ function App() {
                                                     <li>Description: {threat['Description']}</li>
                                                 </ul>
                                             </li>
-                                            <br/>
+                                            <br />
                                         </>
                                     );
                                 } else {
@@ -68,7 +80,6 @@ function App() {
                                 }
                             })}
                         </ol>
-
                     </ul>
                 ))}
             </div>
@@ -82,35 +93,86 @@ function App() {
 
     return (
         <div className="App">
-            <header className="App-header">
-                <h1>ThreatsFinder for AI-based Systems</h1>
-                <input type="file" onChange={handleFileChange} />
-                <br />
-                <button onClick={handleUpload}>Upload and Identify Threats</button>
-                <br />
-
-                <div style={{ textAlign: 'left', fontSize: '16px' }}>
-                    <strong>Filter by Properties:</strong>
-                    {['Integrity', 'Availability', 'Authenticity', 'Non-repudiation', 'Confidentiality', 'Authorization'].map(
-                        (property) => (
-                            <label key={property}>
-                                <input
-                                    type="checkbox"
-                                    checked={filter.includes(property)}
-                                    onChange={() => handlePropertyChange(property)}
-                                />
-                                {property}
-                            </label>
-                        )
-                    )}
+            <header
+                className="App-header"
+                style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                }}
+            >
+                <div
+                    style={{
+                        width: "20%",
+                        position: "fixed",
+                        top: "0",
+                        transform: "translateY(45vh)"
+                    }}
+                >
+                    <Button
+                        onClick={() => setThreatFinder(false)}
+                        sx={{ color: "white", backgroundColor: "#546e7a" }}
+                        variant="contained"
+                    >
+                        Switch to ThreatModeler
+                    </Button>
+                    <Button
+                        onClick={() => setThreatFinder(true)}
+                        sx={{ color: "white", backgroundColor: "#546e7a" }}
+                        variant="contained"
+                    >
+                        Switch to ThreatFinder
+                    </Button>
                 </div>
 
-                {data && (
-                    <>
+                {threatFinder ? (
+                    <div style={{width: "80%", marginLeft: "20%", textAlign: "center"}}>
+                        <h1>ThreatsFinder for AI-based Systems</h1>
+                        <Button component="label" variant="contained" onChange={handleFileChange}
+                                startIcon={<CloudUploadIcon/>} sx={{backgroundColor: "#2196f3", color: "white"}}>
+                            Choose XML file
+                            <VisuallyHiddenInput type="file"/>
+                        </Button>
                         <br/>
-                        <button onClick={downloadPDF}>Download as a PDF</button>
-                        <div id="pdf-content">{getTestDivs(data)}</div>
-                    </>
+                        <Button onClick={handleUpload} variant="contained"
+                                sx={{backgroundColor: "#4caf50", color: "white"}}>
+                            Upload and Identify Threats
+                        </Button>
+                        <br/>
+                        <br/>
+                        <div style={{textAlign: 'left', fontSize: '16px'}}>
+                            <strong style={{fontSize: "18px"}}>Filter by Properties: </strong>
+                            {['Integrity', 'Availability', 'Authenticity', 'Non-repudiation', 'Confidentiality', 'Authorization'].map((property) => (
+                                <FormControlLabel
+                                    key={property}
+                                    control={
+                                        <Checkbox
+                                            type="checkbox"
+                                            checked={filter.includes(property)}
+                                            onChange={() => handlePropertyChange(property)}
+                                            sx={{color: "#546e7a"}}
+                                        />
+                                    }
+                                    label={property}
+                                />
+                            ))}
+                        </div>
+
+                        {data && (
+                            <>
+                                <br/>
+                                <Button onClick={downloadPDF} variant="contained"
+                                        sx={{backgroundColor: "#607d8b", color: "white"}}>
+                                    Download as a PDF
+                                </Button>
+                                <div id="pdf-content">{getTestDivs(data)}</div>
+                            </>
+                        )}
+                    </div>
+                ) : (
+                    <div style={{width: "80%", marginLeft: "20%"}}>
+                        <DrawIO/>
+                    </div>
                 )}
             </header>
         </div>
