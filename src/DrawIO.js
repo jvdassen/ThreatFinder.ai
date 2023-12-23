@@ -1,6 +1,4 @@
 import React, {useEffect, useRef, useState} from 'react';
-import axios from "axios";
-import {getDomain} from "./utils/getDomain";
 
 function DrawIO() {
     const iframeRef = useRef(null);
@@ -22,7 +20,7 @@ function DrawIO() {
 
         const handleMessage = (event) => {
             if (event.data === 'ready' && iframeRef.current) {
-                iframeRef.current.contentWindow.postMessage(JSON.stringify({ action: 'load', xmlpng: data }), '*');
+                iframeRef.current.contentWindow.postMessage(JSON.stringify({action: 'load', xmlpng: data }), '*');
             }
         };
 

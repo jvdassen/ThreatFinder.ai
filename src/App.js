@@ -3,8 +3,8 @@ import { getDomain } from './utils/getDomain.js';
 import { useState } from 'react';
 import axios from 'axios';
 import html2pdf from 'html2pdf.js';
-import DrawIO from "./DrawIO";
-import { Button, Checkbox, FormControlLabel, Input, styled } from "@mui/material";
+import DrawIO from "./DrawIOMix";
+import { Button, Checkbox, FormControlLabel, styled } from "@mui/material";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 const VisuallyHiddenInput = styled('input')({
