@@ -27,7 +27,7 @@ export default class DrawioStateController {
       //this.drawio.contentWindow.postMessage(JSON.stringify({ action: 'load', xmlpng: "" }), '*');
       return
     }
-    if(!this.isJsonString(message.data)){
+    if (!this.isJsonString(message.data)) {
       return
     }
     var msg = JSON.parse(message.data)
