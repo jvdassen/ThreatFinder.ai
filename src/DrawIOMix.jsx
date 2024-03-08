@@ -8,11 +8,11 @@ import "./Draw_io/styles/variables.css"
 function DrawIO() {
     const iframeRef = useRef(null);
 
-    useEffect(() => {
-        // eslint-disable-next-line
-        const drawioView = new CORSCommunicator(iframeRef.current)
-        const localStorageModel = new LocalStorageModel()
-        const stateController =  new DrawioStateController(drawioView, localStorageModel)
+  useEffect(() => {
+    const drawioView = new CORSCommunicator(iframeRef.current)
+    const localStorageModel = new LocalStorageModel()
+    const stateController = new DrawioStateController(drawioView, localStorageModel)
+    console.info(`stateController initialized`, stateController)
 
     }, []);
 
