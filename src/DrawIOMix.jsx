@@ -20,9 +20,9 @@ function DrawIO() {
     <iframe
       ref={iframeRef}
       width="100%"
-      height="800px"
+      height="100%"
       src="https://embed.diagrams.net/?embed=1&ui=min&theme=dark&spin=1&proto=json&configure=1&noExitBtn=1&saveAndExit=0&noSaveBtn=1&noExitBtn=1"
-      style={{ border: 'none' }}
+      style={{ border: 'none', borderRadius: '.5em' }}
       title={'draw.io'}
     />
   );

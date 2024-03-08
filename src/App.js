@@ -23,7 +23,7 @@ function App() {
   const [data, setData] = useState([]);
   const [file, setFile] = useState(null);
   const [filter, setFilter] = useState("");
-  const [threatFinder, setThreatFinder] = useState(true);
+  const [view, setView] = useState('model');
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -97,50 +97,44 @@ function App() {
         className="App-header"
         style={{
           display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
+          alignItems: "flex-start",
+          height: "2em"
         }}
       >
-        <div
-          style={{
-            width: "20%",
-            position: "fixed",
-            top: "0",
-            transform: "translateY(45vh)"
-          }}
-        >
+        <div class="header-item-wrapper">
           <Button
-            onClick={() => setThreatFinder(false)}
-            sx={{ color: "white", backgroundColor: "#546e7a" }}
+            onClick={() => setView('model')}
+            sx={{ color: "white", backgroundColor: "#282c34" }}
             variant="contained"
           >
-            1. Model Assets
+            1. Model Assets &#8871;
           </Button>
           <Button
-            onClick={() => { }}
-            sx={{ color: "white", backgroundColor: "#546e7a" }}
+            onClick={() => { setView('goals') }}
+            sx={{ color: "white", backgroundColor: "#282c34" }}
             variant="contained"
           >
-            2. Define Goals
+            2. Define Goals &#128907;
           </Button>
           <Button
-            onClick={() => setThreatFinder(true)}
-            sx={{ color: "white", backgroundColor: "#546e7a" }}
+            onClick={() => setView('analyze')}
+            sx={{ color: "white", backgroundColor: "#282c34" }}
             variant="contained"
           >
-            3. Compile Threats
+            3. Compile Threats &#8721;
           </Button>
           <Button
-            onClick={() => { }}
-            sx={{ color: "white", backgroundColor: "#546e7a" }}
+            onClick={() => { setView('controls') }}
+            sx={{ color: "white", backgroundColor: "#282c34" }}
             variant="contained"
           >
-            4. Adopt Controls
+            4. Adopt Controls &#12108;
           </Button>
         </div>
-
-        {threatFinder ? (
-          <div style={{ width: "80%", marginLeft: "20%", textAlign: "center" }}>
+      </header>
+      <div class="body-wrapper">
+        {view === 'model' ? (
+          <div style={{ textAlign: "center" }}>
             <h1>ThreatsFinder for AI-based Systems</h1>
             <Button component="label" variant="contained" onChange={handleFileChange}
               startIcon={<CloudUploadIcon />} sx={{ backgroundColor: "#2196f3", color: "white" }}>
@@ -184,12 +178,10 @@ function App() {
             )}
           </div>
         ) : (
-          <div style={{ width: "80%", marginLeft: "20%" }}>
-            <DrawIO />
-          </div>
+          <DrawIO />
         )}
-      </header>
-    </div>
+      </div>
+    </div >
   );
 }
 
