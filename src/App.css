@@ -11,7 +11,7 @@
   margin-left: .5em;
 }
 
-.App {
+/*.App {
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -23,9 +23,10 @@
   flex-grow: 1;
   margin: .5em;
 }
+*/
 
 #root,
 .App-header,
 .body-wrapper {
-  background: #282c34;
+  /*background: #282c34;*/
 }

@@ -1,36 +1,35 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react'
 
 function DrawIO() {
-  const iframeRef = useRef(null);
-  const [data, setData] = useState("");
+  const iframeRef = useRef(null)
+  const [data, setData] = useState("")
 
   useEffect(() => {
     const getFile = async () => {
       try {
-        // const response = await axios.get(`${getDomain()}file`);
-        // setData(response.data);
+        // const response = await axios.get(`${getDomain()}file`)
+        // setData(response.data)
       } catch (error) {
         try {
-          alert(error.response.data);
+          alert(error.response.data)
         } catch (e) {
-          alert(error);
+          alert(error)
         }
       }
-    };
+    }
 
     const handleMessage = (event) => {
       if (event.data === 'ready' && iframeRef.current) {
-        iframeRef.current.contentWindow.postMessage(JSON.stringify({ action: 'load', xmlpng: data }), '*');
+        iframeRef.current.contentWindow.postMessage(JSON.stringify({ action: 'load', xmlpng: data }), '*')
       }
-    };
+    }
 
-    getFile().then();
-    window.addEventListener('message', handleMessage);
+    getFile().then()
+    window.addEventListener('message', handleMessage)
     return () => {
-      window.removeEventListener('message', handleMessage);
-    };
-    // eslint-disable-next-line
-  }, []);
+      window.removeEventListener('message', handleMessage)
+    }
+  }, [])
 
   return (
     <iframe
@@ -41,7 +40,7 @@ function DrawIO() {
       style={{ border: 'none' }}
       title={'draw.io'}
     />
-  );
+  )
 }
 
-export default DrawIO;
+export default DrawIO

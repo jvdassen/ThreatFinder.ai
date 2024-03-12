@@ -73,7 +73,8 @@ export default class DrawioStateController {
           "Humor Sans",
           "Helvetica",
           "Times New Roman"
-        ]
+        ],
+        ui: 'dark'
       }
     }
     this.drawio.send(configurationAction)

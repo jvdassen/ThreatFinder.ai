@@ -1,9 +1,10 @@
-import axios from 'axios';
-import html2pdf from 'html2pdf.js';
-import { useState } from 'react';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { Button, Checkbox, FormControlLabel, styled } from '@mui/material';
-import { getDomain } from '../utils/getDomain.js';
+import axios from 'axios'
+import html2pdf from 'html2pdf.js'
+import { useState } from 'react'
+import CloudUploadIcon from '@mui/icons-material/CloudUpload'
+import { Button, Checkbox, FormControlLabel, styled, Typography, Box } from '@mui/material'
+import { getDomain } from '../utils/getDomain.js'
+
 
 export default Goals
 
@@ -92,16 +93,26 @@ function Goals() {
   };
 
   return (
-    <div style={{ textAlign: "center" }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <Typography level="title-lg" variant='h4' fontFamily='monospace'>
+        <i>Step 1) Security Objectives</i>
+        <Typography
+            level="title-lg"
+            textColor="var(--joy-palette-success-plainColor)"
+            fontFamily="monospace"
+            sx={{ opacity: '50%', marginBottom: '1em' }}
+          >
+          Define the most critical property of your key asset that you would intuitively protect.
+          </Typography>
+        </Typography>
       <h1>ThreatsFinder for AI-based Systems</h1>
       <Button component="label" variant="contained" onChange={handleFileChange}
-        startIcon={<CloudUploadIcon />} sx={{ backgroundColor: "#2196f3", color: "white" }}>
+        startIcon={<CloudUploadIcon />}>
         Choose XML file
         <VisuallyHiddenInput type="file" />
       </Button>
       <br />
-      <Button onClick={handleUpload} variant="contained"
-        sx={{ backgroundColor: "#4caf50", color: "white" }}>
+      <Button onClick={handleUpload} variant="contained">
         Upload and Identify Threats
       </Button>
       <br />
@@ -127,13 +138,12 @@ function Goals() {
       {data && (
         <>
           <br />
-          <Button onClick={downloadPDF} variant="contained"
-            sx={{ backgroundColor: "#607d8b", color: "white" }}>
+          <Button onClick={downloadPDF} variant="contained">
             Download as a PDF
           </Button>
           <div id="pdf-content">{getTestDivs(data)}</div>
         </>
       )}
-    </div>
+    </Box>
   )
 }
