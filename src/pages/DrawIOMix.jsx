@@ -8,16 +8,21 @@ import './Draw_io/styles/variables.css'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-function DrawIO() {
+function DrawIO({ sendDiagram }) {
   const iframeRef = useRef(null);
 
   useEffect(() => {
     const drawioView = new CORSCommunicator(iframeRef.current)
     const localStorageModel = new LocalStorageModel()
     const stateController = new DrawioStateController(drawioView, localStorageModel)
+    localStorageModel.observe(function (diagram) {
+      sendDiagram(diagram)
+      console.log('localstorage.observe')
+    })
+    sendDiagram(localStorageModel.read())
     console.info(`stateController initialized`, stateController)
 
-  }, []);
+  }, [ sendDiagram ]);
 
   return (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -25,7 +30,6 @@ function DrawIO() {
         <i>Step 1) Architectural Modeling</i>
         <Typography
             level="title-lg"
-            textColor="var(--joy-palette-success-plainColor)"
             fontFamily="monospace"
             sx={{ opacity: '50%', marginBottom: '1em' }}
           >

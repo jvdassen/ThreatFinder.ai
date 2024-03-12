@@ -98,7 +98,6 @@ function Goals() {
         <i>Step 1) Security Objectives</i>
         <Typography
             level="title-lg"
-            textColor="var(--joy-palette-success-plainColor)"
             fontFamily="monospace"
             sx={{ opacity: '50%', marginBottom: '1em' }}
           >

@@ -3,6 +3,7 @@ import { useState } from 'react'
 import DrawIO from './pages/DrawIOMix'
 import Analyze from './pages/Analyze'
 import Controls from './pages/Controls'
+import Stats from './pages/Stats'
 import Goals from './pages/Goals'
 
 
@@ -11,7 +12,7 @@ import Divider from '@mui/material/Divider'
 import Drawer from '@mui/material/Drawer'
 import FlagIcon from '@mui/icons-material/FlagOutlined'
 import SecurityOutlinedIcon from '@mui/icons-material/SecurityOutlined'
-import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
+import FunctionsOutlinedIcon from '@mui/icons-material/FunctionsOutlined';
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
@@ -23,13 +24,19 @@ import Typography from '@mui/material/Typography'
 
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
+import ListSubheader from '@mui/material/ListSubheader'
 import CheckIcon from '@mui/icons-material/Check'
 import EditIcon from '@mui/icons-material/Edit';
 
-function App () {
-  const drawerWidth = 240
+function App() {
+  const drawerWidth = 280
 
   const [view, setView] = useState('model')
+  const [diagram, setDiagram] = useState({})
+
+  function receiveDiagram (diagram) {
+    setDiagram(diagram)
+  }
 
 
   const darkTheme = createTheme({
@@ -41,65 +48,83 @@ function App () {
   const drawer = (
     <div>
       <Toolbar>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.1rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            ThreatFinderAI
-          </Typography>
+        <Typography
+          variant="h6"
+          noWrap
+          component="a"
+          sx={{
+            mr: 2,
+            display: { xs: 'none', md: 'flex' },
+            fontFamily: 'monospace',
+            fontWeight: 700,
+            letterSpacing: '.1rem',
+            color: 'inherit',
+            textDecoration: 'none',
+          }}
+        >
+          ThreatFinder<span style={{color: 'hsl(95, 28%, 44%)'}}>AI</span>
+        </Typography>
       </Toolbar>
       <Divider />
       <List>
+        <ListSubheader style={{lineHeight: '24px'}}>
+          Stages
+        </ListSubheader>
         <ListItem key={'goals'} disablePadding onClick={() => setView('goals')}>
           <ListItemButton>
             <ListItemIcon>
-            <FlagIcon/>
+              <FlagIcon />
             </ListItemIcon>
-            <ListItemText primary={'Goals'} /> 
-            {['model', 'analyze', 'controls'].includes(view) && <CheckIcon sx={{ fontSize: 15 }}/>}
-            {view === 'goals' && <EditIcon sx={{ fontSize: 15 }}/>}
+            <ListItemText primary={'Goals'} />
+            {['model', 'analyze', 'controls'].includes(view) && <CheckIcon sx={{ fontSize: 15 }} />}
+            {view === 'goals' && <EditIcon sx={{ fontSize: 15 }} />}
           </ListItemButton>
         </ListItem>
         <ListItem key={'model'} disablePadding onClick={() => setView('model')}>
           <ListItemButton>
             <ListItemIcon>
-            <ArchitectureIcon/>
+              <ArchitectureIcon />
             </ListItemIcon>
             <ListItemText primary={'Model'} />
-            {['analyze', 'controls'].includes(view) && <CheckIcon sx={{ fontSize: 15 }}/>}
-            {view === 'model' && <EditIcon sx={{ fontSize: 15 }}/>}
+            {['analyze', 'controls'].includes(view) && <CheckIcon sx={{ fontSize: 15 }} />}
+            {view === 'model' && <EditIcon sx={{ fontSize: 15 }} />}
           </ListItemButton>
         </ListItem>
         <ListItem key={'analyze'} disablePadding onClick={() => setView('analyze')}>
           <ListItemButton>
             <ListItemIcon>
-              <FilterAltOutlinedIcon/>
+              <FunctionsOutlinedIcon />
             </ListItemIcon>
             <ListItemText primary={'Analyze'} />
-            {['controls'].includes(view) && <CheckIcon sx={{ fontSize: 15 }}/>}
-            {view === 'analyze' && <EditIcon sx={{ fontSize: 15 }}/>}
+            {['controls'].includes(view) && <CheckIcon sx={{ fontSize: 15 }} />}
+            {view === 'analyze' && <EditIcon sx={{ fontSize: 15 }} />}
           </ListItemButton>
         </ListItem>
         <ListItem key={'controls'} disablePadding onClick={() => setView('controls')}>
           <ListItemButton>
             <ListItemIcon>
-              <SecurityOutlinedIcon/>
+              <SecurityOutlinedIcon />
             </ListItemIcon>
             <ListItemText primary={'Controls'} />
-            {view === 'controls' && <EditIcon sx={{ fontSize: 15 }}/>}
+            {view === 'controls' && <EditIcon sx={{ fontSize: 15 }} />}
           </ListItemButton>
         </ListItem>
-      </List>
+    </List>
+    <Divider />
+    <List>
+      <ListSubheader style={{lineHeight: '24px'}}>
+        Instructions
+      </ListSubheader>
+      <ListItem>        <Typography
+          level="title-lg"
+          fontFamily="monospace"
+          sx={{ opacity: '50%', marginBottom: '1em' }}
+        >
+      &rarr; In this stage, a diagram of the architecture must be created. The resulting diagram is used to elicit AI-related assets and the threats surrounding them.
+        </Typography>
+      </ListItem>
+    </List>
+    <Stats diagram={diagram}/>
     </div>
   )
 
@@ -138,10 +163,10 @@ function App () {
         <Box
           component="main"
           sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` }, height: '100vh' }}>
-            {view === 'model' && <DrawIO />}
-            {view === 'goals' && <Goals />}
-            {view === 'analyze' && <Analyze />}
-            {view === 'controls' && <Controls />}
+          {view === 'model' && <DrawIO  sendDiagram={receiveDiagram}/>}
+          {view === 'goals' && <Goals />}
+          {view === 'analyze' && <Analyze />}
+          {view === 'controls' && <Controls />}
         </Box>
       </Box>
     </ThemeProvider>
