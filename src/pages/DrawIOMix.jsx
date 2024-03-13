@@ -10,11 +10,12 @@ import Typography from '@mui/material/Typography'
 
 function DrawIO({ sendDiagram }) {
   const iframeRef = useRef(null);
+  var localStorageModel = new LocalStorageModel()
+
 
   useEffect(() => {
-    const drawioView = new CORSCommunicator(iframeRef.current)
-    const localStorageModel = new LocalStorageModel()
-    const stateController = new DrawioStateController(drawioView, localStorageModel)
+    var drawioView = new CORSCommunicator(iframeRef.current)
+    var stateController = new DrawioStateController(drawioView, localStorageModel)
     localStorageModel.observe(function (diagram) {
       sendDiagram(diagram)
       console.log('localstorage.observe')
@@ -22,7 +23,7 @@ function DrawIO({ sendDiagram }) {
     sendDiagram(localStorageModel.read())
     console.info(`stateController initialized`, stateController)
 
-  }, [ sendDiagram ]);
+  }, []);
 
   return (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>

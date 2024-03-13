@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
+import Badge from '@mui/material/Badge'
 import { List, ListItem, ListSubheader, Typography } from '@mui/material'
+
 
 export default Stats
 
@@ -22,14 +24,18 @@ function Stats({ diagram }) {
     }
   }, [ diagram ]);
 
-
   function assetList(assets) {
     var uniqueAssets = [...new Set(assets)]
 
     return uniqueAssets.map(a => {
-      return <ListItem key={a}>
-        {a} ({assets.filter(x => x === a).length})
-      </ListItem>
+      var mentioned = assets.filter(x => x === a).length
+
+      if (mentioned > 1) {
+        return <ListItem key={a}>
+          <Badge badgeContent={mentioned} color="primary"> {a} </Badge>
+        </ListItem>
+      }
+      return <ListItem> {a} </ListItem>
     })
   }
 
@@ -47,8 +53,7 @@ function Stats({ diagram }) {
       Your model contains the following {asset.length} assets:
         </Typography>
       </ListItem>
-      {assetList(asset)}
+          {assetList(asset)}
     </List>
   )
-
 }

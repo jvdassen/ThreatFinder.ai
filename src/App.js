@@ -42,6 +42,9 @@ function App() {
   const darkTheme = createTheme({
     palette: {
       mode: 'dark',
+      primary: {
+        main: 'rgb(107, 144, 81)'
+      }
     },
   })
 
@@ -124,7 +127,7 @@ function App() {
         </Typography>
       </ListItem>
     </List>
-    <Stats diagram={diagram}/>
+    {/*<Stats diagram={diagram}/>*/}
     </div>
   )
 
