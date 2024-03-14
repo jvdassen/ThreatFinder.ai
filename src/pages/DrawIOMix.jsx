@@ -13,16 +13,21 @@ function DrawIO({ sendDiagram }) {
   var localStorageModel = new LocalStorageModel()
 
 
+  const initialized = useRef(false);
+  console.log('useEFF')
   useEffect(() => {
-    var drawioView = new CORSCommunicator(iframeRef.current)
-    var stateController = new DrawioStateController(drawioView, localStorageModel)
-    localStorageModel.observe(function (diagram) {
-      sendDiagram(diagram)
-      console.log('localstorage.observe')
-    })
-    sendDiagram(localStorageModel.read())
-    console.info(`stateController initialized`, stateController)
-
+    if (!initialized.current) {
+      initialized.current = true
+      var drawioView = new CORSCommunicator(iframeRef.current)
+      var stateController = new DrawioStateController(drawioView, localStorageModel)
+      console.log('START OBSERVING')
+      localStorageModel.observe(function (diagram) {
+        sendDiagram(diagram)
+        console.log('localstorage.observe')
+      })
+      sendDiagram(localStorageModel.read())
+      console.info(`stateController initialized`, stateController)
+    }
   }, []);
 
   return (

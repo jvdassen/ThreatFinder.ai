@@ -38,7 +38,6 @@ function App() {
     setDiagram(diagram)
   }
 
-
   const darkTheme = createTheme({
     palette: {
       mode: 'dark',
@@ -127,7 +126,7 @@ function App() {
         </Typography>
       </ListItem>
     </List>
-    {/*<Stats diagram={diagram}/>*/}
+    <Stats diagram={diagram}/>
     </div>
   )
 

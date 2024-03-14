@@ -125,14 +125,11 @@ export default class DrawioStateController {
   storeDiagram(msg) {
     var svg = atob(msg.data.substring(msg.data.indexOf(',') + 1))
     this.storage.write({
-      lastModified: new Date(),
       data: svg
     })
   }
   autoSaveDiagram(msg) {
     this.storage.write({
-      lastModified: new Date(),
-      savedBy: this.clientId,
       xml: msg.xml
     })
   }
