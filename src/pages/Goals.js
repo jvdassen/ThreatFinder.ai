@@ -4,6 +4,7 @@ import { useState } from 'react'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import { Button, Checkbox, FormControlLabel, styled, Typography, Box } from '@mui/material'
 import { getDomain } from '../utils/getDomain.js'
+import ThreatModels from './ThreatModels.jsx'
 
 
 export default Goals
@@ -143,6 +144,7 @@ function Goals() {
           <div id="pdf-content">{getTestDivs(data)}</div>
         </>
       )}
+      <ThreatModels/>
     </Box>
   )
 }
