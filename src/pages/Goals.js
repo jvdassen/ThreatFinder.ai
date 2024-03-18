@@ -95,6 +95,7 @@ function Goals() {
 
   return (
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+{/*
       <Typography level="title-lg" variant='h4' fontFamily='monospace'>
         <i>Step 1) Security Objectives</i>
         <Typography
@@ -105,7 +106,6 @@ function Goals() {
           Define the most critical property of your key asset that you would intuitively protect.
           </Typography>
         </Typography>
-      <h1>ThreatsFinder for AI-based Systems</h1>
       <Button component="label" variant="contained" onChange={handleFileChange}
         startIcon={<CloudUploadIcon />}>
         Choose XML file
@@ -134,7 +134,6 @@ function Goals() {
           />
         ))}
       </div>
-
       {data && (
         <>
           <br />
@@ -143,7 +142,8 @@ function Goals() {
           </Button>
           <div id="pdf-content">{getTestDivs(data)}</div>
         </>
-      )}
+      )}*/}
+
       <ThreatModels/>
     </Box>
   )

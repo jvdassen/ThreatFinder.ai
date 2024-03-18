@@ -31,7 +31,7 @@ import EditIcon from '@mui/icons-material/Edit';
 function App() {
   const drawerWidth = 280
 
-  const [view, setView] = useState('model')
+  const [view, setView] = useState('goals')
   const [diagram, setDiagram] = useState({})
 
   function receiveDiagram (diagram) {
