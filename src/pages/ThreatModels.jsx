@@ -28,7 +28,15 @@ function ThreatModels() {
   const [newName, setNewName] = useState('')
   const [newDesc, setNewDesc] = useState('')
 
-  useEffect(() => {
+  try {
+    var loaded = JSON.parse(localStorage.getItem('storedModels')) || []
+  } catch (e) {
+    loaded = []
+  }
+  var storedModels = loaded
+  const [models, setModels] = useState(storedModels)
+
+  useEffect(function handleModelSelection () {
     console.log('store selected model', selectedModel)
     localStorage.setItem('selectedModel', selectedModel)
   }, [selectedModel])
@@ -36,17 +44,21 @@ function ThreatModels() {
   function createModel () {
     console.log(newName)
     console.log(newDesc)
-    var storedModels = JSON.parse(localStorage.getItem('storedModels'))
+    var storedModels = JSON.parse(localStorage.getItem('storedModels')) || []
     storedModels.push({
       id: Math.random() * 1e17,
       name: newName,
       date: Date.now(),
-      description: newDesc
+      description: newDesc,
+      diagram: '',
+      analysis: {}
     })
     localStorage.setItem('storedModels', JSON.stringify(storedModels))
+    setModels(storedModels)
   }
 
-  function Saved () {
+
+  function Saved (props) {
   /*localStorage.setItem('storedModels', JSON.stringify([{
       id: Math.random() * 1e17,
       name: 'DataForge',
@@ -69,7 +81,8 @@ function ThreatModels() {
       description: 'Review existing controls'
     }]))
     */
-    var storedModels = JSON.parse(localStorage.getItem('storedModels')).sort((a, b) => a.date < b.date)
+
+    var storedModels = props.storedModels.sort((a, b) => a.date < b.date)
 
     return (
       <>
@@ -119,9 +132,9 @@ function ThreatModels() {
         </AccordionDetails>
       </Accordion>
       <Typography variant="h5" sx={{textTransform: 'uppercase', opacity: '50%', marginBottom: '.5em', marginTop: '.5em'}}>Load Existing Threat Model</Typography>
-      <Saved></Saved>
+      <Saved storedModels={models}></Saved>
       <Box sx={{display: 'flex'}}>
-        <Typography variant="h5" sx={{textTransform: 'uppercase', opacity: '50%', marginBottom: '.5em', marginTop: '.5em'}}>Selected Model</Typography>
+        <Typography variant="h5" sx={{textTransform: 'uppercase', opacity: '50%', marginBottom: '.5em', marginTop: '.5em'}}>Selected Model: </Typography>
         <Typography variant="h5" sx={{textTransform: 'uppercase', opacity: '50%', marginBottom: '.5em', marginTop: '.5em'}}>{selectedModel}</Typography>
       </Box>
 
