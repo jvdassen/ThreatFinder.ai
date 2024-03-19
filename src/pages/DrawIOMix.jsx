@@ -17,6 +17,19 @@ function DrawIO({ sendDiagram }) {
   console.log('useEFF')
   useEffect(() => {
     if (!initialized.current) {
+      try {
+        var selectedModel = localStorage.getItem('selectedModel')
+        var loaded = JSON.parse(localStorage.getItem('storedModels')) || []
+      } catch (error) {
+        var loaded = [] 
+      }
+      selectedStoreModel = loaded.filter(m => m.id === selectedModel)
+      if(selectedStoreModel.diagram) {
+        localStorage.setItem('diagram', selectedStoreModel.diagram)
+      } else {
+        localStorage.removeItem('diagram')
+      }
+
       initialized.current = true
       var drawioView = new CORSCommunicator(iframeRef.current)
       var stateController = new DrawioStateController(drawioView, localStorageModel)
@@ -24,6 +37,8 @@ function DrawIO({ sendDiagram }) {
       localStorageModel.observe(function (diagram) {
         sendDiagram(diagram)
         console.log('localstorage.observe')
+        selectedStoreModel.diagram = diagram
+        localStorage.setItem('storedModels', JSON.stringify(storedModels))
       })
       sendDiagram(localStorageModel.read())
       console.info(`stateController initialized`, stateController)
