@@ -6,7 +6,6 @@ import Controls from './pages/Controls'
 import Stats from './pages/Stats'
 import Goals from './pages/Goals'
 
-
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import Drawer from '@mui/material/Drawer'
@@ -77,7 +76,7 @@ function App() {
             <ListItemIcon>
               <FlagIcon />
             </ListItemIcon>
-            <ListItemText primary={'Goals'} />
+            <ListItemText primary={'Scenarios'} />
             {['model', 'analyze', 'controls'].includes(view) && <CheckIcon sx={{ fontSize: 15 }} />}
             {view === 'goals' && <EditIcon sx={{ fontSize: 15 }} />}
           </ListItemButton>

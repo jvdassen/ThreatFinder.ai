@@ -10,22 +10,22 @@ import Typography from '@mui/material/Typography'
 
 function DrawIO({ sendDiagram }) {
   const iframeRef = useRef(null);
-  var localStorageModel = new LocalStorageModel()
 
 
   const initialized = useRef(false);
   console.log('useEFF')
   useEffect(() => {
     if (!initialized.current) {
+      var localStorageModel = new LocalStorageModel()
       try {
         var selectedModel = localStorage.getItem('selectedModel')
         var loaded = JSON.parse(localStorage.getItem('storedModels')) || []
       } catch (error) {
-        var loaded = [] 
+        loaded = []
       }
-      selectedStoreModel = loaded.filter(m => m.id === selectedModel)
-      if(selectedStoreModel.diagram) {
-        localStorage.setItem('diagram', selectedStoreModel.diagram)
+      var selectedStoreModel = loaded.find(m => m.id === selectedModel)
+      if (selectedStoreModel.diagram) {
+        localStorageModel.write(selectedStoreModel.diagram)
       } else {
         localStorage.removeItem('diagram')
       }
@@ -34,37 +34,37 @@ function DrawIO({ sendDiagram }) {
       var drawioView = new CORSCommunicator(iframeRef.current)
       var stateController = new DrawioStateController(drawioView, localStorageModel)
       console.log('START OBSERVING')
-      localStorageModel.observe(function (diagram) {
+      localStorageModel.observe(function(diagram) {
         sendDiagram(diagram)
         console.log('localstorage.observe')
         selectedStoreModel.diagram = diagram
-        localStorage.setItem('storedModels', JSON.stringify(storedModels))
+        localStorage.setItem('storedModels', JSON.stringify(loaded))
       })
       sendDiagram(localStorageModel.read())
       console.info(`stateController initialized`, stateController)
     }
-  }, []);
+  }, [sendDiagram]);
 
   return (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <Typography level="title-lg" variant='h4' fontFamily='monospace'>
-        <i>Step 1) Architectural Modeling</i>
+        <i>Architectural Modeling</i>
         <Typography
-            level="title-lg"
-            fontFamily="monospace"
-            sx={{ opacity: '50%', marginBottom: '1em' }}
-          >
-        Draw the architectural diagram
-          </Typography>
+          level="title-lg"
+          fontFamily="monospace"
+          sx={{ opacity: '50%', marginBottom: '1em', display: 'none' }}
+        >
+          Draw the architectural diagram
         </Typography>
-    <iframe
-      ref={iframeRef}
-      width="100%"
-      height="100%"
-      src="https://embed.diagrams.net/?embed=1&ui=dark&spin=1&proto=json&configure=1&noExitBtn=1&saveAndExit=0&noSaveBtn=1&noExitBtn=1"
-      style={{ border: 'none', borderRadius: '.5em' }}
-      title={'draw.io'}
-    />
+      </Typography>
+      <iframe
+        ref={iframeRef}
+        width="100%"
+        height="100%"
+        src="https://embed.diagrams.net/?embed=1&ui=dark&spin=1&proto=json&configure=1&noExitBtn=1&saveAndExit=0&noSaveBtn=1&noExitBtn=1"
+        style={{ border: 'none', borderRadius: '.5em' }}
+        title={'draw.io'}
+      />
     </Box>
 
   );
