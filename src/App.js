@@ -41,9 +41,27 @@ function App() {
     palette: {
       mode: 'dark',
       primary: {
-        main: 'rgb(107, 144, 81)'
+        main: '#3b512a'
+      },
+      secondary: {
+        main: '#8278d9'
       }
     },
+    typography: {
+      h4: {
+        fontFamily: '"Noto Sans Mono", monospace',
+        color: '#8278d9',
+        fontWeight: '400',
+      },
+      h5: {
+        fontFamily: '"Noto Sans Mono", monospace',
+        opacity: '0.6'
+      },
+      subtitle: {
+        fontFamily: '"Noto Sans Mono", monospace',
+        opacity: '0.6'
+      }
+    }
   })
 
   const drawer = (
@@ -74,7 +92,7 @@ function App() {
         <ListItem key={'goals'} disablePadding onClick={() => setView('goals')}>
           <ListItemButton>
             <ListItemIcon>
-              <FlagIcon />
+              <FlagIcon color="secondary"/>
             </ListItemIcon>
             <ListItemText primary={'Scenarios'} />
             {['model', 'analyze', 'controls'].includes(view) && <CheckIcon sx={{ fontSize: 15 }} />}
@@ -84,7 +102,7 @@ function App() {
         <ListItem key={'model'} disablePadding onClick={() => setView('model')}>
           <ListItemButton>
             <ListItemIcon>
-              <ArchitectureIcon />
+              <ArchitectureIcon color="secondary"/>
             </ListItemIcon>
             <ListItemText primary={'Model'} />
             {['analyze', 'controls'].includes(view) && <CheckIcon sx={{ fontSize: 15 }} />}
@@ -94,7 +112,7 @@ function App() {
         <ListItem key={'analyze'} disablePadding onClick={() => setView('analyze')}>
           <ListItemButton>
             <ListItemIcon>
-              <FunctionsOutlinedIcon />
+              <FunctionsOutlinedIcon color="secondary"/>
             </ListItemIcon>
             <ListItemText primary={'Analyze'} />
             {['controls'].includes(view) && <CheckIcon sx={{ fontSize: 15 }} />}
@@ -104,7 +122,7 @@ function App() {
         <ListItem key={'controls'} disablePadding onClick={() => setView('controls')}>
           <ListItemButton>
             <ListItemIcon>
-              <SecurityOutlinedIcon />
+              <SecurityOutlinedIcon color="secondary"/>
             </ListItemIcon>
             <ListItemText primary={'Controls'} />
             {view === 'controls' && <EditIcon sx={{ fontSize: 15 }} />}

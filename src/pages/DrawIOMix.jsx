@@ -47,15 +47,12 @@ function DrawIO({ sendDiagram }) {
 
   return (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <Typography level="title-lg" variant='h4' fontFamily='monospace'>
-        <i>Architectural Modeling</i>
-        <Typography
-          level="title-lg"
-          fontFamily="monospace"
-          sx={{ opacity: '50%', marginBottom: '1em', display: 'none' }}
-        >
-          Draw the architectural diagram
-        </Typography>
+      <Typography variant="h4">
+        Architectural Modeling
+      </Typography>
+      <Typography
+        variant="subtitle" sx={{ marginBottom: '1em' }}>
+        Draw the architectural diagram
       </Typography>
       <iframe
         ref={iframeRef}
