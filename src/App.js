@@ -5,6 +5,7 @@ import Analyze from './pages/Analyze'
 import Controls from './pages/Controls'
 import Stats from './pages/Stats'
 import Goals from './pages/Goals'
+import Instructions from './pages/Instructions'
 
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
@@ -134,13 +135,8 @@ function App() {
       <ListSubheader style={{lineHeight: '24px'}}>
         Instructions
       </ListSubheader>
-      <ListItem>        <Typography
-          level="title-lg"
-          fontFamily="monospace"
-          sx={{ opacity: '50%', marginBottom: '1em' }}
-        >
-      &rarr; In this stage, a diagram of the architecture must be created. The resulting diagram is used to elicit AI-related assets and the threats surrounding them.
-        </Typography>
+      <ListItem>
+        <Instructions stage={view}/>
       </ListItem>
     </List>
     <Stats diagram={diagram}/>

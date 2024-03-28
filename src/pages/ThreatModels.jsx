@@ -188,11 +188,11 @@ function ThreatModels() {
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1em'}}>
               <Paper elevation={4} sx={{p: '1em', display: 'flex', flexGrow: 1, alignItems: 'center', flexDirection: 'column'}}>
                   <Typography variant="h4" sx={{flexGrow: 1, fontSize: '4rem'}}>3</Typography>
-                 ASSETS
+                 <Typography sx={{ opacity: '.6'}}>ASSETS</Typography>
               </Paper>
               <Paper elevation={4} sx={{p: '1em', display: 'flex', flexGrow: 1, alignItems: 'center', flexDirection: 'column'}}>
                   <Typography variant="h4" sx={{flexGrow: 1, fontSize: '4rem'}}>9</Typography>
-                  THREATS
+                  <Typography sx={{ opacity: '.6'}}>THREATS</Typography>
               </Paper>
             </Box>
             <Paper elevation={4} sx={{p: '1em'}}>
@@ -215,12 +215,15 @@ function ThreatModels() {
                 width={500}
                 height={300}/>
             </Paper>
-            <Box>
-              <Paper elevation={4} sx={{p: '1em', display: 'flex', flexGrow: 1, alignItems: 'center', flexDirection: 'column'}}>
-                  <Typography variant="h4" sx={{flexGrow: 1, fontSize: '4rem'}}>854'244</Typography>
-                  Expected Annual Loss
-              </Paper>
-            </Box>
+            <Paper elevation={4} sx={{p: '1em', display: 'flex', flexGrow: 1, alignItems: 'left', flexDirection: 'column', textTransform: 'uppercase'}}>
+              <Typography sx={{flexGrow: 1, display: 'flex', textAlign: 'center', alignItems: 'center'}}>Annualized Loss (CHF)</Typography>
+              <Typography variant="h4" sx={{flexGrow: 1, display: 'flex', alignItems: 'center', fontSize: '4rem'}}>826'802</Typography>
+              <Typography sx={{ opacity: '.6'}}>Expected Loss P50)</Typography>
+              <Typography variant="h4" sx={{flexGrow: 1, display: 'flex', alignItems: 'center', fontSize: '3rem'}}>515'378</Typography>
+              <Typography sx={{ opacity: '.6'}}>Optimistic Loss (P20)</Typography>
+              <Typography variant="h4" sx={{flexGrow: 1, display: 'flex', alignItems: 'center', fontSize: '3rem'}}>1'171'836</Typography>
+              <Typography sx={{ opacity: '.6'}}>Pessimistic Loss (P80)</Typography>
+            </Paper>
         </Box>
       </Box>
     </Box>
