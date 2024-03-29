@@ -1,0 +1,15 @@
+{
+  "name": "libs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "convert.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "html-entities": "^2.5.2",
+    "pako": "^2.1.0"
+  }
+}
