@@ -2,6 +2,9 @@ import cssVariables from './styles/variables.js'
 import aiactors from './libs/ai-actors.json'
 import aidata from './libs/ai-data.json'
 import aimodels from './libs/ai-models.json'
+import aiprocesses from './libs/ai-processes.json'
+import aienv from './libs/ai-env.json'
+import aimisc from './libs/ai-misc.json'
 
 export default class DrawioStateController {
   constructor(drawio, storage) {
@@ -103,6 +106,12 @@ export default class DrawioStateController {
             },
             "libs": [{
               "title": {
+                "main": "Miscellaneous",
+                "de": "Miscellaneous"
+              },
+              "data": aimisc
+            }, {
+              "title": {
                 "main": "Actors",
                 "de": "Actors"
               },
@@ -119,6 +128,18 @@ export default class DrawioStateController {
                 "de": "Models"
               },
               "data": aimodels
+            }, {
+              "title": {
+                "main": "Procedures",
+                "de": "Procedures"
+              },
+              "data": aiprocesses
+            }, {
+              "title": {
+                "main": "Environments",
+                "de": "Environments"
+              },
+              "data": aienv
             }
             ]
           }]

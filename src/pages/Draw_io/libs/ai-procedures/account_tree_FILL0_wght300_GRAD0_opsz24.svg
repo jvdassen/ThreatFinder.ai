@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   height="24"
+   viewBox="0 -960 960 960"
+   width="24"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="account_tree_FILL0_wght300_GRAD0_opsz24.svg"
+   inkscape:version="1.3.2 (091e20ef0f, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="49.875"
+     inkscape:cx="11.989975"
+     inkscape:cy="12"
+     inkscape:window-width="2560"
+     inkscape:window-height="1403"
+     inkscape:window-x="2560"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <path
+     d="M610.001-130.001v-120h-160v-400H349.999v120H90.001v-299.998h259.998v120h260.002v-120h259.998v299.998H610.001v-120H509.999v340.002h100.002v-120h259.998v299.998H610.001Zm-460.002-640v180.002-180.002Zm520 400v180.002-180.002Zm0-400v180.002-180.002Zm0 180.002h140.002v-180.002H669.999v180.002Zm0 400h140.002v-180.002H669.999v180.002Zm-520-400h140.002v-180.002H149.999v180.002Z"
+     id="path1"
+     style="fill:#ffffff" />
+</svg>
