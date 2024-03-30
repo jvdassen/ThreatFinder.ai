@@ -1,0 +1,3 @@
+ai-actors library: uses the default draw.io icon
+data assets: mui
+model assets: google material symbols

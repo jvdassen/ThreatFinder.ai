@@ -1,4 +1,7 @@
 import cssVariables from './styles/variables.js'
+import aiactors from './libs/ai-actors.json'
+import aidata from './libs/ai-data.json'
+import aimodels from './libs/ai-models.json'
 
 export default class DrawioStateController {
   constructor(drawio, storage) {
@@ -53,7 +56,10 @@ export default class DrawioStateController {
       config: {
         css: `
           .geMenubarContainer, .mxWindow {
-            background-color: ${cssVariables['--coretm-lightgreen']} !important;
+            background-color: hsl(246, 56%, 90%) !important;
+          }
+          .geSidebarFooter > .geBtn {
+            display: none !important;
           }
           .geTitle, .mxWindowTitle, .geFormatSection {
             color: ${cssVariables['--coretm-darkgrey']} !important;
@@ -76,7 +82,47 @@ export default class DrawioStateController {
           "Helvetica",
           "Times New Roman"
         ],
-        ui: 'dark'
+        ui: 'dark',
+        defaultLibraries: 'ThreatFinderAI',
+        libraries: 'ThreatFinderAI',
+        defaultCustomLibraries: ['ThreatFinderAI'],
+        enabledLibraries: ['ThreatFinderAI'],
+        libraries: [{
+          "title": {
+            "main": "ThreatFinderAI"
+          },
+          "entries": [{
+            "id": "ThreatFinderAI",
+            "title": {
+              "main": "ThreatFinderAI",
+              "de": "ThreatFinderAI"
+            },
+            "desc": {
+              "main": "ThreatFinderAI",
+              "de": "ThreatFinderAI"
+            },
+            "libs": [{
+              "title": {
+                "main": "Actors",
+                "de": "Actors"
+              },
+              "data": aiactors
+            }, {
+              "title": {
+                "main": "Data",
+                "de": "Data"
+              },
+              "data": aidata
+            }, {
+              "title": {
+                "main": "Models",
+                "de": "Models"
+              },
+              "data": aimodels
+            }
+            ]
+          }]
+        }]
       }
     }
     this.drawio.send(configurationAction)
