@@ -5,6 +5,7 @@ import aimodels from './libs/ai-models.json'
 import aiprocesses from './libs/ai-processes.json'
 import aienv from './libs/ai-env.json'
 import aimisc from './libs/ai-misc.json'
+import aidomain from './libs/ai-domain.json'
 
 export default class DrawioStateController {
   constructor(drawio, storage) {
@@ -61,6 +62,18 @@ export default class DrawioStateController {
           .geMenubarContainer, .mxWindow {
             background-color: hsl(246, 56%, 90%) !important;
           }
+          tr.mxPopupMenuItemHover {
+            background-color: hsl(246, 56%, 90%) !important;
+          }
+          .geSidebarContainer .geTitle:hover {
+            background: hsl(246, 56%, 95%) !important;
+          }
+          .geSidebarTooltip {
+            box-shadow:0 2px 6px 2px rgba(218, 215, 244, 0.6) !important;
+          }
+          .geSidebar .geItem:hover {
+            background-color: hsl(246, 56%, 95%) !important;
+          }
           .geSidebarFooter > .geBtn {
             display: none !important;
           }
@@ -110,6 +123,12 @@ export default class DrawioStateController {
                 "de": "Miscellaneous"
               },
               "data": aimisc
+            }, {
+              "title": {
+                "main": "Business Domain",
+                "de": "Business Domain"
+              },
+              "data": aidomain
             }, {
               "title": {
                 "main": "Actors",
