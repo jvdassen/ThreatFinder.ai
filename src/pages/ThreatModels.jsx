@@ -3,6 +3,12 @@ import Accordion from '@mui/material/Accordion'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import AccordionActions from '@mui/material/AccordionActions'
+
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import Button from '@mui/material/Button'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
@@ -32,6 +38,8 @@ function ThreatModels() {
 
   const [newName, setNewName] = useState('')
   const [newDesc, setNewDesc] = useState('')
+  const [newKeyProp, setNewKeyProp] = useState('')
+  const [newKeyAsset, setNewKeyAsset] = useState('')
 
   try {
     var loaded = JSON.parse(localStorage.getItem('storedModels')) || []
@@ -47,7 +55,7 @@ function ThreatModels() {
     console.log('store selected model', selectedModel)
     localStorage.setItem('selectedModel', selectedModel)
     selectModelInfo(models.find(m => m.id === selectedModel))
-  }, [selectedModel])
+  }, [models, selectedModel])
 
   function createModel() {
     console.log(newName)
@@ -58,6 +66,10 @@ function ThreatModels() {
       name: newName,
       date: Date.now(),
       description: newDesc,
+      keyProp: newKeyProp,
+      keyAsset: newKeyAsset,
+      assets: [],
+      threats: [],
       diagram: '',
       analysis: {
         summary: {
@@ -166,6 +178,47 @@ function ThreatModels() {
               <TextField label="Name" variant="outlined" required onChange={(e) => { setNewName(e.target.value) }} />
               <TextField label="Description" variant="outlined" onChange={(e) => { setNewDesc(e.target.value) }} multiline required />
               <TextField label="Date" variant="outlined" disabled defaultValue={formatDate(new Date())} />
+
+
+              <Box sx={{ display: 'flex', gap: '1em' }}>
+                <FormControl sx={{ m: 0, minWidth: 120, flexGrow: 1 }}>
+                  <InputLabel id="key-prop"><em>Property</em></InputLabel>
+                  <Select
+                    labelId="key-prop"
+                    id="key-prop-helper"
+                    value={newKeyProp}
+                    onChange={(e) => { setNewKeyProp(e.target.value) }}
+                    label="Key Security Property">
+                    <MenuItem value={'confidentiality'}>Confidentiality</MenuItem>
+                    <MenuItem value={'integrity'}>Integrity</MenuItem>
+                    <MenuItem value={'availability'}>Availability</MenuItem>
+                    <MenuItem value={'accountability'}>Accountability</MenuItem>
+                  </Select>
+                  <FormHelperText>Define the most critical security property</FormHelperText>
+                </FormControl>
+                <span style={{ paddingTop: '1em'}}>of</span>
+                <FormControl sx={{ m: 0, minWidth: 120, flexGrow: 1 }}>
+                  <InputLabel id="key-asset"><em>Asset</em></InputLabel>
+                  <Select
+                    labelId="key-asset"
+                    id="key-asset-helper"
+                    label="Optional: Key Asset"
+                    onChange={(e) => { setNewKeyAsset(e.target.value) }}
+                    value={newKeyAsset}>
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={'Actor'}>Actors</MenuItem>
+                    <MenuItem value={'Data'}>Data</MenuItem>
+                    <MenuItem value={'Model'}>Models</MenuItem>
+                    <MenuItem value={'Artefacts'}>Artefacts</MenuItem>
+                    <MenuItem value={'Processes'}>Processes</MenuItem>
+                    <MenuItem value={'Environment/tools'}>Environments and Tools</MenuItem>
+                  </Select>
+                  <FormHelperText>Optional: Define the most critical asset</FormHelperText>
+                </FormControl>
+              </Box>
+
               <Button variant="contained" onClick={createModel} >Create</Button>
             </Box>
           </AccordionDetails>
@@ -184,14 +237,32 @@ function ThreatModels() {
                 {selectedModelInfo.name}
               </Typography>
             </Box>
-            <Box sx={{ display: 'flex', gap: '1em' }}>
+            <Box sx={{ display: 'flex', gap: '1em', flexWrap: 'wrap' }}>
+            <Paper elevation={4} sx={{ minWidth: '100%', p: '1em', display: 'flex', flexDirection: 'column', textTransform: 'uppercase' }}>
+              <Box sx={{ flexGrow: 1}}>
+                <Typography sx={{ display: 'inline-flex', opacity: '.6', mr: '.5em' }}>Created</Typography>
+                <Typography sx={{ display: 'inline-flex', textTransform: 'initial'}}>{formatDate(new Date(selectedModelInfo.date))}</Typography>
+              </Box>
+              <Box sx={{ flexGrow: 1}}>
+                <Typography sx={{ display: 'inline', opacity: '.6', mr: '.5em' }}>Description</Typography>
+                <Typography sx={{ display: 'inline', textTransform: 'initial'}}>{selectedModelInfo.description}</Typography>
+              </Box>
+              {selectedModelInfo.keyProp && <Box sx={{ flexGrow: 1}}>
+                <Typography sx={{ display: 'inline', opacity: '.6', mr: '.5em' }}>Security Goal</Typography>
+                <Typography sx={{ display: 'inline', textTransform: 'initial'}}>Protect the {selectedModelInfo.keyProp} 
+                    {selectedModelInfo.keyAsset && <span>
+                      <span style={{opacity: '.6'}}> of</span> {selectedModelInfo.keyAsset} 
+                    </span>}
+                </Typography>
+              </Box>}
+            </Paper>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1em' }}>
                 <Paper elevation={4} sx={{ p: '1em', display: 'flex', flexGrow: 1, alignItems: 'center', flexDirection: 'column' }}>
-                  <Typography variant="h4" sx={{ flexGrow: 1, fontSize: '4rem' }}>3</Typography>
+                  <Typography variant="h4" sx={{ flexGrow: 1, fontSize: '4rem' }}>{selectedModelInfo.assets.length}</Typography>
                   <Typography sx={{ opacity: '.6' }}>ASSETS</Typography>
                 </Paper>
                 <Paper elevation={4} sx={{ p: '1em', display: 'flex', flexGrow: 1, alignItems: 'center', flexDirection: 'column' }}>
-                  <Typography variant="h4" sx={{ flexGrow: 1, fontSize: '4rem' }}>9</Typography>
+                  <Typography variant="h4" sx={{ flexGrow: 1, fontSize: '4rem' }}>{selectedModelInfo.threats.length}</Typography>
                   <Typography sx={{ opacity: '.6' }}>THREATS</Typography>
                 </Paper>
               </Box>
