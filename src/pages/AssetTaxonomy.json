@@ -1,0 +1,434 @@
+[
+    {
+        "Category": "Data",
+        "Asset": "Augmented Data Set",
+        "Definition": "An augmented data set is a (usually labeled) data set which has been augmented by adding data produced by transformations or by generative ML models. Augmentation significantly increases labeled data sets’ diversity (which is supposed to prevent overfitting) in view of using augmented datasets for training other ML models. In image recognition, data augmentation techniques include cropping, padding, and horizontal flipping.",
+        "AI Lifecycle Stage": "Data Pre-processing"
+    },
+    {
+        "Category": "Data",
+        "Asset": "Evaluation Data",
+        "Definition": "The evaluation data is used to evaluate the predictive quality of the trained model. The ML system evaluates predictive performance by comparing predictions on the evaluation data set with true values (known as ground truth) using a variety of metrics.",
+        "AI Lifecycle Stage": "Model Tuning"
+    },
+    {
+        "Category": "Data",
+        "Asset": "Labeled Data Set",
+        "Definition": "The term “Labeled Data” refers to a set of scalar or multi-dimensional data items that have been tagged with one or more informative labels, usually for the purpose of training a supervised ML model.",
+        "AI Lifecycle Stage": "Data Pre-processing"
+    },
+    {
+        "Category": "Data",
+        "Asset": "Metric Data Set",
+        "Definition": "The sorts of numbers we collect when we measure something. Metric data can be ratio scale, interval scale, integer scale, and cardinal numbers.",
+        "AI Lifecycle Stage": "Feature Selection"
+    },
+    {
+        "Category": "Data",
+        "Asset": "Pre-processed Data Set",
+        "Definition": "The data is pre-processed before feeding it into our ML model.",
+        "AI Lifecycle Stage": "Data Pre-processing"
+    },
+    {
+        "Category": "Data",
+        "Asset": "Public Data set",
+        "Definition": "Public data set is information that can be freely used, reused, and redistributed by anyone with no existing local, national, or international legal restrictions on access or usage.",
+        "AI Lifecycle Stage": "Data Exploration, Data Ingestion"
+    },
+    {
+        "Category": "Data",
+        "Asset": "Raw Data",
+        "Definition": "Raw data refers to any type of information gathered for AI analysis purposes, possibly after cleaning but before it is transformed or analyzed in any way.",
+        "AI Lifecycle Stage": "Data Ingestion"
+    },
+    {
+        "Category": "Data",
+        "Asset": "Testing Data",
+        "Definition": "It is a dataset used to provide an unbiased evaluation of a final ML model fitted on the training dataset. We use testing data to test the model. If the data in the test dataset has never been used in training (e.g. in cross-validation), the test dataset is also called a holdout dataset.",
+        "AI Lifecycle Stage": "Model Training"
+    },
+    {
+        "Category": "Data",
+        "Asset": "Training Data",
+        "Definition": "Training data refers to the initial data that is used to develop a ML model, from which the model adapts its internal parameters to refine its rules.",
+        "AI Lifecycle Stage": "Model Selection / Building, Model Training, Transfer Learning"
+    },
+  {
+        "Category": "Data",
+        "Asset": "Validation Data Set",
+        "Definition": "Validation data sets are labeled data sets, which differ from ordinary labeled data sets only in their usage and, usually, in their collection circumstances. Validation data sets are mostly used to perform an evaluation of a ML model in-training, for example by stopping the ML model’s training (early stopping) when the error on the validation dataset increases too much, as this is considered a sign of overfitting the model to the training dataset.",
+        "AI Lifecycle Stage": "Model Tuning"
+    },
+    {
+        "Category": "Model",
+        "Asset": "Algorithms",
+        "Definition": "ML algorithms are programs (math and logic) that adjust themselves to perform better as they are exposed to more data. The “learning” part of ML means that those programs change how they process data over time, much as humans change how they process data by learning. So a ML algorithm is a program with a specific way to adjusting its own parameters, given feedback on its previous performance in making predictions about a dataset.",
+        "AI Lifecycle Stage": "Model Training"
+    },
+    {
+        "Category": "Model",
+        "Asset": "Data Pre-Processing Algorithms",
+        "Definition": "The data pre-processing employs techniques to clean, integrate and transform the data, resulting in improved data quality that will improve performance and efficiency by saving time during the analytic models’ training phase and by promoting a better quality of results. Specifically, the term data cleaning designates techniques to correct inconsistencies, remove noise and anonymize/pseudonymize data.",
+        "AI Lifecycle Stage": "Data Pre-processing"
+    },
+    {
+        "Category": "Model",
+        "Asset": "Hyper-parameters",
+        "Definition": "Hyper-parameters define high-level concepts about ML models, such as the frequency of the adjustment of the internal parameters on the part of the training algorithm. They cannot be learned from input data but need to be set by trial-and-error using model space search techniques.",
+        "AI Lifecycle Stage": "Model Tuning"
+    },
+    {
+        "Category": "Model",
+        "Asset": "Training Algorithms",
+        "Definition": "Training algorithms are procedures for adjusting the parameters of ML models. In supervised training, the correct output for each input vector of a training set is presented to the model, and multiple iterations through the training data may be required to adjust the parameters. In unsupervised training, the model parameters are adjusted without specifying the correct output for any of the input vectors.",
+        "AI Lifecycle Stage": "Model Selection / Building"
+    },
+    {
+        "Category": "Model",
+        "Asset": "Model",
+        "Definition": "The term ML model designates computer algorithms implementing parametric mathematical models that improve through experience.",
+        "AI Lifecycle Stage": "Model Training, Model Tuning, Model Selection / Building, Model Deployment, Model Maintenance"
+    },
+    {
+        "Category": "Model",
+        "Asset": "Model parameters",
+        "Definition": "A model parameter is a configuration variable that is internal to the model and whose value can be estimated from the given data.",
+        "AI Lifecycle Stage": "Model Training"
+    },
+    {
+        "Category": "Model",
+        "Asset": "Model performance",
+        "Definition": "The ML model performance is the accuracy and speed of the model’s computation that receives inputs from the production-ready environment and outputs the model’s classifications, predictions, or decisions.",
+        "AI Lifecycle Stage": "Model Training, Model Tuning"
+    },
+    {
+        "Category": "Model",
+        "Asset": "Subspace (Feature) selection Algorithm",
+        "Definition": "Feature selection algorithms are techniques that select a subset of relevant features from an original feature set, in order to increase the performance of ML models trained on the subset. Some feature selection methods used for classification problems are supervised and use class labels as a guide.",
+        "AI Lifecycle Stage": "Feature Selection"
+    },
+    {
+        "Category": "Model",
+        "Asset": "Trained models",
+        "Definition": "A trained ML model is a model whose internal parameters have been adjusted by training to reach a minimum of the error function that defines the distance between the actual and expected outputs.",
+        "AI Lifecycle Stage": "Model Training, Transfer Learning"
+    },
+    {
+        "Category": "Model",
+        "Asset": "Training parameters",
+        "Definition": "ML model training parameters are quantities adjusted by the learning process by applying training algorithms based on training data. Training parameters values determine the actual classification, prediction, or detection function computed by the ML model.",
+        "AI Lifecycle Stage": "Model Selection / Building, Model Training"
+    },
+    {
+        "Category": "Model",
+        "Asset": "Tuned Model",
+        "Definition": "A tuned ML model is a model where the hyper-parameters affecting the training algorithm operation have been set to maximize the convergence and speed of the training algorithm.",
+        "AI Lifecycle Stage": "Model Tuning"
+    },
+     {
+        "Category": "Actor",
+        "Asset": "Cloud Provider",
+        "Definition": "Cloud providers are third parties that offer computational platforms, and even in some cases tend to offer some data analyses capabilities or “Machine learning as service” (for this please check Model Provider threats below). Cloud provider adds to AI the same attack vectors as to other domains: data breaches, insufficient authentication and authorization, insecure interfaces, etc.",
+        "AI Lifecycle Stage": "Data Ingestion, Model Training, Model Tuning"
+    },
+    {
+        "Category": "Actor",
+        "Asset": "Data Engineers",
+        "Definition": "Data Engineers are professionals that prepare the computational infrastructure and mainly focus on the design, management, and optimization of the flow of data. They’re usually more intervenient in the first stages of AI Lifecycle: extraction and assembling of data from different sources, transformation, cleaning, and loading it in a standardized format and in an adequate repository. Data Engineers must have specialized skills in creating software solutions around data: software engineering, distributed systems, open frameworks, SQL, Cloud platforms, data modeling.",
+        "AI Lifecycle Stage": "Data Ingestion, Data Exploration, Data Pre-processing, Feature Selection, Model Selection / Building, Model Training, Model Tuning, Model Deployment, Model Maintenance"
+    },
+    {
+        "Category": "Actor",
+        "Asset": "Data Owner",
+        "Definition": "Data owner can be a data broker or provider, as described before, or the business owner, who asks for the AI study. In this section, the focus is on the latter.",
+        "AI Lifecycle Stage": "Business Goal Definition, Data Ingestion, Data Exploration"
+    },
+    {
+        "Category": "Actor",
+        "Asset": "Data Provider/Data Broker",
+        "Definition": "Third parties providing data for the AI process.",
+        "AI Lifecycle Stage": "Data Ingestion"
+    },
+    {
+        "Category": "Actor",
+        "Asset": "Data Scientists / AI designer / AI developer",
+        "Definition": "Professionals that apply statistics, Machine Learning, and analytic approaches to analyze different datasets of different sizes and shapes and solve complex and critical problems. Skills in computer science fundamentals and programming, including experience with languages and database (big/small) technologies are essential.",
+        "AI Lifecycle Stage": "Business Goal Definition, Data Ingestion, Data Exploration, Data Pre-processing, Feature Selection, Model Selection / Building, Model Training, Model Tuning, Transfer Learning, Model Deployment, Model Maintenance"
+    },
+    {
+        "Category": "Actor",
+        "Asset": "End Users",
+        "Definition": "Those inside an organization that use and benefit from the results provided by the AI/ML system/service.",
+        "AI Lifecycle Stage": "Business Goal Definition, Data Ingestion, Data Exploration, Model Maintenance, Business Understanding"
+    },
+    {
+        "Category": "Actor",
+        "Asset": "Model Provider",
+        "Definition": "In the context of transfer and/or federated learning, third parties that provide models (called as “Teacher” models), previously trained and fine-tuned with large datasets that are useful to learn from small datasets and/or by organizations without access to high computational clusters, with GPU.",
+        "AI Lifecycle Stage": "Transfer Learning"
+    },
+    {
+        "Category": "Actor",
+        "Asset": "Service consumers / Model users",
+        "Definition": "AI/ML users that rely on pre-trained models or consume them through available services.",
+        "AI Lifecycle Stage": "Model Maintenance, Business Understanding"
+    },
+    {
+        "Category": "Processes",
+        "Asset": "Data augmentation",
+        "Definition": "Techniques used to increase the amount of data by adding slightly modified copies of already existing data or newly created synthetic data from existing data. It helps reduce overfitting when training a machine learning. Data augmentation usually consists in applying transformations which are known to be label-preserving, i.e. the model should not change its prediction when presented with the transformed data items.",
+        "AI Lifecycle Stage": "Data Pre-processing, Data Exploration"
+    },
+    {
+        "Category": "Processes",
+        "Asset": "Data Collection",
+        "Definition": "It is the process of gathering and measuring information on specific variables (needed for the AI system) from countless different sources.",
+        "AI Lifecycle Stage": "Data Ingestion"
+    },{
+        "Category": "Processes",
+        "Asset": "Data Exploration/Pre-processing",
+        "Definition": "Understanding, preparing, and cleaning data.",
+        "AI Lifecycle Stage": "Data Exploration, Data Pre-processing"
+    },
+    {
+        "Category": "Processes",
+        "Asset": "Data Ingestion",
+        "Definition": "Data Ingestion is the process related to data transportation from multiple sources to compose multi-dimensional data points. Data can be placed in a storage medium where it can be accessed, used, and analyzed, or the data stream can be used directly in the ML process.",
+        "AI Lifecycle Stage": "Data Ingestion"
+    },
+    {
+        "Category": "Processes",
+        "Asset": "Data labelling",
+        "Definition": "It is the process of detecting and tagging data samples. The process can be manual and time-consuming and assisted by software.",
+        "AI Lifecycle Stage": "Data Pre-processing"
+    },
+    {
+        "Category": "Processes",
+        "Asset": "Data Storage",
+        "Definition": "Data can be stored locally, in a distributed file system, in the cloud.",
+        "AI Lifecycle Stage": "Data Ingestion"
+    },
+    {
+        "Category": "Processes",
+        "Asset": "Data understanding",
+        "Definition": "Data understanding is the knowledge you have about data, data assets, the needs the data will satisfy, its content, and location.",
+        "AI Lifecycle Stage": "Data Exploration"
+    },
+    {
+        "Category": "Processes",
+        "Asset": "Feature selection",
+        "Definition": "During this process, the number of dimensions or features of the input vector is reduced, by identifying those that are the most meaningful for the AI/ML model.",
+        "AI Lifecycle Stage": "Feature Selection"
+    },
+    {
+        "Category": "Processes",
+        "Asset": "Model adaptation – transfer learning / Model deployment",
+        "Definition": "Transfer Learning is the ability to re-use previously learned knowledge to solve new problems faster. Deployment is the process of taking a pre-trained model and making it available to the users. Transfer learning emphasizes the transfer of knowledge across domains, tasks, and distributions that are similar but not the same.",
+        "AI Lifecycle Stage": "Transfer Learning"
+    },
+    {
+        "Category": "Processes",
+        "Asset": "Model Maintenance",
+        "Definition": "After deployment, it is necessary to monitor the prediction accuracy to detect possible changes or drift of concepts. A decrease in model performance might be overcome by retraining it using recent data and then redeploy it in production.",
+        "AI Lifecycle Stage": "Model Maintenance"
+    },
+    {
+        "Category": "Processes",
+        "Asset": "Model selection/building, training, and testing",
+        "Definition": "During the training process, the selected, or developed, algorithm is trained with input data, this means algorithm parameters, like weights and bias, will be learned from the data. During this stage, the resulting prediction is compared with the actual value for each data instance, the accuracy is evaluated, and model parameters adjusted until the best values are found.",
+        "AI Lifecycle Stage": "Model Selection / Building"
+    },
+      {
+        "Category": "Processes",
+        "Asset": "Model tuning",
+        "Definition": "Tuning focus on setting up special parameters, often called hyper-parameters. This process can be done manually or automatically by searching the model parameters’ space, through a so called hyper-parameter optimization. While during the training process model parameters are tuned, during the tuning process hyper-parameters are adjusted by running the whole training job and looking at the aggregated accuracy.",
+        "AI Lifecycle Stage": "Model Tuning"
+    },
+    {
+        "Category": "Processes",
+        "Asset": "Reduction/Discretization technique",
+        "Definition": "It is the process of converting a numerical attribute into a symbolic attribute by partitioning the attribute domain.",
+        "AI Lifecycle Stage": "Feature Selection"
+    },
+  {
+        "Category": "Environment/tools",
+        "Asset": "Cloud",
+        "Definition": "It is the on-demand availability of computer system resources, especially data storage (cloud storage) and computing power, without direct active management by the user. The term is generally used to describe data centres available to many users over the Internet.",
+        "AI Lifecycle Stage": "Data Ingestion, Model Training, Model Tuning"
+    },
+    {
+        "Category": "Environment/tools",
+        "Asset": "Communication networks",
+        "Definition": "Networks with internet connectivity for communication purposes.",
+        "AI Lifecycle Stage": "Data Ingestion"
+    },
+    {
+        "Category": "Environment/tools",
+        "Asset": "Communication protocols",
+        "Definition": "Communication protocol is a system of rules that allows two or more entities of a communications system to transmit information via any kind of variation of a physical quantity. The protocol defines the rules, syntax, semantics, and synchronization of communication and possible error recovery methods. Protocols may be implemented by hardware, software, or a combination of both.",
+        "AI Lifecycle Stage": "Data Ingestion"
+    },
+    {
+        "Category": "Environment/tools",
+        "Asset": "Computational platforms",
+        "Definition": "It is the environment in which a piece of software is executed. It may be the hardware or the operating system (OS), even a web browser and associated application programming interfaces, or other underlying software, as long as the program code is executed with it.",
+        "AI Lifecycle Stage": "Data Pre-processing, Feature Selection, Model Selection / Building, Model Training, Model Tuning, Transfer Learning, Model Deployment, Model Maintenance"
+    },
+    {
+        "Category": "Environment/tools",
+        "Asset": "Data exploration tools",
+        "Definition": "The tools used for data exploration. Tools such as visualization tools and charting features are frequently used to create a more straightforward view of data sets than simply examining thousands of individual numbers or names.",
+        "AI Lifecycle Stage": "Data Exploration"
+    },
+    {
+        "Category": "Environment/tools",
+        "Asset": "Data ingestion platforms",
+        "Definition": "It is the platform where data ingestion takes place.",
+        "AI Lifecycle Stage": "Data Ingestion"
+    },
+    {
+        "Category": "Environment/tools",
+        "Asset": "Database management system",
+        "Definition": "It is the software that handles the storage, retrieval, and updating of data in a computer system.",
+        "AI Lifecycle Stage": "Data Ingestion"
+    },
+    {
+        "Category": "Environment/tools",
+        "Asset": "Distributed File System",
+        "Definition": "File System Distribution is a method for storing and accessing files, which allows for multiple users to access and share files from multiple machines, or multiple hosts, via a computer network. Control of information access and authorization is critical. In the context of distributed file systems, distributed databases and data stored in the cloud are encompassed.",
+        "AI Lifecycle Stage": "Data Ingestion"
+    },
+    {
+        "Category": "Environment/tools",
+        "Asset": "Integrated Development Environment",
+        "Definition": "It is a software application that provides comprehensive facilities to computer programmers for software development. An IDE normally consists of at least a source code editor, build automation tools, and a debugger.",
+        "AI Lifecycle Stage": "Data Pre-processing, Feature Selection, Model Selection / Building, Model Training, Model Tuning"
+    },
+    {
+        "Category": "Environment/tools",
+        "Asset": "Libraries (with algorithms for transformation, labeling, etc)",
+        "Definition": "Pre-written programs implementing algorithms ready to be used, for scientific computation, tabular data, Time-Series Analysis, Data Modeling and Preprocessing, deep learning, among others. Their usage saves time and facilitates the development of high-level analytical functions, even for less trained ML developers. Some examples are Apache Spark MLlib, Scikit-learn Python, Keras Python, etc.",
+        "AI Lifecycle Stage": "Data Exploration, Data Pre-processing, Feature Selection, Model Selection / Building, Model Training, Model Tuning"
+    },
+    {
+        "Category": "Environment/tools",
+        "Asset": "Machine Learning Platforms",
+        "Definition": "Provide an ecosystem of tools, libraries, and resources that support the development of machine learning applications.",
+        "AI Lifecycle Stage": "Data Exploration, Data Pre-processing, Feature Selection, Model Selection / Building, Model Training, Model Tuning, Model Deployment, Model Maintenance"
+    },
+  {
+        "Category": "Environment/tools",
+        "Asset": "Monitoring Tools",
+        "Definition": "Tools that are used to continuously keep track of the status of the system in use, in order to have the earliest warning of failures, defects, or problems and to improve them.",
+        "AI Lifecycle Stage": "Data Pre-processing, Feature Selection, Model Selection / Building, Model Training, Model Tuning, Transfer Learning, Model Deployment, Model Maintenance"
+    },
+    {
+        "Category": "Environment/tools",
+        "Asset": "Operating System/software",
+        "Definition": "It manages computer hardware, software resources, and provides common services for computer programs.",
+        "AI Lifecycle Stage": "Model Deployment, Model Maintenance"
+    },
+    {
+        "Category": "Environment/tools",
+        "Asset": "Optimization techniques",
+        "Definition": "Techniques used for optimization in model tuning such as Grid Search, Random Search, and Bayesian optimization.",
+        "AI Lifecycle Stage": "Model Tuning"
+    },
+    {
+        "Category": "Environment/tools",
+        "Asset": "Processors",
+        "Definition": "A processor is the part of a computer that interprets commands and performs the processes the user has requested.",
+        "AI Lifecycle Stage": "All Stages"
+    },
+    {
+        "Category": "Environment/tools",
+        "Asset": "Visualization tools",
+        "Definition": "Any program, utility, routine, or function that performs an operation by dragging and dropping icons or by 'drawing' the solution. Visual tools are the norm in virtually every graphics-based application.",
+        "AI Lifecycle Stage": "Data Exploration"
+    },
+    {
+        "Category": "Artefacts",
+        "Asset": "Access Control Lists",
+        "Definition": "An access control list (ACL) is a table that represents which access rights each user has to a particular resource, such as a file directory or individual file. In an organization’s Active Directory, the ACL of a resource specifies the organization's access intent for that resource. An ACL has an entry for each user account (or user group) with access privileges, and each resource has a security attribute that identifies its access control list. The most common privileges include the ability to read a file (or all the files in a directory), to write to the file or files, and to execute the file (if it is an executable file or program). Collecting data for AI applications requires checking read/write permissions on ACLs regarding people as well as ‘things’ and taking into account increasingly stringent safety and data privacy regulations. Managing ACL permissions and access rights via groups (and groups of groups) is a standard technique for managing access to IT resources. User accounts will inherit all access permissions to resources that are set on the group of which they are (direct or indirect) members.",
+        "AI Lifecycle Stage": "Data Ingestion"
+    },
+    {
+        "Category": "Artefacts",
+        "Asset": "Composition artefacts: AI models compositions",
+        "Definition": "Compositions of AI models (also called ensemble systems) put together multiple AI models, typically via majority voting, in order to reduce the outputs’ variance and improve the accuracy of the overall composition with respect to the ones of individual components. Ensemble systems have been successfully used to address a variety of problems, such as feature selection, confidence estimation, missing data and concept drift from non-stationary distributions, among others.",
+        "AI Lifecycle Stage": "Data Pre-processing, Feature Selection, Model Selection / Building, Model Training, Model Tuning, Model Deployment, Model Maintenance"
+    },
+    {
+        "Category": "Artefacts",
+        "Asset": "Data and Metadata schemata",
+        "Definition": "A data schema is a skeleton structure, often depicted by means of schema diagrams, that defines how data is organized and the relations among them. It also formulates all the constraints that are to be applied on the data. In turn, metadata schemata define the overall structure for the metadata. They describe how the metadata is set up, and usually rely on standards for common components like dates, names, and places. Discipline-specific metadata schemata are used to collect the specific metadata needed by a discipline.",
+        "AI Lifecycle Stage": "Data Ingestion, Data Exploration, Data Pre-processing"
+    },
+    {
+        "Category": "Artefacts",
+        "Asset": "Data displays and plots",
+        "Definition": "A data display (or data plot) is a graphical technique for representing a data set as a graph, highlighting the relationship between two or more variables. Data plots provide a visual representation of the relationship between variables, helping human experts to quickly gain an understanding which may not come from lists of values. Data plot techniques include, among others, scatter and spectrum plots, histograms, pie charts, probability and residual plots, box and block plots.",
+        "AI Lifecycle Stage": "Data Exploration"
+    },
+    {
+        "Category": "Artefacts",
+        "Asset": "Data Governance Policies",
+        "Definition": "Data governance policies are sets of guidelines ensuring that data and information assets are managed consistently and used properly. They articulate the principles, practices, and standards that organizations consider necessary to ensure they hold high-quality data and that data assets are adequately protected. A data governance policy is typically a composite artefact, including individual policies for data quality, access, security, and privacy. It also specifies the organizational roles and responsibilities for implementing those policies and the methodology to be used for monitoring compliance with them.",
+        "AI Lifecycle Stage": "Data Ingestion"
+    },
+    {
+        "Category": "Artefacts",
+        "Asset": "Data Indexes",
+        "Definition": "Data indexes are special data structures that store a small portion of a data set in a form which is easy to traverse or to search into. Indexes store the value of a specific field or set of fields, ordered by the value of the field. The ordering of the index entries supports efficient equality matches and range-based query operations.",
+        "AI Lifecycle Stage": "Data Ingestion, Data Exploration, Data Pre-processing"
+    },
+    {
+        "Category": "Artefacts",
+        "Asset": "Descriptive Statistical Parameters",
+        "Definition": "Descriptive statistical parameters are the quantities that characterize the probability distribution of a statistic or a random variable. They can be regarded as a numerical characteristic of statistical populations. Parametric probability distributions include the normal or Gaussian distribution, the Poisson distribution, the binomial and the exponential family of distributions. For instance, the family of normal distributions has two parameters, the mean and the variance: if those are specified, the distribution is known exactly. Statistical parameters are sometimes unobservable; in this case it is the data scientists’ task to infer what they can about the parameter, based on a random sample taken from the population of interest.",
+        "AI Lifecycle Stage": "Data Exploration"
+    },
+    {
+        "Category": "Artefacts",
+        "Asset": "High-Level Test Cases",
+        "Definition": "High-Level Test Cases (HLTCs) are inputs used to test AI models. HLTCs are the union of four different datasets: the classic training, validation, and test datasets (the latter being often a subset of the training dataset), and a held-out dataset. HLTCs also include some specific inputs of interest. AI models' testing is the procedure for (i) assessing the AI model's performance on each dataset composing the HLTCs and comparing it to a predetermined minimum acceptable threshold (ii) computing the model's outputs corresponding to some specific inputs of interest. The rationale for the latter is that when an ML model shows good aggregate performance, it can be hard to notice whether its performance is acceptable on specific types of inputs.",
+        "AI Lifecycle Stage": "Business Goal Definition, Model Deployment"
+    },
+    {
+        "Category": "Artefacts",
+        "Asset": "Informal/Semi-formal AI Requirements, GQM (Goal/Question/Metrics) model",
+        "Definition": "Semi-formal Requirements are often used to specify functional and non-functional requirements for AI systems. Functional requirements model the domain of interest, the AI problem to be solved, and the task to be executed by the AI system. Non-functional requirements include architectural (hardware) and code (software) components. For example, a CPU-based environment might not be sufficient for large ML training loads, and GPUs (cloud-based or on-premises) could be required. Requirements on network bandwidth and storage are also relevant. Since AI can involve handling sensitive data such as patient records, financial information, and personal data, security requirements (usually, regarding the Confidentiality-Integrity-Authenticity (CIA) triad) are also important for AI systems. Goal Question Metrics (GQM) models complement the non-functional requirements with metrics such as computing performance/storage capacity (for the architectural component) and source code and complexity level (for the code component).",
+        "AI Lifecycle Stage": "Business Goal Definition"
+    },
+    {
+        "Category": "Artefacts",
+        "Asset": "Model Architecture",
+        "Definition": "Model Architecture defines the various layers involved in the AI/ML lifecycle and involves the major steps being carried out in the transformation of raw data into training data sets capable of enabling the decision-making of a system.",
+        "AI Lifecycle Stage": "Model Selection / Building, Model Deployment"
+    },
+    {
+        "Category": "Artefacts",
+        "Asset": "Model Hardware Design",
+        "Definition": "Model Hardware Design may be viewed as a 'partitioning scheme,' or algorithm, which considers all of the system's present and foreseeable requirements and arranges the necessary hardware components into a workable set of cleanly bounded subsystems with no more parts than are required.",
+        "AI Lifecycle Stage": "Model Selection / Building, Model Deployment"
+    },
+    {
+        "Category": "Artefacts",
+        "Asset": "Model Frameworks, Software, Firmware or Hardware Incarnations",
+        "Definition": "Model frameworks include all software, firmware, and hardware components required to train and deploy an AI model. Within model frameworks, developers use ML libraries (e.g. Keras or TensorFlow) to describe their ML model's structure and implement the corresponding training algorithms. These libraries rely on math libraries like NumPy to handle complex matrix operations used for the gradient descent and loss function calculations. In turn, math libraries build on lower-level libraries such as Basic Linear Algebra Subroutines (BLAS). To speed up model training and inference, software frameworks typically rely on one or more graphics processing units (GPUs) with corresponding GPU-enabled libraries. Deployment in firmware moves the AI model to the (read-only) memory of a Microcontroller Unit (MCU), which can be embedded into industrial systems. Developers who need increased performance turn to Field Programmable Gate Arrays (FPGAs) that embed memory blocks to reduce the memory access bottleneck that limits performance in these kinds of compute-intensive operations. Deployment in hardware deploys the ML model as a custom hardware chip. Specialized AI hardware will eventually provide significant performance enhancements for ML models.",
+        "AI Lifecycle Stage": "Transfer Learning, Model Deployment, Model Maintenance"
+    },
+    {
+        "Category": "Artefacts",
+        "Asset": "Use Case",
+        "Definition": "A specific situation in which the ML model could potentially be used.",
+        "AI Lifecycle Stage": "Business Understanding"
+    },
+    {
+        "Category": "Artefacts",
+        "Asset": "Value Proposition and Business Model",
+        "Definition": "Value propositions are promises of value to be delivered from organizations to stakeholders via a service or a product, or expectations on the part of the latter of the value (benefit) they will receive from the product or service. Business models provide the rationale of how organizations will create and deliver the value.",
+        "AI Lifecycle Stage": "Business Understanding"
+    }
+
+]

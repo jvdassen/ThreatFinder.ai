@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import Badge from '@mui/material/Badge'
-import { List, ListItem, ListSubheader, Typography } from '@mui/material'
+import { List, ListItem, ListItemText, ListSubheader, Typography } from '@mui/material'
 
 
 export default Stats
@@ -31,29 +31,45 @@ function Stats({ diagram }) {
       var mentioned = assets.filter(x => x === a).length
 
       if (mentioned > 1) {
-        return <ListItem key={a}>
-          <Badge badgeContent={mentioned} color="primary"> {a} </Badge>
+        return <ListItem key={a} sx={{ pt: 0, pb: 0, pl: '1.5em', opacity: .6}}>
+           <ListItemText>‒ {mentioned}&times; {a}</ListItemText>
         </ListItem>
       }
-      return <ListItem> {a} </ListItem>
+      return <ListItem key={a} sx={{ pt: 0, pb: 0, pl: '1.5em', opacity: .6}}>
+        <ListItemText>‒ {a}</ListItemText>
+      </ListItem>
+
     })
   }
 
   return (
     <List>
       <ListSubheader style={{lineHeight: '24px'}}>
-        Overview
+        Assets
       </ListSubheader>
+
       <ListItem>
         <Typography
-          level="title-lg"
-          fontFamily="monospace"
-          sx={{ opacity: '50%', marginBottom: '1em' }}
-        >
-      Your model contains the following {asset.length} assets:
+        level="title-lg"
+        fontFamily="monospace"
+        sx={{ opacity: '.6' }}>
+        Your model contains {asset.length} assets:
         </Typography>
       </ListItem>
+
+      <List
+        sx={{
+          width: '100%',
+          maxWidth: 360,
+          bgcolor: 'background.paper',
+          position: 'relative',
+          overflow: 'auto',
+          maxHeight: 300,
+          '& ul': { padding: 0 },
+        }}
+        subheader={<li />}>
           {assetList(asset)}
+    </List>
     </List>
   )
 }

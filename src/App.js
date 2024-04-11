@@ -136,7 +136,7 @@ function App() {
         Instructions
       </ListSubheader>
       <ListItem>
-        <Instructions stage={view}/>
+        <Instructions/>
       </ListItem>
     </List>
     <Stats diagram={diagram}/>
