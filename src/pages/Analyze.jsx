@@ -36,10 +36,9 @@ function Analyze() {
 
     // TODOD DELETE
     var potentialKeyAssets = assets.filter(a => a.assetCategory === selectedModelInfo.keyAsset)
-    var potentialKeyAssets = assets.filter(a => a.assetCategory === 'Data')
 
 
-    var nonCriticalAssets = assets.filter(a => a.assetCategory !== 'Data')
+    var nonCriticalAssets = assets.filter(a => a.assetCategory !== selectedModelInfo.keyAsset)
     //var notKeyAssetGroups = [...new Set(otherAssets.map(a => a.assetCategory))]
 
     function byCategory ({ assetCategory }) { return assetCategory }
