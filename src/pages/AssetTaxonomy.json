@@ -157,6 +157,12 @@
     },
     {
         "Category": "Actor",
+        "Asset": "developer",
+        "Definition": "Professionals that apply statistics, Machine Learning, and analytic approaches to analyze different datasets of different sizes and shapes and solve complex and critical problems. Skills in computer science fundamentals and programming, including experience with languages and database (big/small) technologies are essential.",
+        "AI Lifecycle Stage": "Business Goal Definition, Data Ingestion, Data Exploration, Data Pre-processing, Feature Selection, Model Selection / Building, Model Training, Model Tuning, Transfer Learning, Model Deployment, Model Maintenance"
+    },
+    {
+        "Category": "Actor",
         "Asset": "End Users",
         "Definition": "Those inside an organization that use and benefit from the results provided by the AI/ML system/service.",
         "AI Lifecycle Stage": "Business Goal Definition, Data Ingestion, Data Exploration, Model Maintenance, Business Understanding"
@@ -210,6 +216,12 @@
     },
     {
         "Category": "Processes",
+        "Asset": "Model Storage",
+        "Definition": "Models can be stored locally, in a distributed file system, in the cloud.",
+        "AI Lifecycle Stage": "Model Selection / Building, Model Training, Model Tuning, Transfer Learning, Model Deployment, Model Maintenance"
+    },
+    {
+        "Category": "Processes",
         "Asset": "Data understanding",
         "Definition": "Data understanding is the knowledge you have about data, data assets, the needs the data will satisfy, its content, and location.",
         "AI Lifecycle Stage": "Data Exploration"
@@ -222,7 +234,7 @@
     },
     {
         "Category": "Processes",
-        "Asset": "Model adaptation – transfer learning / Model deployment",
+        "Asset": "Model adaptation transfer learning / Model deployment",
         "Definition": "Transfer Learning is the ability to re-use previously learned knowledge to solve new problems faster. Deployment is the process of taking a pre-trained model and making it available to the users. Transfer learning emphasizes the transfer of knowledge across domains, tasks, and distributions that are similar but not the same.",
         "AI Lifecycle Stage": "Transfer Learning"
     },

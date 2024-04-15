@@ -256,6 +256,7 @@ function ThreatModels() {
                 </Typography>
               </Box>}
             </Paper>
+              {selectedModelInfo.assets &&
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1em' }}>
                 <Paper elevation={4} sx={{ p: '1em', display: 'flex', flexGrow: 1, alignItems: 'center', flexDirection: 'column' }}>
                   <Typography variant="h4" sx={{ flexGrow: 1, fontSize: '4rem' }}>{selectedModelInfo.assets.length}</Typography>
@@ -266,6 +267,7 @@ function ThreatModels() {
                   <Typography sx={{ opacity: '.6' }}>THREATS</Typography>
                 </Paper>
               </Box>
+              }
               <Paper elevation={4} sx={{ p: '1em' }}>
                 <BarChart
                   xAxis={[{ scaleType: 'band', barGapRatio: 0.1, data: [0, 62155, 124310, 186465, 248620, 310775, 372930, 435085, 497240, 559395, 621550, 683706, 745861, 808016, 870171, 932326, 994481, 1056636, 1118791, 1180946, 1243101, 1305256, 1367411, 1429566, 1491721, 1553876, 1616031, 1678186, 1740341, 1802496, 1864651, 1926807, 1988962, 2051117, 2113272, 2175427, 2237582, 2299737, 2361892, 2424047, 2486202, 2548357, 2610512, 2672667, 2734822, 2796977, 2859132, 2921287, 2983442, 3045597, 3107752] }]}

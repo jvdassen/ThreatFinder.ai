@@ -100,6 +100,7 @@ export default class DrawioStateController {
         ],
         ui: 'dark',
         defaultLibraries: 'ThreatFinderAI',
+        libraries: 'ThreatFinderAI',
         defaultCustomLibraries: ['ThreatFinderAI'],
         enabledLibraries: ['ThreatFinderAI'],
         libraries: [{

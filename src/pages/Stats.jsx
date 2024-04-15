@@ -43,33 +43,37 @@ function Stats({ diagram }) {
   }
 
   return (
-    <List>
-      <ListSubheader style={{lineHeight: '24px'}}>
-        Assets
-      </ListSubheader>
+    <>
+      {asset.length > 0 &&
+      <List>
+        <ListSubheader style={{lineHeight: '24px'}}>
+          Assets
+        </ListSubheader>
 
-      <ListItem>
-        <Typography
-        level="title-lg"
-        fontFamily="monospace"
-        sx={{ opacity: '.6' }}>
-        Your model contains {asset.length} assets:
-        </Typography>
-      </ListItem>
+        <ListItem>
+          <Typography
+          level="title-lg"
+          fontFamily="monospace"
+          sx={{ opacity: '.6' }}>
+          Your model contains {asset.length} assets:
+          </Typography>
+        </ListItem>
 
-      <List
-        sx={{
-          width: '100%',
-          maxWidth: 360,
-          bgcolor: 'background.paper',
-          position: 'relative',
-          overflow: 'auto',
-          maxHeight: 300,
-          '& ul': { padding: 0 },
-        }}
-        subheader={<li />}>
-          {assetList(asset)}
-    </List>
-    </List>
+        <List
+          sx={{
+            width: '100%',
+            maxWidth: 360,
+            bgcolor: 'background.paper',
+            position: 'relative',
+            overflow: 'auto',
+            maxHeight: 300,
+            '& ul': { padding: 0 },
+          }}
+          subheader={<li />}>
+            {assetList(asset)}
+        </List>
+      </List>
+      }
+    </>
   )
 }

@@ -1,12 +1,19 @@
-import { List, ListItem, ListItemText, ListSubheader, Typography } from '@mui/material'
+import Accordion from '@mui/material/Accordion'
+import AccordionSummary from '@mui/material/AccordionSummary'
+import AccordionDetails from '@mui/material/AccordionDetails'
+import Box from '@mui/material/Box'
+import Paper from '@mui/material/Paper'
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import { Typography } from '@mui/material'
 import { useState, useEffect } from 'react'
 import assetTaxonomy from './AssetTaxonomy.json'
+
 
 export default Analyze
 
 function Analyze() {
   const [selectedModel, selectModel] = useState(localStorage.getItem('selectedModel') || '')
-
   try {
     var loaded = JSON.parse(localStorage.getItem('storedModels')) || []
   } catch (e) {
@@ -17,35 +24,73 @@ function Analyze() {
   const [selectedModelInfo, selectModelInfo] = useState(storedModels.find(m => m.id === selectedModel))
 
   var diagram = selectedModelInfo.diagram
-  
-  var x = new DOMParser()
-  var d = x.parseFromString(diagram.xml, 'text/xml')
-  var a = [...d.querySelectorAll('[assetname]')]
-  var [assets, setAsset] = useState(a.map(e => e.getAttribute('assetname')))
+  var [detectedAssets, setAsset] = useModeledAssets(diagram, assetTaxonomy)
 
   console.log(assetTaxonomy)
-  function assetList (assets) {
-    var uniqueAssets = [...new Set(assets)]
-    uniqueAssets = uniqueAssets.map(function (e) {
-      return {
-        assetname: e,
-        taxonomyEntry: assetTaxonomy.find(e => e.Asset = e)
-      }
+ 
+
+  function assetList (assets, selectedModelInfo) {
+    assets.sort(function sortByStringAttribute(a, b) {
+      return a.assetDisplayname.localeCompare(b.assetDisplayname)
     })
 
-    return uniqueAssets.map(a => {
-      var mentioned = assets.filter(x => x === a).length
+    // TODOD DELETE
+    var potentialKeyAssets = assets.filter(a => a.assetCategory === selectedModelInfo.keyAsset)
+    var potentialKeyAssets = assets.filter(a => a.assetCategory === 'Data')
 
-      if (mentioned > 1) {
-        return <ListItem key={a} sx={{ pt: 0, pb: 0, pl: '1.5em', opacity: .6}}>
-           <ListItemText>‒ {mentioned}&times; {a}</ListItemText>
-        </ListItem>
-      }
-      return <ListItem key={a} sx={{ pt: 0, pb: 0, pl: '1.5em', opacity: .6}}>
-        <ListItemText>‒ {a}</ListItemText>
-      </ListItem>
 
-    })
+    var nonCriticalAssets = assets.filter(a => a.assetCategory !== 'Data')
+    //var notKeyAssetGroups = [...new Set(otherAssets.map(a => a.assetCategory))]
+
+    function byCategory ({ assetCategory }) { return assetCategory }
+    var nonCriticalAssetGroups = Object.values(Object.groupBy(nonCriticalAssets, byCategory))
+    console.log(nonCriticalAssetGroups)
+
+
+    function assetGroup (group, groupIsKey) {
+      // should all be the same, check the first
+      var category = group[0].assetCategory
+      return (
+        <>
+          <Paper sx={{ p: '1em' }} elevation={groupIsKey ? 0 : 0}>
+            <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row', mb: '1em' }}>
+              {groupIsKey && <ArrowRightAltIcon color="secondary" />}
+              <Typography variant="h5" sx={{ fontStyle: 'italic', textTransform: 'capitalize' }}>
+                {category.replace('/', ' & ')}
+              </Typography>
+            </Box>
+            { groupIsKey && 
+              <Typography >
+                  These threats may impact or relate to a key asset.
+              </Typography>
+            }
+            { group.map(asset => {
+             return (<Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1-content"
+                id="panel1-header"
+                sx={{ textTransform: 'capitalize' }}>
+                {asset.assetDisplayname}
+              </AccordionSummary>
+              <AccordionDetails>
+                {asset.assetDescription}
+              </AccordionDetails>
+            </Accordion>)
+            })}
+          </Paper>
+        </>
+      )
+    }
+
+    return (
+      <>
+      {assetGroup(potentialKeyAssets, true)}
+        {nonCriticalAssetGroups.map(group => {
+          return assetGroup(group, false)
+        })}
+      </>
+    )
   }
 
   return (
@@ -56,8 +101,44 @@ function Analyze() {
       <Typography variant="subtitle">
         Identify the Threats Surrouding Your Assets
       </Typography>
-      {assetList(assets)}
+      {assetList(detectedAssets, selectedModelInfo)}
     </>
   )
 }
 
+function useModeledAssets (diagram, taxonomy) {
+  var x = new DOMParser()
+  var d = x.parseFromString(diagram.xml, 'text/xml')
+  var a = [...d.querySelectorAll('[assetname]')]
+  var [detectedAssets, setAsset] = useState(a.map(function (e) {
+    var assetAttr = e.getAttribute('assetname')
+    var labelAttr = e.getAttribute('label')
+    var displayName = assetAttr
+
+    if (assetAttr !== labelAttr) {
+      displayName = `${assetAttr} (${labelAttr})`
+    }
+
+    var assetTaxonomyEntry = taxonomy.find(t => t.Asset === assetAttr)
+    if(!assetTaxonomyEntry) {
+      console.warn(`${assetAttr} not in asset taxonomy`)
+      return {
+        assetname: e.getAttribute('assetname'),
+        assetDisplayname: displayName,
+        assetDescription: 'N/A',
+        assetLifeCycleStage: 'N/A',
+        assetCategory: 'N/A'
+      }
+    }
+
+    return {
+      assetname: e.getAttribute('assetname'),
+      assetDisplayname: displayName,
+      assetDescription: assetTaxonomyEntry.Definition,
+      assetLifeCycleStage: assetTaxonomyEntry['AI Lifecycle Stage'],
+      assetCategory: assetTaxonomyEntry.Category
+    }
+  }))
+
+  return [detectedAssets, setAsset]
+}
