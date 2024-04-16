@@ -52,14 +52,12 @@ function ThreatModels() {
   const [selectedModelInfo, selectModelInfo] = useState(storedModels.find(m => m.id === selectedModel))
 
   useEffect(function handleModelSelection() {
-    console.log('store selected model', selectedModel)
+    //console.g('store selected model', selectedModel)
     localStorage.setItem('selectedModel', selectedModel)
     selectModelInfo(models.find(m => m.id === selectedModel))
   }, [models, selectedModel])
 
   function createModel() {
-    console.log(newName)
-    console.log(newDesc)
     var storedModels = JSON.parse(localStorage.getItem('storedModels')) || []
     storedModels.push({
       id: '' + Math.random() * 1e17,

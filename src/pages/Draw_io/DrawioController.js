@@ -40,17 +40,13 @@ export default class DrawioStateController {
     var { event } = msg
 
     if (event === 'configure') {
-      console.log('configure')
       this.configureDrawio()
     } else if (event === 'init') {
-      console.log('init')
       this.loadDrawio()
     } else if (event === 'export') {
-      console.log('export')
       this.storeDiagram(msg)
       this.close()
     } else if (event === 'autosave') {
-      console.log('Autosave')
       this.autoSaveDiagram(msg)
     }
   }

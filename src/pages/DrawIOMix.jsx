@@ -15,7 +15,6 @@ function DrawIO({ sendDiagram }) {
 
 
   const initialized = useRef(false);
-  console.log('useEFF')
   useEffect(() => {
     if (!initialized.current) {
       var localStorageModel = new LocalStorageModel()
@@ -35,15 +34,12 @@ function DrawIO({ sendDiagram }) {
       initialized.current = true
       var drawioView = new CORSCommunicator(iframeRef.current)
       var stateController = new DrawioStateController(drawioView, localStorageModel)
-      console.log('START OBSERVING')
       localStorageModel.observe(function(diagram) {
         sendDiagram(diagram)
-        console.log('localstorage.observe')
         selectedStoreModel.diagram = diagram
         localStorage.setItem('storedModels', JSON.stringify(loaded))
       })
       sendDiagram(localStorageModel.read())
-      console.info(`stateController initialized`, stateController)
     }
   }, [sendDiagram]);
 

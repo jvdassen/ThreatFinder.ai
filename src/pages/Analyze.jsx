@@ -26,7 +26,6 @@ function Analyze() {
   var diagram = selectedModelInfo.diagram
   var [detectedAssets, setAsset] = useModeledAssets(diagram, assetTaxonomy)
 
-  console.log(assetTaxonomy)
  
 
   function assetList (assets, selectedModelInfo) {
@@ -43,7 +42,6 @@ function Analyze() {
 
     function byCategory ({ assetCategory }) { return assetCategory }
     var nonCriticalAssetGroups = Object.values(Object.groupBy(nonCriticalAssets, byCategory))
-    console.log(nonCriticalAssetGroups)
 
 
     function assetGroup (group, groupIsKey) {

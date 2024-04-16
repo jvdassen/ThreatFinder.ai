@@ -9,8 +9,8 @@ function Stats({ diagram }) {
   var [asset, setAsset] = useState([])
 
   useEffect(() => {
-    console.log('useeffect', diagram)
-    console.log('handleStorageChange')
+    //console.log('useeffect', diagram)
+    //console.log('handleStorageChange')
     if(diagram && Object.hasOwn(diagram, 'xml')) {
       try {
       var x = new DOMParser()
