@@ -3,11 +3,16 @@ import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
+import { ListItem, ListItemText, Switch } from '@mui/material'
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { Typography } from '@mui/material'
+import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
 import { useState, useEffect } from 'react'
+
+import { FormControl, FormLabel, FormGroup, FormControlLabel, FormHelperText } from '@mui/material'
 import assetTaxonomy from './AssetTaxonomy.json'
+import threatTaxonomy from './ThreatTaxonomy.json'
 
 
 export default Analyze
@@ -26,7 +31,34 @@ function Analyze() {
   var diagram = selectedModelInfo.diagram
   var [detectedAssets, setAsset] = useModeledAssets(diagram, assetTaxonomy)
 
- 
+  selectedModelInfo.assets = detectedAssets
+  localStorage.setItem('storedModels', JSON.stringify(storedModels))
+
+  var keyProp = selectedModelInfo.keyProp
+  const [propFilter, setPropFilter] = useState(
+    {
+      Confidentiality: keyProp === 'Confidentiality',
+      Integrity: keyProp === 'Integrity',
+      Availability: keyProp === 'Availability',
+      Accountability: keyProp === 'Accountability'
+    }
+  )
+
+  function updatePropFilter(newState) { setPropFilter({ ... newState }) }
+
+  window.propFilter = propFilter
+  window.setPropFilter = setPropFilter
+
+  //console.log(propFilter)
+
+  function getThreatsforCategory (category) {
+    var threats = threatTaxonomy.filter(t => t['Affected assets'].includes(category))
+    threats.map(t => {
+      return t.potentialKeyThreat = t['Potential Impact'].includes(selectedModelInfo.keyProp)
+    })
+    return threats
+  }
+
 
   function assetList (assets, selectedModelInfo) {
     assets.sort(function sortByStringAttribute(a, b) {
@@ -43,6 +75,38 @@ function Analyze() {
     function byCategory ({ assetCategory }) { return assetCategory }
     var nonCriticalAssetGroups = Object.values(Object.groupBy(nonCriticalAssets, byCategory))
 
+    function ThreatList (asset, category) {
+      var threats = getThreatsforCategory(category)
+      //console.log(`${asset.assetDisplayname} has ${threats.length} threats`, threats)
+      return (
+        <>
+          {
+            threats.map(k => {
+              var impacts = k['Potential Impact'].split(', ').some(i => {
+                return propFilter[i]
+              })
+              if(impacts) {
+                return (
+                  <Accordion>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel1-content"
+                      id="panel1-header"
+                      sx={{ textTransform: 'capitalize' }}>
+                      {k.Threat} - ({k['Potential Impact']})
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      {k.Description}
+                    </AccordionDetails>
+                  </Accordion>
+                )
+              }
+            })
+          }
+        </>
+
+      )
+    }
 
     function assetGroup (group, groupIsKey) {
       // should all be the same, check the first
@@ -62,6 +126,7 @@ function Analyze() {
               </Typography>
             }
             { group.map(asset => {
+              console.log(asset.assetCategory)
              return (<Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
@@ -72,6 +137,7 @@ function Analyze() {
               </AccordionSummary>
               <AccordionDetails>
                 {asset.assetDescription}
+                {ThreatList(asset, category)}
               </AccordionDetails>
             </Accordion>)
             })}
@@ -90,6 +156,13 @@ function Analyze() {
     )
   }
 
+  function handlePropChange (event) {
+    var propChanged = event.target.name
+    propFilter[propChanged] = !propFilter[propChanged]
+    updatePropFilter(propFilter)
+    console.log(propFilter)
+  }
+
   return (
     <>
       <Typography level="title-lg" variant='h4'>
@@ -98,6 +171,54 @@ function Analyze() {
       <Typography variant="subtitle">
         Identify the Threats Surrouding Your Assets
       </Typography>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<TuneRoundedIcon />}
+          aria-controls="panel1-content"
+          id="panel1-header"
+          sx={{ textTransform: 'capitalize' }}>
+          Filters
+        </AccordionSummary>
+        <AccordionDetails>
+          Automated threat identification easily produces false positives (<i>i.e.,</i> irrelevant threats).<br/> Apply filters to investigate threats from different angles — the initial selection reflects the previously defined key asset and security property.
+          {propFilter.Confidentiality}
+          <Box>
+            <FormControl component="fieldset" variant="standard">
+              <FormLabel component="legend">Security Properties</FormLabel>
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <Switch checked={propFilter.Confidentiality} onChange={handlePropChange}  name="Confidentiality" color="secondary"/>
+                  }
+                  label="Confidentiality"
+                />
+                <FormControlLabel
+                  control={
+                    <Switch checked={propFilter.Integrity} onChange={handlePropChange} name="Integrity" color="secondary"/>
+                  }
+                  label="Integrity"
+                />
+                <FormControlLabel
+                  control={
+                    <Switch checked={propFilter.Availability} onChange={handlePropChange} name="Availability" color="secondary"/>
+                  }
+                  label="Availability"
+                />
+                <FormControlLabel
+                  control={
+                    <Switch checked={propFilter.Accountability} onChange={handlePropChange} name="Accountability" color="secondary"/>
+                  }
+                  label="Accountability"
+                />
+              </FormGroup>
+              <FormHelperText><span style={{ textTransform: 'capitalize' }}>                {selectedModelInfo.keyProp} is your key property</span>
+
+              </FormHelperText>
+            </FormControl>
+          </Box>
+
+        </AccordionDetails>
+      </Accordion>
       {assetList(detectedAssets, selectedModelInfo)}
     </>
   )

@@ -187,10 +187,10 @@ function ThreatModels() {
                     value={newKeyProp}
                     onChange={(e) => { setNewKeyProp(e.target.value) }}
                     label="Key Security Property">
-                    <MenuItem value={'confidentiality'}>Confidentiality</MenuItem>
-                    <MenuItem value={'integrity'}>Integrity</MenuItem>
-                    <MenuItem value={'availability'}>Availability</MenuItem>
-                    <MenuItem value={'accountability'}>Accountability</MenuItem>
+                    <MenuItem value={'Confidentiality'}>Confidentiality</MenuItem>
+                    <MenuItem value={'Integrity'}>Integrity</MenuItem>
+                    <MenuItem value={'Availability'}>Availability</MenuItem>
+                    <MenuItem value={'Accountability'}>Accountability</MenuItem>
                   </Select>
                   <FormHelperText>Define the most critical security property</FormHelperText>
                 </FormControl>
