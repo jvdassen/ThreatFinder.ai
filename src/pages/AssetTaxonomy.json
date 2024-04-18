@@ -51,7 +51,7 @@
         "Category": "Data",
         "Asset": "Training Data",
         "Definition": "Training data refers to the initial data that is used to develop a ML model, from which the model adapts its internal parameters to refine its rules.",
-        "AI Lifecycle Stage": "Model Selection / Building, Model Training, Transfer Learning"
+        "AI Lifecycle Stage": "Model Selection, Model Building, Model Training, Transfer Learning"
     },
   {
         "Category": "Data",
@@ -81,13 +81,13 @@
         "Category": "Model",
         "Asset": "Training Algorithms",
         "Definition": "Training algorithms are procedures for adjusting the parameters of ML models. In supervised training, the correct output for each input vector of a training set is presented to the model, and multiple iterations through the training data may be required to adjust the parameters. In unsupervised training, the model parameters are adjusted without specifying the correct output for any of the input vectors.",
-        "AI Lifecycle Stage": "Model Selection / Building"
+        "AI Lifecycle Stage": "Model Selection, Model Building"
     },
     {
         "Category": "Model",
         "Asset": "Model",
         "Definition": "The term ML model designates computer algorithms implementing parametric mathematical models that improve through experience.",
-        "AI Lifecycle Stage": "Model Training, Model Tuning, Model Selection / Building, Model Deployment, Model Maintenance"
+        "AI Lifecycle Stage": "Model Training, Model Tuning, Model Selection, Model Building, Model Deployment, Model Maintenance"
     },
     {
         "Category": "Model",
@@ -117,7 +117,7 @@
         "Category": "Model",
         "Asset": "Training parameters",
         "Definition": "ML model training parameters are quantities adjusted by the learning process by applying training algorithms based on training data. Training parameters values determine the actual classification, prediction, or detection function computed by the ML model.",
-        "AI Lifecycle Stage": "Model Selection / Building, Model Training"
+        "AI Lifecycle Stage": "Model Selection, Model Building, Model Training"
     },
     {
         "Category": "Model",
@@ -135,7 +135,7 @@
         "Category": "Actor",
         "Asset": "Data Engineers",
         "Definition": "Data Engineers are professionals that prepare the computational infrastructure and mainly focus on the design, management, and optimization of the flow of data. They’re usually more intervenient in the first stages of AI Lifecycle: extraction and assembling of data from different sources, transformation, cleaning, and loading it in a standardized format and in an adequate repository. Data Engineers must have specialized skills in creating software solutions around data: software engineering, distributed systems, open frameworks, SQL, Cloud platforms, data modeling.",
-        "AI Lifecycle Stage": "Data Ingestion, Data Exploration, Data Pre-processing, Feature Selection, Model Selection / Building, Model Training, Model Tuning, Model Deployment, Model Maintenance"
+        "AI Lifecycle Stage": "Data Ingestion, Data Exploration, Data Pre-processing, Feature Selection, Model Selection, Model Building, Model Training, Model Tuning, Model Deployment, Model Maintenance"
     },
     {
         "Category": "Actor",
@@ -153,13 +153,13 @@
         "Category": "Actor",
         "Asset": "Data Scientists / AI designer / AI developer",
         "Definition": "Professionals that apply statistics, Machine Learning, and analytic approaches to analyze different datasets of different sizes and shapes and solve complex and critical problems. Skills in computer science fundamentals and programming, including experience with languages and database (big/small) technologies are essential.",
-        "AI Lifecycle Stage": "Business Goal Definition, Data Ingestion, Data Exploration, Data Pre-processing, Feature Selection, Model Selection / Building, Model Training, Model Tuning, Transfer Learning, Model Deployment, Model Maintenance"
+        "AI Lifecycle Stage": "Business Goal Definition, Data Ingestion, Data Exploration, Data Pre-processing, Feature Selection, Model Selection, Model Building, Model Training, Model Tuning, Transfer Learning, Model Deployment, Model Maintenance"
     },
     {
         "Category": "Actor",
         "Asset": "developer",
         "Definition": "Professionals that apply statistics, Machine Learning, and analytic approaches to analyze different datasets of different sizes and shapes and solve complex and critical problems. Skills in computer science fundamentals and programming, including experience with languages and database (big/small) technologies are essential.",
-        "AI Lifecycle Stage": "Business Goal Definition, Data Ingestion, Data Exploration, Data Pre-processing, Feature Selection, Model Selection / Building, Model Training, Model Tuning, Transfer Learning, Model Deployment, Model Maintenance"
+        "AI Lifecycle Stage": "Business Goal Definition, Data Ingestion, Data Exploration, Data Pre-processing, Feature Selection, Model Selection, Model Building, Model Training, Model Tuning, Transfer Learning, Model Deployment, Model Maintenance"
     },
     {
         "Category": "Actor",
@@ -218,7 +218,7 @@
         "Category": "Processes",
         "Asset": "Model Storage",
         "Definition": "Models can be stored locally, in a distributed file system, in the cloud.",
-        "AI Lifecycle Stage": "Model Selection / Building, Model Training, Model Tuning, Transfer Learning, Model Deployment, Model Maintenance"
+        "AI Lifecycle Stage": "Model Selection, Model Building, Model Training, Model Tuning, Transfer Learning, Model Deployment, Model Maintenance"
     },
     {
         "Category": "Processes",
@@ -248,7 +248,7 @@
         "Category": "Processes",
         "Asset": "Model selection/building, training, and testing",
         "Definition": "During the training process, the selected, or developed, algorithm is trained with input data, this means algorithm parameters, like weights and bias, will be learned from the data. During this stage, the resulting prediction is compared with the actual value for each data instance, the accuracy is evaluated, and model parameters adjusted until the best values are found.",
-        "AI Lifecycle Stage": "Model Selection / Building"
+        "AI Lifecycle Stage": "Model Selection, Model Building"
     },
       {
         "Category": "Processes",
@@ -284,7 +284,7 @@
         "Category": "Environment/tools",
         "Asset": "Computational platforms",
         "Definition": "It is the environment in which a piece of software is executed. It may be the hardware or the operating system (OS), even a web browser and associated application programming interfaces, or other underlying software, as long as the program code is executed with it.",
-        "AI Lifecycle Stage": "Data Pre-processing, Feature Selection, Model Selection / Building, Model Training, Model Tuning, Transfer Learning, Model Deployment, Model Maintenance"
+        "AI Lifecycle Stage": "Data Pre-processing, Feature Selection, Model Selection, Model Building, Model Training, Model Tuning, Transfer Learning, Model Deployment, Model Maintenance"
     },
     {
         "Category": "Environment/tools",
@@ -314,25 +314,25 @@
         "Category": "Environment/tools",
         "Asset": "Integrated Development Environment",
         "Definition": "It is a software application that provides comprehensive facilities to computer programmers for software development. An IDE normally consists of at least a source code editor, build automation tools, and a debugger.",
-        "AI Lifecycle Stage": "Data Pre-processing, Feature Selection, Model Selection / Building, Model Training, Model Tuning"
+        "AI Lifecycle Stage": "Data Pre-processing, Feature Selection, Model Selection, Model Building, Model Training, Model Tuning"
     },
     {
         "Category": "Environment/tools",
         "Asset": "Libraries (with algorithms for transformation, labeling, etc)",
         "Definition": "Pre-written programs implementing algorithms ready to be used, for scientific computation, tabular data, Time-Series Analysis, Data Modeling and Preprocessing, deep learning, among others. Their usage saves time and facilitates the development of high-level analytical functions, even for less trained ML developers. Some examples are Apache Spark MLlib, Scikit-learn Python, Keras Python, etc.",
-        "AI Lifecycle Stage": "Data Exploration, Data Pre-processing, Feature Selection, Model Selection / Building, Model Training, Model Tuning"
+        "AI Lifecycle Stage": "Data Exploration, Data Pre-processing, Feature Selection, Model Selection, Model Building, Model Training, Model Tuning"
     },
     {
         "Category": "Environment/tools",
         "Asset": "Machine Learning Platforms",
         "Definition": "Provide an ecosystem of tools, libraries, and resources that support the development of machine learning applications.",
-        "AI Lifecycle Stage": "Data Exploration, Data Pre-processing, Feature Selection, Model Selection / Building, Model Training, Model Tuning, Model Deployment, Model Maintenance"
+        "AI Lifecycle Stage": "Data Exploration, Data Pre-processing, Feature Selection, Model Selection, Model Building, Model Training, Model Tuning, Model Deployment, Model Maintenance"
     },
   {
         "Category": "Environment/tools",
         "Asset": "Monitoring Tools",
         "Definition": "Tools that are used to continuously keep track of the status of the system in use, in order to have the earliest warning of failures, defects, or problems and to improve them.",
-        "AI Lifecycle Stage": "Data Pre-processing, Feature Selection, Model Selection / Building, Model Training, Model Tuning, Transfer Learning, Model Deployment, Model Maintenance"
+        "AI Lifecycle Stage": "Data Pre-processing, Feature Selection, Model Selection, Model Building, Model Training, Model Tuning, Transfer Learning, Model Deployment, Model Maintenance"
     },
     {
         "Category": "Environment/tools",
@@ -350,7 +350,7 @@
         "Category": "Environment/tools",
         "Asset": "Processors",
         "Definition": "A processor is the part of a computer that interprets commands and performs the processes the user has requested.",
-        "AI Lifecycle Stage": "All Stages"
+        "AI Lifecycle Stage": "Data Pre-processing, Model Tuning, Feature Selection, Data Exploration, Data Ingestion, Model Training, Model Selection, Model Building, Transfer Learning, Model Deployment, Model Maintenance, Business Goal Definition, Business Understanding"
     },
     {
         "Category": "Environment/tools",
@@ -368,7 +368,7 @@
         "Category": "Artefacts",
         "Asset": "Composition artefacts: AI models compositions",
         "Definition": "Compositions of AI models (also called ensemble systems) put together multiple AI models, typically via majority voting, in order to reduce the outputs’ variance and improve the accuracy of the overall composition with respect to the ones of individual components. Ensemble systems have been successfully used to address a variety of problems, such as feature selection, confidence estimation, missing data and concept drift from non-stationary distributions, among others.",
-        "AI Lifecycle Stage": "Data Pre-processing, Feature Selection, Model Selection / Building, Model Training, Model Tuning, Model Deployment, Model Maintenance"
+        "AI Lifecycle Stage": "Data Pre-processing, Feature Selection, Model Selection, Model Building, Model Training, Model Tuning, Model Deployment, Model Maintenance"
     },
     {
         "Category": "Artefacts",
@@ -416,13 +416,13 @@
         "Category": "Artefacts",
         "Asset": "Model Architecture",
         "Definition": "Model Architecture defines the various layers involved in the AI/ML lifecycle and involves the major steps being carried out in the transformation of raw data into training data sets capable of enabling the decision-making of a system.",
-        "AI Lifecycle Stage": "Model Selection / Building, Model Deployment"
+        "AI Lifecycle Stage": "Model Selection, Model Building, Model Deployment"
     },
     {
         "Category": "Artefacts",
         "Asset": "Model Hardware Design",
         "Definition": "Model Hardware Design may be viewed as a 'partitioning scheme,' or algorithm, which considers all of the system's present and foreseeable requirements and arranges the necessary hardware components into a workable set of cleanly bounded subsystems with no more parts than are required.",
-        "AI Lifecycle Stage": "Model Selection / Building, Model Deployment"
+        "AI Lifecycle Stage": "Model Selection, Model Building, Model Deployment"
     },
     {
         "Category": "Artefacts",

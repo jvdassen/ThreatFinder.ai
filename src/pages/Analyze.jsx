@@ -40,16 +40,14 @@ function Analyze() {
       Confidentiality: keyProp === 'Confidentiality',
       Integrity: keyProp === 'Integrity',
       Availability: keyProp === 'Availability',
-      Accountability: keyProp === 'Accountability'
+      Accountability: keyProp === 'Accountability',
+      'Model Selection': true
     }
   )
 
   function updatePropFilter(newState) { setPropFilter({ ... newState }) }
 
-  window.propFilter = propFilter
-  window.setPropFilter = setPropFilter
-
-  //console.log(propFilter)
+  window.assetTaxonomy = assetTaxonomy
 
   function getThreatsforCategory (category) {
     var threats = threatTaxonomy.filter(t => t['Affected assets'].includes(category))
@@ -93,7 +91,10 @@ function Analyze() {
                       aria-controls="panel1-content"
                       id="panel1-header"
                       sx={{ textTransform: 'capitalize' }}>
-                      {k.Threat} - ({k['Potential Impact']})
+                      <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'space-between'}}>
+                        <span>{k.Threat}</span>
+                        <span>({k['Potential Impact'].split(', ').map(i => i.split('')[0])})</span>
+                      </Box>
                     </AccordionSummary>
                     <AccordionDetails>
                       {k.Description}
@@ -182,39 +183,77 @@ function Analyze() {
         <AccordionDetails>
           Automated threat identification easily produces false positives (<i>i.e.,</i> irrelevant threats).<br/> Apply filters to investigate threats from different angles — the initial selection reflects the previously defined key asset and security property.
           {propFilter.Confidentiality}
-          <Box>
-            <FormControl component="fieldset" variant="standard">
-              <FormLabel component="legend">Security Properties</FormLabel>
-              <FormGroup>
-                <FormControlLabel
-                  control={
-                    <Switch checked={propFilter.Confidentiality} onChange={handlePropChange}  name="Confidentiality" color="secondary"/>
-                  }
-                  label="Confidentiality"
-                />
-                <FormControlLabel
-                  control={
-                    <Switch checked={propFilter.Integrity} onChange={handlePropChange} name="Integrity" color="secondary"/>
-                  }
-                  label="Integrity"
-                />
-                <FormControlLabel
-                  control={
-                    <Switch checked={propFilter.Availability} onChange={handlePropChange} name="Availability" color="secondary"/>
-                  }
-                  label="Availability"
-                />
-                <FormControlLabel
-                  control={
-                    <Switch checked={propFilter.Accountability} onChange={handlePropChange} name="Accountability" color="secondary"/>
-                  }
-                  label="Accountability"
-                />
-              </FormGroup>
-              <FormHelperText><span style={{ textTransform: 'capitalize' }}>                {selectedModelInfo.keyProp} is your key property</span>
-
-              </FormHelperText>
-            </FormControl>
+          <Box sx={{display: 'flex'}}>
+            <Box sx={{ maxHeight: '13em', p: '1em'}}>
+              <FormControl component="fieldset">
+                <FormLabel component="legend" color="secondary">Security Properties</FormLabel>
+                <FormGroup>
+                  <FormControlLabel
+                    control={<Switch checked={propFilter.Confidentiality} onChange={handlePropChange}  name="Confidentiality" color="secondary"/>}
+                    label="Confidentiality"/>
+                  <FormControlLabel
+                    control={<Switch checked={propFilter.Integrity} onChange={handlePropChange} name="Integrity" color="secondary"/>}
+                    label="Integrity"/>
+                  <FormControlLabel
+                    control={<Switch checked={propFilter.Availability} onChange={handlePropChange} name="Availability" color="secondary"/>}
+                    label="Availability"/>
+                  <FormControlLabel
+                    control={<Switch checked={propFilter.Accountability} onChange={handlePropChange} name="Accountability" color="secondary"/>}
+                    label="Accountability"/>
+                </FormGroup>
+                <FormHelperText>
+                  <span style={{ textTransform: 'capitalize' }}>{selectedModelInfo.keyProp} is your key property</span>
+                </FormHelperText>
+              </FormControl>
+            </Box>
+            <Box sx={{ maxHeight: '12em', p: '1em', overflow: 'scroll'}}>
+              <FormControl component="fieldset">
+                <FormLabel component="legend" color="secondary">Design Stage</FormLabel>
+                <FormGroup>
+                  <FormControlLabel
+                    control={<Switch checked={propFilter['Business Understanding']} onChange={handlePropChange}  name="Business Understanding" color="secondary"/>}
+                    label="Business Understanding"/>
+                  <FormControlLabel
+                    control={<Switch checked={propFilter['Business Goal Definition']} onChange={handlePropChange}  name="Business Goal Definition" color="secondary"/>}
+                    label="Business Goal Definition"/>
+                  <FormControlLabel
+                    control={<Switch checked={propFilter['Data Pre-processing']} onChange={handlePropChange}  name="Data Pre-processing" color="secondary"/>}
+                    label="Data Pre-processing"/>
+                  <FormControlLabel
+                    control={<Switch checked={propFilter['Model Tuning']} onChange={handlePropChange}  name="Model Tuning" color="secondary"/>}
+                    label="Model Tuning"/>
+                  <FormControlLabel
+                    control={<Switch checked={propFilter['Feature Selection']} onChange={handlePropChange}  name="Feature Selection" color="secondary"/>}
+                    label="Feature Selection"/>
+                  <FormControlLabel
+                    control={<Switch checked={propFilter['Data Exploration']} onChange={handlePropChange}  name="Data Exploration" color="secondary"/>}
+                    label="Data Exploration"/>
+                  <FormControlLabel
+                    control={<Switch checked={propFilter['Data Ingestion']} onChange={handlePropChange}  name="Data Ingestion" color="secondary"/>}
+                    label="Data Ingestion"/>
+                  <FormControlLabel
+                    control={<Switch checked={propFilter['Model Training']} onChange={handlePropChange}  name="Model Training" color="secondary"/>}
+                    label="Model Training"/>
+                  <FormControlLabel
+                    control={<Switch checked={propFilter['Model Selection']} onChange={handlePropChange}  name="Model Selection" color="secondary"/>}
+                    label="Model Selection"/>
+                  <FormControlLabel
+                    control={<Switch checked={propFilter['Model Building']} onChange={handlePropChange}  name="Model Building" color="secondary"/>}
+                    label="Model Building"/>
+                  <FormControlLabel
+                    control={<Switch checked={propFilter['Model Deployment']} onChange={handlePropChange}  name="Model Deployment" color="secondary"/>}
+                    label="Model Deployment"/>
+                  <FormControlLabel
+                    control={<Switch checked={propFilter['Model Maintenance']} onChange={handlePropChange}  name="Model Maintenance" color="secondary"/>}
+                    label="Model Maintenance"/>
+                  <FormControlLabel
+                    control={<Switch checked={propFilter['Transfer Learning']} onChange={handlePropChange}  name="Transfer Learning" color="secondary"/>}
+                    label="Transfer Learning"/>
+                </FormGroup>
+                <FormHelperText>
+                </FormHelperText>
+              </FormControl>
+            </Box>
           </Box>
 
         </AccordionDetails>
