@@ -3,12 +3,12 @@ import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
-import { ListItem, ListItemText, Switch } from '@mui/material'
+import { Switch } from '@mui/material'
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { Typography } from '@mui/material'
 import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 import { FormControl, FormLabel, FormGroup, FormControlLabel, FormHelperText } from '@mui/material'
 import assetTaxonomy from './AssetTaxonomy.json'
@@ -41,15 +41,33 @@ function Analyze() {
       Integrity: keyProp === 'Integrity',
       Availability: keyProp === 'Availability',
       Accountability: keyProp === 'Accountability',
-      'Model Selection': true
+      'Business Understanding': true,
+      'Business Goal Definition': true,
+      'Data Pre-processing': true,
+      'Model Tuning': true,
+      'Feature Selection': true,
+      'Data Exploration': true,
+      'Data Ingestion': true,
+      'Model Training': true,
+      'Model Selection': true,
+      'Model Building': true,
+      'Model Deployment': true,
+      'Model Maintenance': true,
+      'Transfer Learning': true,
+      'Actor': true,
+      'Data': true,
+      'Model': true,
+      'Artefacts': true,
+      'Processes': true,
+      'Environment/tools': true,
     }
   )
 
-  function updatePropFilter(newState) { setPropFilter({ ... newState }) }
+  function updatePropFilter(newState) { setPropFilter({ ...newState }) }
 
   window.assetTaxonomy = assetTaxonomy
 
-  function getThreatsforCategory (category) {
+  function getThreatsforCategory(category) {
     var threats = threatTaxonomy.filter(t => t['Affected assets'].includes(category))
     threats.map(t => {
       return t.potentialKeyThreat = t['Potential Impact'].includes(selectedModelInfo.keyProp)
@@ -58,7 +76,7 @@ function Analyze() {
   }
 
 
-  function assetList (assets, selectedModelInfo) {
+  function assetList(assets, selectedModelInfo) {
     assets.sort(function sortByStringAttribute(a, b) {
       return a.assetDisplayname.localeCompare(b.assetDisplayname)
     })
@@ -70,10 +88,10 @@ function Analyze() {
     var nonCriticalAssets = assets.filter(a => a.assetCategory !== selectedModelInfo.keyAsset)
     //var notKeyAssetGroups = [...new Set(otherAssets.map(a => a.assetCategory))]
 
-    function byCategory ({ assetCategory }) { return assetCategory }
+    function byCategory({ assetCategory }) { return assetCategory }
     var nonCriticalAssetGroups = Object.values(Object.groupBy(nonCriticalAssets, byCategory))
 
-    function ThreatList (asset, category) {
+    function ThreatList(asset, category) {
       var threats = getThreatsforCategory(category)
       //console.log(`${asset.assetDisplayname} has ${threats.length} threats`, threats)
       return (
@@ -83,7 +101,7 @@ function Analyze() {
               var impacts = k['Potential Impact'].split(', ').some(i => {
                 return propFilter[i]
               })
-              if(impacts) {
+              if (impacts) {
                 return (
                   <Accordion>
                     <AccordionSummary
@@ -91,7 +109,7 @@ function Analyze() {
                       aria-controls="panel1-content"
                       id="panel1-header"
                       sx={{ textTransform: 'capitalize' }}>
-                      <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'space-between'}}>
+                      <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
                         <span>{k.Threat}</span>
                         <span>({k['Potential Impact'].split(', ').map(i => i.split('')[0])})</span>
                       </Box>
@@ -109,47 +127,62 @@ function Analyze() {
       )
     }
 
-    function assetGroup (group, groupIsKey) {
+    function assetGroup(group, groupIsKey) {
       // should all be the same, check the first
       var category = group[0].assetCategory
-      return (
-        <>
-          <Paper sx={{ p: '1em' }} elevation={groupIsKey ? 0 : 0}>
-            <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row', mb: '1em' }}>
-              {groupIsKey && <ArrowRightAltIcon color="secondary" />}
-              <Typography variant="h5" sx={{ fontStyle: 'italic', textTransform: 'capitalize' }}>
-                {category.replace('/', ' & ')}
-              </Typography>
-            </Box>
-            { groupIsKey && 
-              <Typography >
+      console.log(category)
+      if (propFilter[category]) {
+        return (
+          <>
+            <Paper sx={{ p: '1em' }} elevation={groupIsKey ? 0 : 0}>
+              <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row', mb: '1em' }}>
+                {groupIsKey && <ArrowRightAltIcon color="secondary" />}
+                <Typography variant="h5" sx={{ fontStyle: 'italic', textTransform: 'capitalize' }}>
+                  {category.replace('/', ' & ')}
+                </Typography>
+              </Box>
+              {groupIsKey &&
+                <Typography >
                   These threats may impact or relate to a key asset.
-              </Typography>
-            }
-            { group.map(asset => {
-              console.log(asset.assetCategory)
-             return (<Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1-content"
-                id="panel1-header"
-                sx={{ textTransform: 'capitalize' }}>
-                {asset.assetDisplayname}
-              </AccordionSummary>
-              <AccordionDetails>
-                {asset.assetDescription}
-                {ThreatList(asset, category)}
-              </AccordionDetails>
-            </Accordion>)
-            })}
-          </Paper>
-        </>
-      )
+                </Typography>
+              }
+              {group.map(asset => {
+                if (asset.assetLifeCycleStage.split(',').some(lfc => propFilter[lfc])) {
+                  console.log(asset, 'should be displayed', asset.assetLifeCycleStage)
+
+                  return (<Accordion>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel1-content"
+                      id="panel1-header"
+                      sx={{ textTransform: 'capitalize' }}>
+                      {asset.assetDisplayname}
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <Box sx={{ display: 'flex' }}>
+                        <Box sx={{ minWidth: '35ch', maxWidth: '35ch' }}>
+                          <Typography sx={{ opacity: '.6', mb: '1em' }}>{asset.assetLifeCycleStage.split(', ').join('—')}</Typography>
+                          <Typography sx={{ fontStyle: 'italic', mb: '1em' }}>"{asset.assetDescription}"</Typography>
+                        </Box>
+
+                        <Box sx={{ flexGrow: 1 }}>
+                          {ThreatList(asset, category)}
+                        </Box>
+                      </Box>
+
+                    </AccordionDetails>
+                  </Accordion>)
+                }
+              })}
+            </Paper>
+          </>
+        )
+      }
     }
 
     return (
       <>
-      {assetGroup(potentialKeyAssets, true)}
+        {assetGroup(potentialKeyAssets, true)}
         {nonCriticalAssetGroups.map(group => {
           return assetGroup(group, false)
         })}
@@ -157,11 +190,15 @@ function Analyze() {
     )
   }
 
-  function handlePropChange (event) {
+  function handlePropChange(event) {
     var propChanged = event.target.name
     propFilter[propChanged] = !propFilter[propChanged]
     updatePropFilter(propFilter)
-    console.log(propFilter)
+  }
+  function handleAssetChange(event) {
+    var propChanged = event.target.name
+    propFilter[propChanged] = !propFilter[propChanged]
+    updatePropFilter(propFilter)
   }
 
   return (
@@ -181,74 +218,101 @@ function Analyze() {
           Filters
         </AccordionSummary>
         <AccordionDetails>
-          Automated threat identification easily produces false positives (<i>i.e.,</i> irrelevant threats).<br/> Apply filters to investigate threats from different angles — the initial selection reflects the previously defined key asset and security property.
+          Automated threat identification easily produces false positives (<i>i.e.,</i> irrelevant threats).<br /> Apply filters to investigate threats from different angles — the initial selection reflects the previously defined key asset and security property.
           {propFilter.Confidentiality}
-          <Box sx={{display: 'flex'}}>
-            <Box sx={{ maxHeight: '13em', p: '1em'}}>
+          <Box sx={{ display: 'flex' }}>
+            <Box sx={{ maxHeight: '13em', p: '1em' }}>
               <FormControl component="fieldset">
                 <FormLabel component="legend" color="secondary">Security Properties</FormLabel>
                 <FormGroup>
                   <FormControlLabel
-                    control={<Switch checked={propFilter.Confidentiality} onChange={handlePropChange}  name="Confidentiality" color="secondary"/>}
-                    label="Confidentiality"/>
+                    control={<Switch checked={propFilter.Confidentiality} onChange={handlePropChange} name="Confidentiality" color="secondary" />}
+                    label="Confidentiality" />
                   <FormControlLabel
-                    control={<Switch checked={propFilter.Integrity} onChange={handlePropChange} name="Integrity" color="secondary"/>}
-                    label="Integrity"/>
+                    control={<Switch checked={propFilter.Integrity} onChange={handlePropChange} name="Integrity" color="secondary" />}
+                    label="Integrity" />
                   <FormControlLabel
-                    control={<Switch checked={propFilter.Availability} onChange={handlePropChange} name="Availability" color="secondary"/>}
-                    label="Availability"/>
+                    control={<Switch checked={propFilter.Availability} onChange={handlePropChange} name="Availability" color="secondary" />}
+                    label="Availability" />
                   <FormControlLabel
-                    control={<Switch checked={propFilter.Accountability} onChange={handlePropChange} name="Accountability" color="secondary"/>}
-                    label="Accountability"/>
+                    control={<Switch checked={propFilter.Accountability} onChange={handlePropChange} name="Accountability" color="secondary" />}
+                    label="Accountability" />
                 </FormGroup>
                 <FormHelperText>
                   <span style={{ textTransform: 'capitalize' }}>{selectedModelInfo.keyProp} is your key property</span>
                 </FormHelperText>
               </FormControl>
             </Box>
-            <Box sx={{ maxHeight: '12em', p: '1em', overflow: 'scroll'}}>
+            <Box sx={{ maxHeight: '12em', p: '1em', overflow: 'scroll' }}>
               <FormControl component="fieldset">
                 <FormLabel component="legend" color="secondary">Design Stage</FormLabel>
                 <FormGroup>
                   <FormControlLabel
-                    control={<Switch checked={propFilter['Business Understanding']} onChange={handlePropChange}  name="Business Understanding" color="secondary"/>}
-                    label="Business Understanding"/>
+                    control={<Switch checked={propFilter['Business Understanding']} onChange={handlePropChange} name="Business Understanding" color="secondary" />}
+                    label="Business Understanding" />
                   <FormControlLabel
-                    control={<Switch checked={propFilter['Business Goal Definition']} onChange={handlePropChange}  name="Business Goal Definition" color="secondary"/>}
-                    label="Business Goal Definition"/>
+                    control={<Switch checked={propFilter['Business Goal Definition']} onChange={handlePropChange} name="Business Goal Definition" color="secondary" />}
+                    label="Business Goal Definition" />
                   <FormControlLabel
-                    control={<Switch checked={propFilter['Data Pre-processing']} onChange={handlePropChange}  name="Data Pre-processing" color="secondary"/>}
-                    label="Data Pre-processing"/>
+                    control={<Switch checked={propFilter['Data Pre-processing']} onChange={handlePropChange} name="Data Pre-processing" color="secondary" />}
+                    label="Data Pre-processing" />
                   <FormControlLabel
-                    control={<Switch checked={propFilter['Model Tuning']} onChange={handlePropChange}  name="Model Tuning" color="secondary"/>}
-                    label="Model Tuning"/>
+                    control={<Switch checked={propFilter['Model Tuning']} onChange={handlePropChange} name="Model Tuning" color="secondary" />}
+                    label="Model Tuning" />
                   <FormControlLabel
-                    control={<Switch checked={propFilter['Feature Selection']} onChange={handlePropChange}  name="Feature Selection" color="secondary"/>}
-                    label="Feature Selection"/>
+                    control={<Switch checked={propFilter['Feature Selection']} onChange={handlePropChange} name="Feature Selection" color="secondary" />}
+                    label="Feature Selection" />
                   <FormControlLabel
-                    control={<Switch checked={propFilter['Data Exploration']} onChange={handlePropChange}  name="Data Exploration" color="secondary"/>}
-                    label="Data Exploration"/>
+                    control={<Switch checked={propFilter['Data Exploration']} onChange={handlePropChange} name="Data Exploration" color="secondary" />}
+                    label="Data Exploration" />
                   <FormControlLabel
-                    control={<Switch checked={propFilter['Data Ingestion']} onChange={handlePropChange}  name="Data Ingestion" color="secondary"/>}
-                    label="Data Ingestion"/>
+                    control={<Switch checked={propFilter['Data Ingestion']} onChange={handlePropChange} name="Data Ingestion" color="secondary" />}
+                    label="Data Ingestion" />
                   <FormControlLabel
-                    control={<Switch checked={propFilter['Model Training']} onChange={handlePropChange}  name="Model Training" color="secondary"/>}
-                    label="Model Training"/>
+                    control={<Switch checked={propFilter['Model Training']} onChange={handlePropChange} name="Model Training" color="secondary" />}
+                    label="Model Training" />
                   <FormControlLabel
-                    control={<Switch checked={propFilter['Model Selection']} onChange={handlePropChange}  name="Model Selection" color="secondary"/>}
-                    label="Model Selection"/>
+                    control={<Switch checked={propFilter['Model Selection']} onChange={handlePropChange} name="Model Selection" color="secondary" />}
+                    label="Model Selection" />
                   <FormControlLabel
-                    control={<Switch checked={propFilter['Model Building']} onChange={handlePropChange}  name="Model Building" color="secondary"/>}
-                    label="Model Building"/>
+                    control={<Switch checked={propFilter['Model Building']} onChange={handlePropChange} name="Model Building" color="secondary" />}
+                    label="Model Building" />
                   <FormControlLabel
-                    control={<Switch checked={propFilter['Model Deployment']} onChange={handlePropChange}  name="Model Deployment" color="secondary"/>}
-                    label="Model Deployment"/>
+                    control={<Switch checked={propFilter['Model Deployment']} onChange={handlePropChange} name="Model Deployment" color="secondary" />}
+                    label="Model Deployment" />
                   <FormControlLabel
-                    control={<Switch checked={propFilter['Model Maintenance']} onChange={handlePropChange}  name="Model Maintenance" color="secondary"/>}
-                    label="Model Maintenance"/>
+                    control={<Switch checked={propFilter['Model Maintenance']} onChange={handlePropChange} name="Model Maintenance" color="secondary" />}
+                    label="Model Maintenance" />
                   <FormControlLabel
-                    control={<Switch checked={propFilter['Transfer Learning']} onChange={handlePropChange}  name="Transfer Learning" color="secondary"/>}
-                    label="Transfer Learning"/>
+                    control={<Switch checked={propFilter['Transfer Learning']} onChange={handlePropChange} name="Transfer Learning" color="secondary" />}
+                    label="Transfer Learning" />
+                </FormGroup>
+                <FormHelperText>
+                </FormHelperText>
+              </FormControl>
+            </Box>
+            <Box sx={{ maxHeight: '12em', p: '1em', overflow: 'scroll' }}>
+              <FormControl component="fieldset">
+                <FormLabel component="legend" color="secondary">Asset Type</FormLabel>
+                <FormGroup>
+                  <FormControlLabel
+                    control={<Switch checked={propFilter['Actor']} onChange={handleAssetChange} name="Actor" color="secondary" />}
+                    label="Actor" />
+                  <FormControlLabel
+                    control={<Switch checked={propFilter['Data']} onChange={handleAssetChange} name="Data" color="secondary" />}
+                    label="Data" />
+                  <FormControlLabel
+                    control={<Switch checked={propFilter['Model']} onChange={handleAssetChange} name="Model" color="secondary" />}
+                    label="Model" />
+                  <FormControlLabel
+                    control={<Switch checked={propFilter['Artefacts']} onChange={handleAssetChange} name="Artefacts" color="secondary" />}
+                    label="Artefacts" />
+                  <FormControlLabel
+                    control={<Switch checked={propFilter['Processes']} onChange={handleAssetChange} name="Processes" color="secondary" />}
+                    label="Processes" />
+                  <FormControlLabel
+                    control={<Switch checked={propFilter['Environment/Tools']} onChange={handleAssetChange} name="Environment/Tools" color="secondary" />}
+                    label="Environment & Tools" />
                 </FormGroup>
                 <FormHelperText>
                 </FormHelperText>
@@ -263,11 +327,11 @@ function Analyze() {
   )
 }
 
-function useModeledAssets (diagram, taxonomy) {
+function useModeledAssets(diagram, taxonomy) {
   var x = new DOMParser()
   var d = x.parseFromString(diagram.xml, 'text/xml')
   var a = [...d.querySelectorAll('[assetname]')]
-  var [detectedAssets, setAsset] = useState(a.map(function (e) {
+  var [detectedAssets, setAsset] = useState(a.map(function(e) {
     var assetAttr = e.getAttribute('assetname')
     var labelAttr = e.getAttribute('label')
     var displayName = assetAttr
@@ -277,7 +341,7 @@ function useModeledAssets (diagram, taxonomy) {
     }
 
     var assetTaxonomyEntry = taxonomy.find(t => t.Asset === assetAttr)
-    if(!assetTaxonomyEntry) {
+    if (!assetTaxonomyEntry) {
       console.warn(`${assetAttr} not in asset taxonomy`)
       return {
         assetname: e.getAttribute('assetname'),
