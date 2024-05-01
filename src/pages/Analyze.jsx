@@ -1,16 +1,19 @@
 import Accordion from '@mui/material/Accordion'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
+import AccordionActions from '@mui/material/AccordionActions';
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import { Switch } from '@mui/material'
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import NotesRoundedIcon from '@mui/icons-material/NotesRounded';
 import { Typography } from '@mui/material'
 import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
+import NativeSelect from '@mui/material/NativeSelect';
 import { useState } from 'react'
 
-import { FormControl, FormLabel, FormGroup, FormControlLabel, FormHelperText } from '@mui/material'
+import { Button, FormControl, FormLabel, FormGroup, FormControlLabel, FormHelperText, InputLabel } from '@mui/material'
 import assetTaxonomy from './AssetTaxonomy.json'
 import threatTaxonomy from './ThreatTaxonomy.json'
 
@@ -18,21 +21,23 @@ import threatTaxonomy from './ThreatTaxonomy.json'
 export default Analyze
 
 function Analyze() {
-  const [selectedModel, selectModel] = useState(localStorage.getItem('selectedModel') || '')
+  var [selectedModel] = useState(localStorage.getItem('selectedModel') || '')
   try {
     var loaded = JSON.parse(localStorage.getItem('storedModels')) || []
   } catch (e) {
     loaded = []
   }
   var storedModels = loaded
-  const [models, setModels] = useState(storedModels)
-  const [selectedModelInfo, selectModelInfo] = useState(storedModels.find(m => m.id === selectedModel))
+  var [models] = useState(storedModels)
+  var [selectedModelInfo] = useState(storedModels.find(m => m.id === selectedModel))
 
   var diagram = selectedModelInfo.diagram
-  var [detectedAssets, setAsset] = useModeledAssets(diagram, assetTaxonomy)
+  var [detectedAssets] = useModeledAssets(diagram, assetTaxonomy)
 
   selectedModelInfo.assets = detectedAssets
   localStorage.setItem('storedModels', JSON.stringify(storedModels))
+
+  var [threatModel, setThreatModel] = useState([])
 
   var keyProp = selectedModelInfo.keyProp
   const [propFilter, setPropFilter] = useState(
@@ -116,10 +121,16 @@ function Analyze() {
                     </AccordionSummary>
                     <AccordionDetails>
                       {k.Description}
+                      <AccordionActions>
+                        <Button color="secondary" onClick={(e) => {
+                          setThreatModel([... threatModel, [{t: k.Description, a: asset}]]) 
+                          console.log(threatModel)
+                        }}>Add to Threat Model</Button>
+                      </AccordionActions>
                     </AccordionDetails>
                   </Accordion>
                 )
-              }
+              } return null
             })
           }
         </>
@@ -147,7 +158,11 @@ function Analyze() {
                 </Typography>
               }
               {group.map(asset => {
-                if (asset.assetLifeCycleStage.split(',').some(lfc => propFilter[lfc])) {
+                if (asset.assetLifeCycleStage.split(', ').some(function (stage) {
+			if(asset.assetDisplayname === 'Train Model') debugger
+			var stageEnabled = propFilter[stage]
+			return stageEnabled
+		})) {
                   console.log(asset, 'should be displayed', asset.assetLifeCycleStage)
 
                   return (<Accordion>
@@ -172,7 +187,10 @@ function Analyze() {
 
                     </AccordionDetails>
                   </Accordion>)
-                }
+                } else {
+                  console.log(asset, 'should NOT be displayed', asset.assetLifeCycleStage)
+                  return null
+		}
               })}
             </Paper>
           </>
@@ -214,7 +232,7 @@ function Analyze() {
           expandIcon={<TuneRoundedIcon />}
           aria-controls="panel1-content"
           id="panel1-header"
-          sx={{ textTransform: 'capitalize' }}>
+          sx={{ textTransform: 'capitalize', mt: '1em' }}>
           Filters
         </AccordionSummary>
         <AccordionDetails>
@@ -318,8 +336,36 @@ function Analyze() {
                 </FormHelperText>
               </FormControl>
             </Box>
+            <Box sx={{ maxHeight: '12em', p: '1em', overflow: 'scroll' }}>
+              <FormControl fullWidth>
+                <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                  Knowledge Base
+                </InputLabel>
+                <NativeSelect
+                  defaultValue={'enisa'}
+                  inputProps={{
+                    name: 'age',
+                    id: 'uncontrolled-native',
+                  }}>
+                  <option value={'enisa'}>ENISA AI Landscape</option>
+                  <option value={'owasp'}>OWASP AI Exchange</option>
+                  <option value={'mitre'}>MITRE Atlas</option>
+                </NativeSelect>
+              </FormControl>
+            </Box>
           </Box>
 
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<NotesRoundedIcon />}
+          aria-controls="panel1-content"
+          id="panel1-header"
+          sx={{ textTransform: 'capitalize' }}>
+          Your Threat Model ({threatModel.length} Threats)
+        </AccordionSummary>
+        <AccordionDetails>
         </AccordionDetails>
       </Accordion>
       {assetList(detectedAssets, selectedModelInfo)}
