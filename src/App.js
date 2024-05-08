@@ -167,7 +167,6 @@ function App() {
           <Drawer
             variant="permanent"
             sx={{
-              backgroundImage: 'url(/public/noise4.png)',
               display: { xs: 'none', sm: 'block' },
               '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
             }}

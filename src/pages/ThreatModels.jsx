@@ -51,6 +51,8 @@ function ThreatModels() {
 
   const [selectedModelInfo, selectModelInfo] = useState(storedModels.find(m => m.id === selectedModel))
 
+  const elevation = 1
+
   useEffect(function handleModelSelection() {
     //console.g('store selected model', selectedModel)
     localStorage.setItem('selectedModel', selectedModel)
@@ -97,29 +99,6 @@ function ThreatModels() {
 
 
   function Saved(props) {
-    /*localStorage.setItem('storedModels', JSON.stringify([{
-        id: Math.random() * 1e17,
-        name: 'DataForge',
-        date: Date.now() - 36000,
-        description: 'Create a exposure analysis of the healthcare blabla'
-      }, {
-        id: Math.random() * 1e17,
-        name: 'CodeCraft',
-        date: Date.now() - 72000,
-        description: 'Check some security controls'
-      }, {
-        id: Math.random() * 1e17,
-        name: 'QuantumSphere',
-        date: Date.now() - 96000,
-        description: 'Test the beans'
-      }, {
-        id: Math.random() * 1e17,
-        name: 'PhoenixRise',
-        date: Date.now() - 128000,
-        description: 'Review existing controls'
-      }]))
-      */
-
     var storedModels = props.storedModels.sort((a, b) => a.date < b.date)
 
     return (
@@ -236,7 +215,7 @@ function ThreatModels() {
               </Typography>
             </Box>
             <Box sx={{ display: 'flex', gap: '1em', flexWrap: 'wrap' }}>
-            <Paper elevation={4} sx={{ minWidth: '100%', p: '1em', display: 'flex', flexDirection: 'column', textTransform: 'uppercase' }}>
+            <Paper elevation={elevation} sx={{ minWidth: '100%', p: '1em', display: 'flex', flexDirection: 'column', textTransform: 'uppercase' }}>
               <Box sx={{ flexGrow: 1}}>
                 <Typography sx={{ display: 'inline-flex', opacity: '.6', mr: '.5em' }}>Created</Typography>
                 <Typography sx={{ display: 'inline-flex', textTransform: 'initial'}}>{formatDate(new Date(selectedModelInfo.date))}</Typography>
@@ -256,24 +235,24 @@ function ThreatModels() {
             </Paper>
               {selectedModelInfo.assets &&
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1em' }}>
-                <Paper elevation={4} sx={{ p: '1em', display: 'flex', flexGrow: 1, alignItems: 'center', flexDirection: 'column' }}>
+                <Paper elevation={elevation} sx={{ p: '1em', display: 'flex', flexGrow: 1, alignItems: 'center', flexDirection: 'column' }}>
                   <Typography variant="h4" sx={{ flexGrow: 1, fontSize: '4rem' }}>{selectedModelInfo.assets.length}</Typography>
                   <Typography sx={{ opacity: '.6' }}>ASSETS</Typography>
                 </Paper>
-                <Paper elevation={4} sx={{ p: '1em', display: 'flex', flexGrow: 1, alignItems: 'center', flexDirection: 'column' }}>
+                <Paper elevation={elevation} sx={{ p: '1em', display: 'flex', flexGrow: 1, alignItems: 'center', flexDirection: 'column' }}>
                   <Typography variant="h4" sx={{ flexGrow: 1, fontSize: '4rem' }}>{selectedModelInfo.threats.length}</Typography>
                   <Typography sx={{ opacity: '.6' }}>THREATS</Typography>
                 </Paper>
               </Box>
               }
-              <Paper elevation={4} sx={{ p: '1em' }}>
+              <Paper elevation={elevation} sx={{ p: '1em' }}>
                 <BarChart
                   xAxis={[{ scaleType: 'band', barGapRatio: 0.1, data: [0, 62155, 124310, 186465, 248620, 310775, 372930, 435085, 497240, 559395, 621550, 683706, 745861, 808016, 870171, 932326, 994481, 1056636, 1118791, 1180946, 1243101, 1305256, 1367411, 1429566, 1491721, 1553876, 1616031, 1678186, 1740341, 1802496, 1864651, 1926807, 1988962, 2051117, 2113272, 2175427, 2237582, 2299737, 2361892, 2424047, 2486202, 2548357, 2610512, 2672667, 2734822, 2796977, 2859132, 2921287, 2983442, 3045597, 3107752] }]}
                   series={[{ color: '#8278d9', label: 'Exposure', data: [1.17448223e-07, 0.00000000e+00, 4.82020378e-07, 8.10875403e-08, 1.12138920e-07, 1.06363041e-06, 2.26047607e-07, 6.82165021e-07, 1.28935625e-06, 5.46375569e-07, 1.09178581e-06, 1.21164735e-06, 8.40478790e-07, 1.10867905e-06, 1.00828495e-06, 8.41926782e-07, 8.38387247e-07, 7.71136072e-07, 6.31807085e-07, 5.74209189e-07, 5.06797127e-07, 4.25709586e-07, 3.38347415e-07, 2.85093495e-07, 2.23151624e-07, 1.80033646e-07, 1.45764507e-07, 1.12138920e-07, 8.86492752e-08, 6.86991661e-08, 5.13232646e-08, 3.74868986e-08, 2.67074041e-08, 2.41331965e-08, 1.65714616e-08, 1.12621584e-08, 7.88351086e-09, 6.59640705e-09, 3.53953549e-09, 2.57420763e-09, 2.57420763e-09, 8.04439884e-10, 1.12621584e-09, 1.44799179e-09, 4.82663930e-10, 1.60887977e-10, 4.82663930e-10, 1.60887977e-10, 1.60887977e-10, 3.21775953e-10] }]}
                   width={500}
                   height={300} />
               </Paper>
-              <Paper elevation={4} sx={{ p: '1em' }}>
+              <Paper elevation={elevation} sx={{ p: '1em' }}>
                 <LineChart
                   xAxis={[{ data: [0.0, 0.0, 155845.0, 162960.0, 168137.0, 172756.0, 177430.0, 183330.0, 193092.0, 298540.0, 311280.0, 318435.0, 323614.0, 328260.0, 332373.0, 336080.0, 339674.0, 343581.0, 347211.0, 351139.0, 355071.0, 359438.0, 364612.0, 370000.0, 377306.0, 388848.0, 426367.0, 452871.0, 464234.0, 471692.0, 478063.0, 483319.0, 487595.0, 491523.0, 495433.0, 499205.0, 502813.0, 506332.0, 510040.0, 513322.0, 516595.0, 519940.0, 523345.0, 526952.0, 530341.0, 534061.0, 538037.0, 542282.0, 546445.0, 551307.0, 556943.0, 562716.0, 569733.0, 578237.0, 589165.0, 600337.0, 610600.0, 619234.0, 626408.0, 632673.0, 638640.0, 643828.0, 648796.0, 653545.0, 657458.0, 661384.0, 665120.0, 669059.0, 672730.0, 676516.0, 679977.0, 683534.0, 687087.0, 690535.0, 694078.0, 697789.0, 701503.0, 705406.0, 709120.0, 713409.0, 717550.0, 721854.0, 726651.0, 731463.0, 736250.0, 740812.0, 746329.0, 752102.0, 758010.0, 764406.0, 770572.0, 776886.0, 783680.0, 789731.0, 795124.0, 800887.0, 806419.0, 811811.0, 817031.0, 821843.0, 826654.0, 831245.0, 836011.0, 840492.0, 844977.0, 849327.0, 853699.0, 857549.0, 861911.0, 866261.0, 870441.0, 874957.0, 879311.0, 883779.0, 888293.0, 893408.0, 898042.0, 903242.0, 908763.0, 913657.0, 918901.0, 924440.0, 929607.0, 935421.0, 940864.0, 946026.0, 952181.0, 957989.0, 964757.0, 970920.0, 976844.0, 982554.0, 988565.0, 994409.0, 1000730.0, 1006685.0, 1012757.0, 1018243.0, 1024097.0, 1030440.0, 1035871.0, 1041264.0, 1047151.0, 1053442.0, 1059230.0, 1065621.0, 1071808.0, 1078175.0, 1084113.0, 1090728.0, 1097406.0, 1104140.0, 1111450.0, 1118659.0, 1125661.0, 1132537.0, 1139792.0, 1147466.0, 1155057.0, 1162733.0, 1170936.0, 1179060.0, 1186978.0, 1195809.0, 1204025.0, 1212874.0, 1221306.0, 1229622.0, 1238616.0, 1248344.0, 1257174.0, 1267384.0, 1277123.0, 1287221.0, 1297729.0, 1308913.0, 1320752.0, 1333477.0, 1345721.0, 1358354.0, 1371520.0, 1385000.0, 1400414.0, 1416293.0, 1432440.0, 1449069.0, 1465838.0, 1484352.0, 1504041.0, 1524558.0, 1547378.0, 1570968.0, 1600683.0, 1628667.0, 1665219.0, 1708140.0, 1754787.0, 1818593.0, 1904674.0, 2040755.0] }]}
                   series={[
@@ -286,7 +265,7 @@ function ThreatModels() {
                   width={500}
                   height={300} />
               </Paper>
-              <Paper elevation={4} sx={{ p: '1em', display: 'flex', flexGrow: 1, alignItems: 'left', flexDirection: 'column', textTransform: 'uppercase' }}>
+              <Paper elevation={elevation} sx={{ p: '1em', display: 'flex', flexGrow: 1, alignItems: 'left', flexDirection: 'column', textTransform: 'uppercase' }}>
                 <Typography sx={{ flexGrow: 1, display: 'flex', textAlign: 'center', alignItems: 'center' }}>Annualized Loss (CHF)</Typography>
                 <Typography variant="h4" sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', fontSize: '4rem' }}>826'802</Typography>
                 <Typography sx={{ opacity: '.6' }}>Expected Loss P50)</Typography>
