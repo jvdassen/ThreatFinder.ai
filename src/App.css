@@ -1,32 +1,3 @@
-.App-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.header-item-wrapper>button {
-  margin-left: .5em;
-}
-
-/*.App {
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-}
-
-.body-wrapper {
-  height: 100%;
-  flex-grow: 1;
-  margin: .5em;
-}
-*/
-
-#root,
-.App-header,
-.body-wrapper {
-  /*background: #282c34;*/
+body {
+  background-image: url('/public/noise4.png')
 }

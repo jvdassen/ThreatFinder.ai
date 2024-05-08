@@ -149,7 +149,7 @@ function App() {
       <Box sx={{ display: 'flex' }}>
         <Box
           component="nav"
-          sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+          sx={{ width: { sm: drawerWidth },  flexShrink: { sm: 0 } }}
           aria-label="mailbox folders"
         >
           <Drawer
@@ -167,6 +167,7 @@ function App() {
           <Drawer
             variant="permanent"
             sx={{
+              backgroundImage: 'url(/public/noise4.png)',
               display: { xs: 'none', sm: 'block' },
               '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
             }}
