@@ -79,10 +79,76 @@
     "Potential Impact": "Confidentiality",
     "Affected assets": ["Data"],
     "Permalink": "https://owaspai.org/goto/devdataleak/"
+  },
+  {
+    "Threat Category": "Development-Time Threat",
+    "Threat": "Model theft through development-time model parameter leak",
+    "Description": "Unauthorized access to model parameters through a data leak of the development environment.",
+    "Potential Impact": "Confidentiality",
+    "Affected assets": ["Model", "Data"]
+  },
+  {
+    "Threat Category": "Development-Time Threat",
+    "Threat": "Source code/configuration leak",
+    "Description": "Unauthorized access to code or configuration that leads to the model, through a data leak of the development environment. Such code or configuration is used to preprocess the training/test data and train the model.",
+    "Potential Impact": "Confidentiality",
+    "Affected assets": ["Model", "Data"]
+  },
+  {
+    "Threat Category": "Threat through Use",
+    "Threat": "Evasion - Model behaviour manipulation through use",
+    "Description": "Evasion: fooling models with deceptive input data. In other words: an attacker provides input that has intentionally been designed to cause a machine learning model to behave in an unwanted way. A category of such an attack involves small perturbations leading to a large (and false) modification of its outputs. Such modified inputs are often called adversarial examples. Evasion attacks can also be categorized into physical (e.g. changing the real world to influence for example a camera image) and digital (e.g. changing the digital image).",
+    "Potential Impact": "Integrity",
+    "Affected assets": ["Model"]
+  },
+  {
+    "Threat Category": "Threat through Use",
+    "Threat": "Closed-box evasion",
+    "Description": "Black box or closed-box attacks are methods where an attacker crafts an input to exploit a model without having any internal knowledge or access to that model’s implementation, including code, training set, parameters, and architecture. The term “black box” reflects the attacker’s perspective, viewing the model as a ‘closed box’ whose internal workings are unknown. This approach often requires experimenting with how the model responds to various inputs, as the attacker navigates this lack of transparency to identify and leverage potential vulnerabilities. Since the attacker does not have access to the inner workings of the model, he cannot calculate the internal model gradients to efficiently create the adversarial inputs - in contrast to white-box or open-box attacks (see 2.1.2. Open-box evasion).",
+    "Potential Impact": "Integrity",
+    "Affected assets": ["Model"]
+  },
+  {
+    "Threat Category": "Threat through Use",
+    "Threat": "Open-box evasion",
+    "Description": "In open-box or white-box attacks, the attacker knows the architecture, parameters, and weights of the target model. Therefore, the attacker has the ability to create input data designed to introduce errors in the model’s predictions. These attacks may be targeted or untargeted. In a targeted attack, the attacker wants to force a specific prediction, while in an untargeted attack, the goal is to cause the model to make a false prediction. A famous example in this domain is the Fast Gradient Sign Method (FGSM) developed by Goodfellow et al. which demonstrates the efficiency of white-box attacks. FGSM operates by calculating a perturbation p for a given image x and its label l, following the equation p = ε sign(∇x J(θ, x, l)), where ∇x J(⋅,⋅,⋅) is the gradient of the cost function with respect to the input, computed via backpropagation. The model’s parameters are denoted by θ and ε is a scalar defining the perturbation’s magnitude. Even universal adversarial attacks, perturbations that can be applied to any input and result in a successful attack, or attacks against certified defenses are possible. In contrast to white-box attacks, black-box attacks operate without direct access to the inner workings of the model and therefore without access to the gradients. Instead of exploiting detailed knowledge, black-box attackers must rely on output observations to infer how to effectively craft adversarial examples.",
+    "Potential Impact": "Integrity",
+    "Affected assets": ["Model"]
+  },
+  {
+    "Threat Category": "Threat through Use",
+    "Threat": "Evasion after data poisoning",
+    "Description": "After training data has been poisoned (see data poisoning section), specific input (called backdoors or triggers) can lead to unwanted model output.",
+    "Potential Impact": "Integrity",
+    "Affected assets": ["Model", "Data"]
+  },
+  {
+    "Threat Category": "Threat through Use",
+    "Threat": "Sensitive data output from model",
+    "Description": "The output of the model may contain sensitive data from the training set, for example a large language model (GenAI) generating output including personal data that was part of its training set. Furthermore, GenAI can output other types of sensitive data, such as copyrighted text or images (see Copyright). Once training data is in a GenAI model, original variations in access rights cannot be controlled anymore. (OWASP for LLM 06). The disclosure is caused by an unintentional fault of including this data, and exposed through normal use or through provocation by an attacker using the system. See MITRE ATLAS - LLM Data Leakage.",
+    "Potential Impact": "Confidentiality",
+    "Affected assets": ["Model", "Data"]
+  },
+  {
+    "Threat Category": "Threat through Use",
+    "Threat": "Model inversion and Membership inference",
+    "Description": "Model inversion (or data reconstruction) occurs when an attacker reconstructs a part of the training set by intensive experimentation during which the input is optimized to maximize indications of confidence level in the output of the model. Membership inference is presenting a model with input data that identifies something or somebody (e.g. a personal identity or a portrait picture), and using any indication of confidence in the output to infer the presence of that something or somebody in the training set.",
+    "Potential Impact": "Confidentiality",
+    "Affected assets": ["Model", "Data"]
+  },
+  {
+    "Threat Category": "Threat through Use",
+    "Threat": "Model theft through use",
+    "Description": "This attack is known as model stealing attack or model extraction attack or model exfiltration attack. It occurs when an attacker collects inputs and outputs of an existing model and uses those combinations to train a new model, in order to replicate the original model.",
+    "Potential Impact": "Confidentiality",
+    "Affected assets": ["Model"]
+  },
+  {
+    "Threat Category": "Threat through Use",
+    "Threat": "Failure or malfunction of AI-specific elements through use",
+    "Description": "Specific input to the model leads to availability issues (system being very slow or unresponsive, also called denial of service), typically caused by excessive resource usage. The failure occurs from frequency, volume, or the content of the input. See MITRE ATLAS - Denial of ML service. For example: A sponge attack or energy latency attack provides input that is designed to increase the computation time of the model, potentially causing a denial of service. See article on sponge examples.",
+    "Potential Impact": "Availability",
+    "Affected assets": ["Model", "Processes", "Environments and Tools"]
   }
-
-
-
-
 
 ]
