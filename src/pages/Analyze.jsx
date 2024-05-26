@@ -13,7 +13,14 @@ import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
 import NativeSelect from '@mui/material/NativeSelect';
 import { useState } from 'react'
 
-import { Button, FormControl, FormLabel, FormGroup, FormControlLabel, FormHelperText, InputLabel } from '@mui/material'
+import { Button,
+  FormControl,
+  FormLabel,
+  FormGroup,
+  FormControlLabel,
+  FormHelperText,
+  List,
+  InputLabel } from '@mui/material'
 import assetTaxonomy from './AssetTaxonomy.json'
 import threatTaxonomy from './ThreatTaxonomy.json'
 
@@ -37,7 +44,20 @@ function Analyze() {
   selectedModelInfo.assets = detectedAssets
   localStorage.setItem('storedModels', JSON.stringify(storedModels))
 
-  var [threatModel, setThreatModel] = useState([])
+  try {
+    var loadedTM = JSON.parse(localStorage.getItem('threatModels'))[selectedModel] || []
+  } catch (e) {
+    var loadedTM = []
+  }
+
+  var [threatModel, setThreatModel] = useState(loadedTM)
+  function addToThreatModel (newThreat) {
+    threatModel.push(newThreat)
+    setThreatModel([... threatModel])
+    var storedThreatModels = JSON.parse(localStorage.getItem('threatModels')) || {} 
+    storedThreatModels[selectedModel] = threatModel
+    localStorage.setItem('threatModels', JSON.stringify(storedThreatModels))
+  }
 
   var keyProp = selectedModelInfo.keyProp
   const [propFilter, setPropFilter] = useState(
@@ -123,8 +143,7 @@ function Analyze() {
                       {k.Description}
                       <AccordionActions>
                         <Button color="secondary" onClick={(e) => {
-                          setThreatModel([... threatModel, [{t: k.Description, a: asset}]]) 
-                          console.log(threatModel)
+                          addToThreatModel({threat: k, targetedAsset: asset, controls: []}) 
                         }}>Add to Threat Model</Button>
                       </AccordionActions>
                     </AccordionDetails>
@@ -163,7 +182,7 @@ function Analyze() {
 			var stageEnabled = propFilter[stage]
 			return stageEnabled
 		})) {
-                  console.log(asset, 'should be displayed', asset.assetLifeCycleStage)
+                  //  console.log(asset, 'should be displayed', asset.assetLifeCycleStage)
 
                   return (<Accordion>
                     <AccordionSummary
@@ -188,7 +207,7 @@ function Analyze() {
                     </AccordionDetails>
                   </Accordion>)
                 } else {
-                  console.log(asset, 'should NOT be displayed', asset.assetLifeCycleStage)
+                  //console.log(asset, 'should NOT be displayed', asset.assetLifeCycleStage)
                   return null
 		}
               })}
@@ -360,12 +379,36 @@ function Analyze() {
       <Accordion>
         <AccordionSummary
           expandIcon={<NotesRoundedIcon />}
-          aria-controls="panel1-content"
-          id="panel1-header"
           sx={{ textTransform: 'capitalize' }}>
-          Your Threat Model ({threatModel.length} Threats)
+          Threat Model {threatModel.length > 0 ? `(${threatModel.length})` : '(empty)' }
         </AccordionSummary>
         <AccordionDetails>
+        <List>
+          { threatModel.map(function renderThreat (threat) {
+              console.log(threat)
+              return (
+                <Accordion>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    sx={{ textTransform: 'capitalize' }}>
+                    "{threat.threat.Threat}"
+                    <Typography color="secondary" sx={{ml: '.5em', mr: '.5em'}}>@</Typography>
+                    "{threat.targetedAsset.assetDisplayname}" 
+                    <ArrowRightAltIcon color="secondary" sx={{ml: '.5em', mr: '.5em'}}/>
+                    {threat.threat['Potential Impact']}
+                  </AccordionSummary>
+
+                  <AccordionDetails>
+                    <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>DESCRIPTION</span>{threat.threat.Description}</Typography>
+                    <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>CATEGORY</span>{threat.threat['Threat Category']}</Typography>
+                    <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>ASSET</span>{threat.targetedAsset['assetDisplayname']} </Typography>
+                    <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>ASSET CATEGORY</span>{threat.targetedAsset['assetCategory']}</Typography>
+                    <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>ASSET LIFE CYCLE</span>{threat.targetedAsset.assetLifeCycleStage}</Typography>
+                  </AccordionDetails>
+                </Accordion>
+              )})
+          }
+          </List>
         </AccordionDetails>
       </Accordion>
       {assetList(detectedAssets, selectedModelInfo)}
