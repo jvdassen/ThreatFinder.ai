@@ -1,0 +1,411 @@
+[
+  {
+    "title": "AI Program Governance",
+    "description": "The AI Program Governance control involves installing and executing a program to govern AI within an organization. This includes taking responsibility for AI initiatives, maintaining an inventory of these initiatives, performing risk analysis, and managing identified risks. The purpose is to reduce the likelihood of AI initiatives being overlooked for proper governance, including security, and to increase the incentive for proper governance through assigned responsibilities for model accountability, data accountability, and risk governance. Although this control may initially seem outside the scope of cybersecurity, it is essential for initiating actions to ensure AI security.",
+    "category": "governance",
+    "asset": ["Actor", "Data", "Model", "Artefacts", "Processes", "Environment/tools"],
+    "stages": ["Usage", "Development", "Runtime"]
+  },
+  {
+    "title": "AI Security Program",
+    "description": "The AI Security Program Governance control ensures that the organization has a comprehensive security program that includes the entire AI lifecycle and addresses AI-specific aspects. The purpose is to mitigate AI security risks through robust information security management by taking responsibility for AI-specific threats and corresponding controls. This includes incorporating AI-specific assets such as training data, test data, models, documentation, model input and output, and data and models from external sources. Each AI initiative should perform privacy and security risk analysis to guide the implementation of security and privacy controls, based on goals like Confidentiality, Integrity, Availability, Unlinkability, Transparency, and Intervenability. The process includes describing the ecosystem, assessing the system of interest, identifying concerns and risks, and implementing appropriate controls and assurance measures. Additionally, AI-specific honeypots can be used to detect and capture attackers by exposing fake parts of the data/model infrastructure.",
+    "category": "governance",
+    "asset": ["Actor", "Data", "Model", "Artefacts", "Processes", "Environment/tools"],
+    "stages": ["Usage", "Development", "Runtime"]
+  },
+  {
+    "title": "#SECDEVPROGRAM",
+    "description": "Secure development program: Have processes in place to make sure that security is built into software. Make sure that data science development activities are also part of this. Examples of these processes: secure development training, code review, security requirements, secure coding guidelines, threat modeling (including AI-specific threats), static analysis tooling, dynamic analysis tooling, penetration testing.\n\nPurpose: Reduces security risks by proper attention to mitigating those risks during software development.\n\nSee elsewhere in this document for SUPPLYCHAINMANAGE which discusses AI-specific supply-chain risks.\n\nParticularity: Data science development activities need to be taken into scope of secure development lifecycle.",
+    "extraInfo": "Links to standards:\n\n    ISO 27002 control 8.25 Secure development lifecycle. Gap: covers this control fully, with said particularity, but lack of detail - the 8.25 Control description in ISO 27002:2022 is one page, whereas secure software development is a large and complex topic - see below for further references\n    ISO/IEC 27115 (Cybersecurity evaluation of complex systems)\n    See OpenCRE on secure software development processes with notable links to NIST SSDF and OWASP SAMM. Gap: covers this control fully, with said particularity\n\nReferences:\n\n    OWASP SAMM\n    NIST SSDF",
+    "asset": ["Actor", "Data", "Model", "Artefacts", "Processes", "Environment/tools"],
+    "category": "governance",
+    "stages": ["Development"]
+  },
+  {
+    "title": "#DEVPROGRAM",
+    "description": "Development program: Having a development lifecycle program for AI. Apply general (not just security-oriented) software engineering best practices to AI development.\n\nData scientists are focused on creating working models, not on creating future-proof software per se. Often, organizations already have software practices and processes in place. It is important to extend these to AI development, instead of treating AI as something that requires a separate approach. Do not isolate AI engineering. This includes automated testing, code quality, documentation, and versioning. ISO/IEC 5338 explains how to make these practices work for AI.\n\nPurpose: This way, AI systems will become easier to maintain, transferable, secure, more reliable, and future-proof.\n\nA best practice is to mix data scientist profiles with software engineering profiles in teams, as software engineers typically need to learn more about data science, and data scientists generally need to learn more about creating future-proof, maintainable, and easily testable code.\n\nAnother best practice is to continuously measure quality aspects of data science code (maintainability, test code coverage), and provide coaching to data scientists in how to manage those quality levels.\n\nApart from conventional software best practices, there are important AI-specific engineering practices, including for example data provenance & lineage, model traceability and AI-specific testing such as continuous validation, testing for model staleness and concept drift. ISO/IEC 5338 discusses these AI engineering practices.\n\nThe below interpretation diagram of ISO/IEC 5338 provides a good overview to get an idea of the topics involved.",
+    "extraInfo": "Links to standards:\n\n    ISO/IEC 5338 - AI lifecycle Gap: covers this control fully - ISO 5338 covers the complete software development lifecycle for AI, by extending the existing ISO 12207 standard on software lifecycle: defining several new processes and discussing AI-specific particularities for existing processes. See also this blog.\n    ISO/IEC 27002 control 5.37 Documented operating procedures. Gap: covers this control minimally - this covers only a very small part of the control\n    OpenCRE on documentation of function Gap: covers this control minimally",
+    "asset": ["Actor", "Data", "Model", "Artefacts", "Processes", "Environment/tools"],
+    "category": "governance",
+    "stages": ["Development"]
+  },
+
+  {
+    "title": "#CHECKCOMPLIANCE",
+    "description": "Check compliance: Make sure that AI-relevant laws and regulations are taken into account in compliance management (including security aspects). If personal data is involved and/or AI is applied to make decisions about individuals, then privacy laws and regulations are also in scope. See the OWASP AI Guide for privacy aspects of AI.\n\nCompliance as a goal can be a powerful driver for organizations to grow their readiness for AI. While doing this it is important to keep in mind that legislation has a scope that does not necessarily include all the relevant risks for the organization. Many rules are about the potential harm to individuals and society, and don’t cover the impact on business processes per se. For example: the European AI act does not include risks for protecting company secrets. In other words: be mindful of blind spots when using laws and regulations as your guide.\n\nGlobal Jurisdictional considerations (as of end of 2023):\n\n    Canada: Artificial Intelligence & Data Act\n    USA: (i) Federal AI Disclosure Act, (ii) Federal Algorithmic Accountability Act\n    Brazil: AI Regulatory Framework\n    India: Digital India Act\n    Europe: (i) AI Act, (ii) AI Liability Directive, (iii) Product Liability Directive\n    China: (i) Regulations on the Administration of Deep Synthesis of Internet Information Services, (ii) Shanghai Municipal Regulations on Promoting Development of AI Industry, (iii) Shenzhen Special Economic Zone AI Industry Promotion Regulations, (iv) Provisional Administrative Measures for Generative AI Services\n\nGeneral Legal Considerations on AI/Security:\n\n    Privacy Laws: AI must comply with all local/global privacy laws at all times, such as GDPR, CCPA, HIPAA. See Privacy\n    Data Governance: any AI components/functions provided by a 3rd party for integration must have data governance frameworks, including those for the protection of personal data and structure/definitions on how its collected, processed, stored\n    Data Breaches: any 3rd party supplier must answer as to how they store their data and security frameworks around it, which may include personal data or IP of end-users\n\nNon-Security Compliance Considerations:\n\n    Ethics: Deep fake weaponization and how system addresses and deals with it, protects against it and mitigates it\n    Human Control: any and all AI systems should be deployed with appropriate level of human control and oversight, based on ascertained risks to individuals. AI systems should be designed and utilized with the concept that the use of AI respects dignity and rights of individuals; “Keep the human in the loop” concept. See Oversight.\n    Discrimination: a process must be included to review datasets to avoid and prevent any bias. See Unwanted bias testing.\n    Transparency: ensure transparency in the AI system deployment, usage and proactive compliance with regulatory requirements; “Trust by Design”\n    Accountability: AI systems should be accountable for actions and outputs and usage of data sets. See AI Program",
+    "extraInfo": "Links to standards:\n\n    OpenCRE on Compliance\n    ISO 27002 Control 5.36 Compliance with policies, rules and standards. Gap: covers this control fully, with the particularity that AI regulation needs to be taken into account.",
+    "asset": ["Actor", "Data", "Model", "Artefacts", "Processes", "Environment/tools"],
+    "category": "governance",
+    "stages": ["Usage", "Development", "Runtime"]
+  },
+  {
+    "title": "Security Education for Data Scientists and Development Teams",
+    "description": "Security education programs should be established for data scientists and development teams to raise awareness of AI-specific security threats and controls. This includes educating engineers on potential attacks targeting AI models and fostering a security mindset among all team members.",
+    "extraInfo": "Refer to ISO 27002 Control 6.3 for general awareness training. However, additional material should be developed to cover AI security threats and controls in detail, addressing the specific needs of data scientists and development teams.",
+    "asset": ["Data", "Model"],
+    "category": "governance",
+    "stages": ["Development"]
+  },
+  {
+    "title": "Data Minimization",
+    "description": "Data minimization techniques should be employed both during development and at runtime to reduce the risk of data leakage or manipulation. This involves the removal or anonymization of unnecessary data fields or records, especially from training sets, that are not essential for the application.",
+    "extraInfo": "Statistical analysis can be used to determine which data elements do not significantly contribute to model performance and can therefore be safely removed or anonymized.",
+    "asset": ["Data", "Model"],
+    "category": "development-time and runtime control",
+    "stages": ["Development", "Runtime"]
+  },
+  {
+    "title": "Controlled Data Usage",
+    "description": "Data usage should be restricted to only include data that is permitted for the intended purpose. This involves removing any data, especially from training sets, that is prohibited or not consented to be used for the specific application. This is crucial for minimizing the risk of data leakage or manipulation, especially when dealing with personal information collected for different purposes.",
+    "extraInfo": "Refer to ISO/IEC 23894 (AI risk management) section A.8 Privacy for guidance on controlled data usage. Additional emphasis should be placed on thoroughly understanding and implementing these principles.",
+    "asset": ["Data", "Model"],
+    "category": "development-time and runtime control",
+    "stages": ["Development", "Runtime"]
+  },
+  {
+    "title": "Short Data Retention",
+    "description": "Short data retention practices should be implemented both during development and at runtime to minimize the impact of data leakage or manipulation. This involves removing or anonymizing data once it is no longer needed for the intended purpose or when legally required, such as due to privacy laws.",
+    "extraInfo": "Although not yet covered in ISO/IEC standards, adherence to privacy regulations regarding data retention is crucial. Additionally, it is a general best practice to remove any sensitive data when it is no longer necessary to reduce the impact of potential data leaks.",
+    "asset": ["Data", "Model"],
+    "category": "development-time and runtime control",
+    "stages": ["Development", "Runtime"]
+  },
+  {
+    "title": "Obfuscation of Training Data",
+    "description": "Obfuscation techniques should be applied during development to attain a degree of obfuscation for sensitive data, particularly personal data. This includes implementing methods such as differential privacy, which is a framework for formalizing privacy in statistical and data analysis. Differential privacy ensures that individual data entries in a database are protected by adding controlled noise to the results of queries, making it difficult to infer specific individual contributions to the dataset.",
+    "extraInfo": "Various approaches such as Private Aggregation of Teacher Ensembles (PATE), objective function perturbation, masking, encryption, tokenization, and anonymization can be employed to achieve obfuscation of training data. These techniques aim to balance the need for privacy preservation with the utility of the data for model training and analysis.",
+    "asset": ["Data", "Model"],
+    "category": "development-time data science control",
+    "stages": ["Development"]
+  },
+  {
+    "title": "Discretion in Technical Details",
+    "description": "To minimize the risk of attacks, access to technical details that could aid attackers should be restricted both during development and at runtime. This includes limiting the dissemination of technical information about AI systems, such as model architectures, algorithms, and implementation details.",
+    "extraInfo": "Incorporate the protection of technical details as an asset into information security management practices, including asset management, data classification, awareness education, policy development, and inclusion in risk analysis.",
+    "asset": ["Model", "Processes"],
+    "category": "development-time and runtime control",
+    "stages": ["Development", "Runtime"]
+  },
+  {
+    "title": "Oversight of Model Behavior",
+    "description": "Oversight mechanisms should be implemented at runtime to monitor the behavior of AI models, either through human intervention or automated business logic rules (guardrails). This oversight aims to detect and address any unwanted model behavior, either by correcting it or halting the execution of the model's decision.",
+    "extraInfo": "While guardrails provide automated oversight, human oversight offers more intelligent validation based on common sense and domain knowledge. However, it is more costly and slower. Designing automated systems that require some level of human engagement or provide regular updates to human operators can help maintain situational awareness and ensure safer operations.",
+    "asset": ["Model"],
+    "category": "runtime control",
+    "stages": ["Runtime"]
+  },
+  {
+    "title": "Least Model Privilege",
+    "description": "To enhance security, the privileges of AI models to autonomously take actions should be minimized at runtime. This involves restricting the capabilities of models to prevent them from performing certain actions, such as connecting to email facilities to avoid sending incorrect or sensitive information.",
+    "extraInfo": "Privileges assigned to autonomous model decisions should be carefully considered in terms of the associated risk of unwanted model behavior. Implementing the principle of least model privilege helps mitigate the risk of unauthorized actions and potential security breaches.",
+    "asset": ["Model"],
+    "category": "runtime information security control",
+    "stages": ["Runtime"]
+  },
+  {
+    "title": "AI Transparency",
+    "description": "Transparency measures should be implemented at runtime to inform users about the general workings of the AI model, its training process, and the expected accuracy and reliability of its output. This transparency enables users to adjust their reliance on the AI system accordingly.",
+    "extraInfo": "Providing abstract information about the model's operations helps users understand its limitations and make informed decisions. Transparency complements explainability by offering users insight into the overall functioning of the model.",
+    "asset": ["Model"],
+    "category": "runtime control",
+    "stages": ["Runtime"]
+  },
+  {
+    "title": "Continuous Model Validation",
+    "description": "Continuous validation processes should be implemented at runtime to assess the behavior of the AI model against an appropriate test set. This ongoing validation enables the detection of sudden changes, which could be indicative of a permanent attack such as data poisoning or model poisoning.",
+    "extraInfo": "Continuous validation also helps identify other issues such as system failures or deteriorating model performance due to changes in the real-world environment since its training. Implementing continuous validation is essential for maintaining the reliability and effectiveness of AI systems over time.",
+    "asset": ["Model"],
+    "category": "runtime data science control",
+    "stages": ["Runtime"]
+  },
+  {
+    "title": "Explainability",
+    "description": "Explainable AI (XAI) techniques should be employed at runtime to provide insights into how individual model decisions are made. This transparency aids in building user trust in the model and can help prevent overreliance by revealing the simplicity or errors in the decision-making process. Additionally, explanations of model workings assist security assessors in evaluating AI security risks.",
+    "extraInfo": "Implementing explainability measures is crucial for enhancing transparency and accountability in AI systems, as well as for facilitating effective security assessments.",
+    "asset": ["Model"],
+    "category": "runtime data science control",
+    "stages": ["Runtime"]
+  },
+  {
+    "title": "Unwanted Bias Testing",
+    "description": "Unwanted bias testing involves conducting test runs of the model to measure and detect any unwanted bias in its behavior. Unwanted bias can arise from attacks on the model's behavior, which may result in unfair or discriminatory outcomes. While the details of bias detection fall outside the scope of this document, it is important to recognize that attacks on model behavior can lead to biased decisions.",
+    "extraInfo": "Addressing unwanted bias is essential for ensuring fairness and equity in AI systems, as biased decisions can have significant societal impacts.",
+    "asset": ["Model"],
+    "category": "runtime data science control",
+    "stages": ["Runtime"]
+  },
+  {
+    "title": "Monitor Use",
+    "description": "Monitor the use of the model (input, date, time, user) by registering it in logs, so it can be used to reconstruct incidents, and made it part of the existing incident detection process. This includes monitoring for improper functioning of the model, suspicious patterns of model use, and suspicious inputs or series of inputs. By adding details to logs on the version of the model used and the output, troubleshooting becomes easier.",
+    "extraInfo": "Refer to ISO 27002 Controls 8.15 Logging and 8.16 Monitoring activities for general logging and monitoring guidelines. However, specific monitoring for AI-specific attacks may require additional measures beyond standard controls.",
+    "asset": ["Model"],
+    "category": "runtime",
+    "stages": ["Usage"]
+  },
+  {
+    "title": "Rate Limit",
+    "description": "Limit the rate (frequency) of access to the model (e.g. API) - preferably per user. The purpose is to severely delay attackers trying many inputs to perform attacks through use, such as evasion attacks or model inversion. The particularity of this control is to limit access not to prevent system overload but to prevent experimentation. However, it does not prevent attacks that use low frequency of interaction.",
+    "extraInfo": "Refer to OpenCRE for more detailed information on rate limiting techniques specific to AI systems.",
+    "asset": ["Model"],
+    "category": "runtime",
+    "stages": ["Usage"]
+  },
+  {
+    "title": "Model Access Control",
+    "description": "Securely limit allowing access to use the model to authorized users. The purpose is to prevent attackers that are not authorized to perform attacks through use. However, remaining risks include attackers succeeding in authenticating as an authorized user, qualifying as an authorized user, bypassing the access control through a vulnerability, or exploiting the ease of becoming an authorized user (e.g., when the model is publicly available).",
+    "extraInfo": "Refer to ISO 27002 Controls 5.15, 5.16, 5.18, 5.3, and 8.3 for technical access control guidelines. Additionally, consult OpenCRE for further insights into technical and centralized access control mechanisms.",
+    "asset": ["Model"],
+    "category": "runtime",
+    "stages": ["Usage"]
+  },
+  {
+    "title": "Detect Odd Input",
+    "description": "Implement tools to detect whether input is odd: significantly different from the training data or even invalid - also called input validation - without knowledge of what malicious input looks like. The purpose is to address the risk of odd input resulting in unwanted model behavior due to the model not having encountered such data before, potentially leading to false results. Detected odd input can be logged for analysis and optionally discarded.",
+    "extraInfo": "Various techniques, such as Out-of-Distribution Detection (OOD), Novelty Detection (ND), Outlier Detection (OD), Anomaly Detection (AD), and Open Set Recognition (OSR), can be employed for detecting odd input. These techniques involve identifying data points that differ significantly from the distribution of the training data or from the majority of the data. Refer to Hendrycks & Gimpel (2016), Yang et al. (2021), Khosla et al. (2020), and Sehwag et al. (2019) for further insights into the implementation and effectiveness of these techniques.",
+    "asset": ["Model"],
+    "category": "runtime",
+    "stages": ["Usage"]
+  },
+  {
+    "title": "Detect Adversarial Input",
+    "description": "Implement tools to detect specific attack patterns in input or series of inputs, such as patches in images. Adversarial attack detectors can utilize statistical analysis of input series, statistical methods, detection networks, input distortion based techniques (IDBT), and detection of adversarial patches. These tools aim to identify deviations from benign inputs that may indicate adversarial attacks, facilitating the mitigation of such threats.",
+    "extraInfo": "Various techniques and approaches, including statistical analysis, detection networks, and input distortion based techniques, can aid in detecting adversarial input. Refer to the cited references for detailed insights into the implementation and effectiveness of these techniques.",
+    "asset": ["Model"],
+    "category": "runtime",
+    "stages": ["Usage"]
+  },
+  {
+    "title": "Evasion-Robust Model",
+    "description": "Choose an evasion-robust model design, configuration, and/or training approach to maximize resilience against evasion. A robust model in the context of evasion is one that does not display significant changes in output for minor changes in input, thus minimizing susceptibility to adversarial examples. Methods to reinforce adversarial robustness include adversarial training, increasing training samples, tuning/optmizing the model for variance, randomization techniques, and gradient masking.",
+    "extraInfo": "Adversarial robustness can be assessed using tools such as IBM Adversarial Robustness Toolbox, CleverHans, or Foolbox. However, care must be taken when considering robust model designs, as concerns have arisen about their effectiveness and potential limitations.",
+    "asset": ["Model"],
+    "category": "development",
+    "stages": ["Development"]
+  },
+  {
+    "title": "Train Adversarial",
+    "description": "Add adversarial examples to the training set to make the model more robust against evasion attacks. Adversarial examples, generated like they would be for an evasion attack, are added to the training set with the correct output. This process helps the model generalize better by learning not to overly rely on subtle patterns that might not generalize well. However, generating adversarial examples creates significant training overhead, may lead to overfitting, and may not generalize well to new attack methods.",
+    "extraInfo": "Care should be taken as adversarial training may not scale well with model complexity or input dimension, and it may introduce overfitting issues. For more information, refer to the cited references.",
+    "asset": ["Model"],
+    "category": "development",
+    "stages": ["Development"]
+  },
+  {
+    "title": "Input Distortion",
+    "description": "Lightly modify the input with the intention to distort the adversarial attack causing it to fail, while maintaining sufficient model correctness. Modification can be done by adding noise (randomization), smoothing, or JPEG compression. Maintaining model correctness can be improved by performing multiple random modifications (e.g., randomized smoothing) to the input and then comparing the model output.",
+    "extraInfo": "Defenses based on input distortion often rely on gradient masking to protect against attacks. However, they can be vulnerable to attacks such as approximation of gradients using techniques like BPDA or EOT. Random Transformations (RT) defend neural networks by introducing enough randomness to make computing adversarial examples using EOT computationally inefficient.",
+    "asset": ["Model"],
+    "category": "runtime",
+    "stages": ["Usage"]
+  },
+  {
+    "title": "Adversarial-Robust Distillation",
+    "description": "Defensive distillation involves training a student model to replicate the softened outputs of the teacher model, increasing the resilience of the student model to adversarial examples by smoothing the decision boundaries and making the model less sensitive to small perturbations in the input.",
+    "extraInfo": "Care must be taken when considering defensive distillation techniques, as security concerns have arisen about their effectiveness.",
+    "asset": ["Model"],
+    "category": "development",
+    "stages": ["Development"]
+  },
+  {
+    "title": "Filter Sensitive Model Output",
+    "description": "Actively censor sensitive data by detecting it when possible, such as phone numbers, in the model's output.",
+    "extraInfo": "This control aims to prevent the inadvertent leakage of sensitive information by censoring it from the model's output.",
+    "asset": ["Model"],
+    "category": "runtime",
+    "stages": ["Usage"]
+  },
+  {
+    "title": "Obscure Confidence",
+    "description": "Exclude indications of confidence in the output, or round confidence values so they cannot be used for optimization purposes.",
+    "extraInfo": "This control aims to prevent adversaries from exploiting confidence values in the model's output to optimize their attacks or gain insights into the model's behavior.",
+    "asset": ["Model"],
+    "category": "runtime",
+    "stages": ["Usage"]
+  },
+  {
+    "title": "Small Model",
+    "description": "Prevent overfitting, which involves storing individual training samples, by keeping the model small so it is not able to store details at the level of individual training set samples.",
+    "extraInfo": "This control aims to mitigate the risk of overfitting by limiting the capacity of the model to memorize specific training samples, thus improving its generalization ability.",
+    "asset": ["Model"],
+    "category": "development",
+    "stages": ["Development"]
+  },
+  {
+    "title": "Denial-of-Service Input Validation",
+    "description": "Implement input validation and sanitization to reject or correct malicious content, such as very large inputs, to prevent denial-of-service attacks.",
+    "extraInfo": "This control aims to protect the model from malicious inputs that could lead to denial-of-service attacks by validating and sanitizing input data.",
+    "asset": ["Model"],
+    "category": "runtime",
+    "stages": ["Usage"]
+  },
+  {
+    "title": "Limit Resource Usage",
+    "description": "Implement controls to limit resource usage for a single model input, preventing resource overuse.",
+    "extraInfo": "This control aims to protect the system from resource exhaustion attacks by limiting the amount of resources that can be consumed by a single model input.",
+    "asset": ["Model"],
+    "category": "runtime",
+    "stages": ["Usage"]
+  },
+  {
+    "title": "DEVDATAPROTECT",
+    "description": "Development data protect: protect (train/test) data, source code, configuration & parameters. This data protection is important because when it leaks it hurts confidentiality of intellectual property and/or the confidentiality of train/test data which also may contain company secrets, or personal data for example. Also the integrity of this data is important to protect, to prevent data or model poisoning.",
+    "extraInfo": "Further references, links to standards go here.\nPermalink: Development Data Protect",
+    "asset": ["Data", "Model"],
+    "category": "development-time information security control",
+    "stages": ["Development"]
+  },
+  {
+    "title": "DEVSECURITY",
+    "description": "Development security: sufficient security of the AI development infrastructure, also taking into account the sensitive information that is typical to AI: training data, test data, model parameters and technical documentation. This can be achieved by adding these assets to the existing security management system. Security involves for example screening of development personnel, protection of source code/configuration, virus scanning on engineering machines.",
+    "extraInfo": "Further references, links to standards go here.\nPermalink: Development Security",
+    "asset": ["Data", "Model"],
+    "category": "development-time information security control",
+    "stages": ["Development"]
+  },
+  {
+    "title": "SEGREGATEDATA",
+    "description": "Segregate data: store sensitive development data (training or test data, model parameters, technical documentation) in separate areas with restricted access. Each separate area can then be hardened accordingly and access granted to only those that need to work with that data directly.",
+    "extraInfo": "Further references, links to standards go here.\nPermalink: Segregate Data",
+    "asset": ["Data", "Model"],
+    "category": "development-time information security control",
+    "stages": ["Development"]
+  },
+  {
+    "title": "CONFCOMPUTE",
+    "description": "Confidential compute: If available and possible, use features of the data science execution environment to hide training data and model parameters from model engineers - even while it is in use.",
+    "extraInfo": "Further references, links to standards go here.\nPermalink: Confidential Compute",
+    "asset": ["Data", "Model"],
+    "category": "development-time information security control",
+    "stages": ["Development"]
+  },
+  {
+    "title": "FEDERATEDLEARNING",
+    "description": "Federated learning can be applied when a training set is distributed over different organizations, preventing that the data needs to be collected in a central place - increasing the risk of leaking. Federated Learning is a decentralized Machine Learning architecture wherein a number of clients (e.g. sensor or mobile devices) participate in collaborative, decentralized, asynchronous training, which is orchestrated and aggregated by a controlling central server.",
+    "extraInfo": "Further references, links to standards go here.\nPermalink: Federated Learning",
+    "asset": ["Data", "Model"],
+    "category": "development-time data science control",
+    "stages": ["Development"]
+  },
+  {
+    "title": "SUPPLYCHAINMANAGE",
+    "description": "Supply chain management: Managing the supply chain to minimize the security risk from externally obtained elements. In regular software engineering these elements are source code or software components (e.g. open source). The particularities for AI are: supplied elements can include data and models, many of the software components are executed development-time instead of just in production (the runtime of the application), as explained in the development-time threats, there are new vulnerable assets during AI development: training data and model parameters.",
+    "extraInfo": "Further references, links to standards go here.\nPermalink: Supply Chain Management",
+    "asset": ["Data", "Model"],
+    "category": "development-time information security control",
+    "stages": ["Development"]
+  },
+  {
+    "title": "Broad model poisoning development-time",
+    "description": "Model poisoning in the broad sense is manipulating model behaviour by altering training data, code, configuration, or model parameters during development-time. Impact: Integrity of model behaviour is affected, leading to issues from unwanted model output (e.g. failing fraud detection, decisions leading to safety issues, reputation damage, liability). There are roughly two categories of data poisoning: Backdoors - which trigger unwanted responses to specific inputs (e.g. a money transaction is wrongfully marked as NOT fraud because it has a specific amount of money for which the model has been manipulated to ignore). Other name: Trojan attack. Sabotage: data poisoning leads to unwanted results for regular inputs, leading to e.g. business continuity problems or safety issues. Sabotage data poisoning attacks are relatively easy to detect because they occur for regular inputs, but backdoor data poisoning only occurs for really specific inputs and is therefore hard to detect.",
+    "extraInfo": "Further references, links to standards go here.\nPermalink: Broad Model Poisoning Development-time",
+    "asset": ["Data", "Model"],
+    "category": "group of development-time threats",
+    "stages": ["Development"]
+  },
+  {
+    "title": "MODELENSEMBLE",
+    "description": "Model ensemble: include the model as part of an ensemble, where each model is trained in a separately protected environment. If one model's output deviates from the others, it can be ignored, as this indicates possible manipulation. Also called: model isolation.",
+    "extraInfo": "Further references, links to standards go here.\nPermalink: Model Ensemble",
+    "asset": ["Model"],
+    "category": "development-time data science control - including specific runtime implementation",
+    "stages": ["Development", "Runtime"]
+  },
+  ChatGPT
+
+  {
+    "title": "MORETRAINDATA",
+    "description": "More train data: increasing the amount of non-malicious data makes training more robust against poisoned examples - provided that these poisoned examples are small in number. One way to do this is through data augmentation - the creation of artificial training set samples that are small variations of existing samples. The goal is to 'outnumber' the poisoned samples so the model 'forgets' them. This control can only be applied during training and therefore not to an already trained model. Nevertheless, a variation can be applied to a trained model: by fine-tuning it with additional non-malicious data - see POISONROBUSTMODEL.",
+    "extraInfo": "Further references, links to standards go here.\nPermalink: More Train Data",
+    "asset": ["Data", "Model"],
+    "category": "development-time data science control - pre-training",
+    "stages": ["Development"]
+  },
+  {
+    "title": "DATAQUALITYCONTROL",
+    "description": "Data quality control: Perform quality control on data including detecting poisoned samples through statistical deviation or pattern recognition. For important data and scenarios this may involve human verification. Particularity for AI and security: standard quality control needs to take into account that data may have maliciously been changed. This means that extra checks can be placed to detect changes that would normally not happen by themselves. For example: safely storing hash codes of data elements, such as images, and regularly checking to see if the images have been manipulated. A method to detect statistical deviation is to train models on random selections of the training dataset and then feed each training sample to those models and compare results. This control can only be applied during training and therefore not to an already trained model.",
+    "extraInfo": "Further references, links to standards go here.\nPermalink: Data Quality Control",
+    "asset": ["Data", "Model"],
+    "category": "development-time data science control - pre-training",
+    "stages": ["Development"]
+  },
+  {
+    "title": "TRAINDATADISTORTION",
+    "description": "Train data distortion: distorting untrusted training data by smoothing or adding noise, to make poisoned 'triggers' ineffective. Such a trigger has been inserted by an attacker in the training data, together with an unwanted output. Whenever input data is presented that contains a similar 'trigger', the model can recognize it and output the unwanted value. The idea is to distort the triggers so that they are not recognized anymore by the model. A special form of train data distortion is complete removal of certain input fields. Technically, this is data minimization (see DATAMINIMIZE), but its purpose is not protecting the confidentiality of that data per se, but reducing the ability to memorize poisoned samples.",
+    "extraInfo": "Further references, links to standards go here.\nPermalink: Train Data Distortion",
+    "asset": ["Data", "Model"],
+    "category": "development-time data science control - pre-training",
+    "stages": ["Development"]
+  },
+  {
+    "title": "POISONROBUSTMODEL",
+    "description": "Poison robust model: select a model type and creation approach to reduce sensitivity to poisoned training data. This control can be applied to a model that has already been trained, so including models that have been obtained from an external source. The general principle of reducing sensitivity to poisoned training data is to make sure that the model does not memorize the specific malicious input pattern (or backdoor trigger). The following two examples represent different strategies, which can also complement each other in an approach called fine pruning:",
+    "extraInfo": "Further references, links to standards go here.\nPermalink: Poison Robust Model",
+    "asset": ["Model"],
+    "category": "development-time data science control - post-training",
+    "stages": ["Development"]
+  },
+  {
+    "title": "Run-time Model Integrity",
+    "description": "Implement run-time model integrity measures to safeguard against application security threats. This involves applying traditional application security controls to protect the storage of model parameters. These controls may include access control, checksums, and encryption. Additionally, utilizing a Trusted Execution Environment (TEE) can enhance the protection of model integrity.",
+    "extraInfo": "For more information on run-time model integrity, refer to the OWASP Application Security Verification Standard (ASVS) at https://owaspai.org/goto/runtimemodelintegrity/",
+    "asset": ["Model"],
+    "category": "security",
+    "stages": ["Runtime"]
+  },
+  {
+    "title": "Run-time Model Input/Output Integrity",
+    "description": "Implement run-time model input/output integrity measures to safeguard against application security threats. This involves applying traditional application security controls to protect the runtime manipulation of the model's input/output logic. Examples include protection against man-in-the-middle attacks.",
+    "extraInfo": "For more information on run-time model input/output integrity, refer to the OWASP Application Security Verification Standard (ASVS) at https://owaspai.org/goto/runtimemodeliointegrity/",
+    "asset": ["Model"],
+    "category": "security",
+    "stages": ["Runtime"]
+  },
+  {
+    "title": "Run-time Model Confidentiality",
+    "description": "Ensure run-time model confidentiality to mitigate application security threats. This involves adopting practices outlined in SECDEVPROGRAM to enhance application security, with a focus on protecting the storage of model parameters. Measures such as access control and encryption should be implemented to safeguard model confidentiality. Additionally, leveraging a Trusted Execution Environment (TEE) can provide protection against various attacks, including side-channel hardware attacks like DeepSniffer.",
+    "extraInfo": "For more information on run-time model confidentiality, refer to the OWASP Application Security Verification Standard (ASVS) at https://owaspai.org/goto/runtimemodelconfidentiality/",
+    "asset": ["Model"],
+    "category": "security",
+    "stages": ["Runtime"]
+  },
+  {
+    "title": "Model Obfuscation",
+    "description": "Implement model obfuscation techniques to enhance security against application security threats. Model obfuscation involves storing the model in a complex and confusing manner with minimal technical information. This approach makes it more challenging for attackers to extract and understand a model after gaining access to its runtime storage.",
+    "extraInfo": "For more information on model obfuscation techniques, refer to the article on ModelObfuscator at https://owaspai.org/goto/modelobfuscation/",
+    "asset": ["Model"],
+    "category": "security",
+    "stages": ["Runtime"]
+  },
+  {
+    "title": "Encode Model Output",
+    "description": "Apply output encoding to model output, especially if it contains text, to mitigate application security threats. Output encoding helps prevent injection attacks and enhances the security of the application.",
+    "extraInfo": "For more information on output encoding and injection prevention, refer to OpenCRE (Open Web Application Security Project Cross-Site Scripting (XSS) Prevention Cheat Sheet).",
+    "asset": ["Model"],
+    "category": "security",
+    "stages": ["Runtime"]
+  },
+  {
+    "title": "Prompt Input Validation",
+    "description": "Implement prompt input validation mechanisms to detect and remove malicious instructions from input. This involves attempting to recognize and filter out malicious instructions to enhance the security of the application. Due to the flexibility of natural language, implementing input validation for prompts can be more challenging compared to strict syntax situations like SQL commands.",
+    "extraInfo": "For more information on input validation techniques, refer to the OWASP Application Security Verification Standard (ASVS) at https://owaspai.org/goto/promptinputvalidation/",
+    "asset": ["Data"],
+    "category": "security",
+    "stages": ["Runtime"]
+  },
+  {
+    "title": "Input Segregation",
+    "description": "Implement input segregation techniques to clearly separate untrusted input from trusted sources. Make this separation evident in prompt instructions. Utilize developments such as marking user input in prompts to reduce the risk of prompt injection, although complete elimination of the risk may not be possible. Examples of such developments include ChatML for OpenAI API calls and Langchain prompt formatters.",
+    "extraInfo": "For further information on input segregation, refer to Simon Willison's article and the NCC Group discussion.",
+    "asset": ["Data"],
+    "category": "security",
+    "stages": ["Runtime"]
+  },
+  {
+    "title": "Model Input Confidentiality",
+    "description": "Ensure model input confidentiality to enhance security against application security threats. Refer to practices outlined in SECDEVPROGRAM to achieve application security, with a focus on protecting the transport and storage of model input. Implement measures such as access control, encryption, and minimizing data retention to safeguard model input confidentiality.",
+    "extraInfo": "For more information on model input confidentiality, refer to the OWASP Application Security Verification Standard (ASVS) at https://owaspai.org/goto/modelinputconfidentiality/",
+    "asset": ["Data", "Model"],
+    "category": "security",
+    "stages": ["Runtime"]
+  }
+]
