@@ -18,6 +18,7 @@ import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ArchitectureIcon from '@mui/icons-material/Architecture'
 import ListItemIcon from '@mui/material/ListItemIcon'
+import CandlestickChartRoundedIcon from '@mui/icons-material/CandlestickChartRounded';
 import ListItemText from '@mui/material/ListItemText'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
@@ -132,6 +133,15 @@ function App() {
             {view === 'controls' && <EditIcon sx={{ fontSize: 15 }} />}
           </ListItemButton>
         </ListItem>
+        <ListItem key={'Risks'} disablePadding onClick={() => setView('risks')}>
+          <ListItemButton>
+            <ListItemIcon>
+              <CandlestickChartRoundedIcon color="secondary"/>
+            </ListItemIcon>
+            <ListItemText primary={'Risks'} />
+            {view === 'risks' && <EditIcon sx={{ fontSize: 15 }} />}
+          </ListItemButton>
+        </ListItem>
     </List>
     <Divider />
     <List>
@@ -153,8 +163,7 @@ function App() {
         <Box
           component="nav"
           sx={{ width: { sm: drawerWidth },  flexShrink: { sm: 0 }, backgroundImage: 'url(noise4.png)' }}
-          aria-label="mailbox folders"
-        >
+          aria-label="mailbox folders">
           <Drawer
             variant="temporary"
             ModalProps={{
@@ -163,8 +172,7 @@ function App() {
             sx={{
               display: { xs: 'block', sm: 'none' },
               '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-            }}
-          >
+            }}>
             {drawer}
           </Drawer>
           <Drawer
@@ -173,8 +181,7 @@ function App() {
               display: { xs: 'none', sm: 'block' },
               '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
             }}
-            open
-          >
+            open>
             {drawer}
           </Drawer>
         </Box>

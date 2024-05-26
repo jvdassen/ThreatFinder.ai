@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import ThreatModels from './ThreatModels.jsx'
+import Scenarios from './Scenarios.jsx'
 
 
 export default Goals
@@ -127,7 +127,7 @@ function Goals() {
         </>
       )}*/}
 
-      <ThreatModels />
+      <Scenarios />
     </Box>
   )
 }

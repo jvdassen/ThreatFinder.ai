@@ -20,7 +20,7 @@ import AddIcon from '@mui/icons-material/Add'
 import { BarChart } from '@mui/x-charts/BarChart'
 import { LineChart } from '@mui/x-charts/LineChart'
 
-export default ThreatModels
+export default Scenarios
 
 function formatDate(date) {
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -33,7 +33,7 @@ function formatDate(date) {
   return formattedDate;
 }
 
-function ThreatModels() {
+function Scenarios() {
   const [selectedModel, selectModel] = useState(localStorage.getItem('selectedModel') || '')
 
   const [newName, setNewName] = useState('')

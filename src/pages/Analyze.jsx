@@ -35,7 +35,6 @@ function Analyze() {
     loaded = []
   }
   var storedModels = loaded
-  var [models] = useState(storedModels)
   var [selectedModelInfo] = useState(storedModels.find(m => m.id === selectedModel))
 
   var diagram = selectedModelInfo.diagram
@@ -47,13 +46,13 @@ function Analyze() {
   try {
     var loadedTM = JSON.parse(localStorage.getItem('threatModels'))[selectedModel] || []
   } catch (e) {
-    var loadedTM = []
+    loadedTM = []
   }
 
   var [threatModel, setThreatModel] = useState(loadedTM)
   function addToThreatModel (newThreat) {
     threatModel.push(newThreat)
-    setThreatModel([... threatModel])
+    setThreatModel([...threatModel])
     var storedThreatModels = JSON.parse(localStorage.getItem('threatModels')) || {} 
     storedThreatModels[selectedModel] = threatModel
     localStorage.setItem('threatModels', JSON.stringify(storedThreatModels))
@@ -373,49 +372,54 @@ function Analyze() {
               </FormControl>
             </Box>
           </Box>
-
         </AccordionDetails>
       </Accordion>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<NotesRoundedIcon />}
-          sx={{ textTransform: 'capitalize' }}>
-          Threat Model {threatModel.length > 0 ? `(${threatModel.length})` : '(empty)' }
-        </AccordionSummary>
-        <AccordionDetails>
-        <List>
-          { threatModel.map(function renderThreat (threat) {
-              console.log(threat)
-              return (
-                <Accordion>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    sx={{ textTransform: 'capitalize' }}>
-                    "{threat.threat.Threat}"
-                    <Typography color="secondary" sx={{ml: '.5em', mr: '.5em'}}>@</Typography>
-                    "{threat.targetedAsset.assetDisplayname}" 
-                    <ArrowRightAltIcon color="secondary" sx={{ml: '.5em', mr: '.5em'}}/>
-                    {threat.threat['Potential Impact']}
-                  </AccordionSummary>
-
-                  <AccordionDetails>
-                    <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>DESCRIPTION</span>{threat.threat.Description}</Typography>
-                    <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>CATEGORY</span>{threat.threat['Threat Category']}</Typography>
-                    <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>ASSET</span>{threat.targetedAsset['assetDisplayname']} </Typography>
-                    <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>ASSET CATEGORY</span>{threat.targetedAsset['assetCategory']}</Typography>
-                    <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>ASSET LIFE CYCLE</span>{threat.targetedAsset.assetLifeCycleStage}</Typography>
-                  </AccordionDetails>
-                </Accordion>
-              )})
-          }
-          </List>
-        </AccordionDetails>
-      </Accordion>
+      <ThreatModel threatModel={threatModel}></ThreatModel>
       {assetList(detectedAssets, selectedModelInfo)}
     </>
   )
 }
 
+export function ThreatModel (props) {
+  var {threatModel} = props
+  return (
+    <Accordion>
+      <AccordionSummary
+        expandIcon={<NotesRoundedIcon />}
+        sx={{ textTransform: 'capitalize' }}>
+        Threat Model {threatModel.length > 0 ? `(${threatModel.length})` : '(empty)' }
+      </AccordionSummary>
+      <AccordionDetails>
+        <List>
+          { threatModel.map(function renderThreat (threat) {
+            console.log(threat)
+            return (
+              <Accordion>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  sx={{ textTransform: 'capitalize' }}>
+                  "{threat.threat.Threat}"
+                  <Typography color="secondary" sx={{ml: '.5em', mr: '.5em'}}>@</Typography>
+                  "{threat.targetedAsset.assetDisplayname}" 
+                  <ArrowRightAltIcon color="secondary" sx={{ml: '.5em', mr: '.5em'}}/>
+                  {threat.threat['Potential Impact']}
+                </AccordionSummary>
+
+                <AccordionDetails>
+                  <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>DESCRIPTION</span>{threat.threat.Description}</Typography>
+                  <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>CATEGORY</span>{threat.threat['Threat Category']}</Typography>
+                  <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>ASSET</span>{threat.targetedAsset['assetDisplayname']} </Typography>
+                  <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>ASSET CATEGORY</span>{threat.targetedAsset['assetCategory']}</Typography>
+                  <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>ASSET LIFE CYCLE</span>{threat.targetedAsset.assetLifeCycleStage}</Typography>
+                </AccordionDetails>
+              </Accordion>
+            )})
+          }
+        </List>
+      </AccordionDetails>
+    </Accordion>
+  )
+}
 function useModeledAssets(diagram, taxonomy) {
   var x = new DOMParser()
   var d = x.parseFromString(diagram.xml, 'text/xml')
