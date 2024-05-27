@@ -18,6 +18,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 import TextField from '@mui/material/TextField';
+import { BarChart } from '@mui/x-charts/BarChart'
 import Select from '@mui/material/Select';
 import { Input as BaseInput, InputProps, inputClasses } from '@mui/base/Input';
 import { styled } from '@mui/system';
@@ -58,8 +59,22 @@ export default function Controls() {
     var [confInc, setConfInc] = useState(0.95)
     var [confLoss, setConfLoss] = useState(0.95)
 
-    function quantify () {
+    var [quantification, setQuant] = useState({})
 
+    async function quantify (minInc, maxInc, minLoss, maxLoss, confInc, confLoss) {
+      console.log('quantification using', arguments)
+      var quantificationRes = await fetch('https://threatfinderai-quant.comsyslab.xyz/quant?' + new URLSearchParams({
+        minInc: minInc,
+        maxInc: maxInc,
+        minLoss: minLoss,
+        maxLoss: maxLoss,
+        confInc: confInc,
+        confLoss: confLoss
+      }))
+      var quantification = await quantificationRes.json()
+      console.log(quantification)
+      setQuant(quantification)
+      setQuantified(true)
     }
 
     return (
@@ -76,10 +91,12 @@ export default function Controls() {
             <NumberInput
               sx={{ flexGrow: 1}}
               value={minInc}
+              onChange={(e) => {setMinInc(e.target.value)}}
               startAdornment={<InputAdornment>min</InputAdornment>}/>
             <NumberInput
               sx={{ flexGrow: 1}}
               value={maxInc}
+              onChange={(e) => {setMaxInc(e.target.value)}}
               startAdornment={<InputAdornment>max</InputAdornment>}/>
           </Box>
 
@@ -90,10 +107,12 @@ export default function Controls() {
             <NumberInput
               sx={{ flexGrow: 1}}
               value={minLoss}
+              onChange={(e) => {setMinLoss(e.target.value)}}
               startAdornment={<InputAdornment>min</InputAdornment>}/>
             <NumberInput
               sx={{ flexGrow: 1}}
               value={maxLoss}
+              onChange={(e) => {setMaxLoss(e.target.value)}}
               startAdornment={<InputAdornment>max</InputAdornment>}/>
           </Box>
 
@@ -104,16 +123,30 @@ export default function Controls() {
             <NumberInput
               sx={{ flexGrow: 1}}
               value={confInc}
+              onChange={(e) => {setConfInc(e.target.value)}}
               startAdornment={<InputAdornment>Incidents</InputAdornment>}/>
             <NumberInput
               sx={{ flexGrow: 1}}
               value={confLoss}
+              onChange={(e) => {setConfLoss(e.target.value)}}
               startAdornment={<InputAdornment>Losses</InputAdornment>}/>
           </Box>
+          {
+            quantified &&
+            <Box sx={{ display: 'flex' }}>
+              <BarChart
+                xAxis={[{ scaleType: 'band', barGapRatio: 0.1, data: quantification.bin_edges }]}
+                series={[{ color: '#8278d9', label: 'Exposure', data: quantification.hist }]}
+                height={300} />
+            </Box>
+
+          }
         </CardContent>
         <CardActions>
           <Button size="small" variant="outlined" color="secondary" disabled={quantified} startIcon={<AddIcon/>} onClick={(e) => {console.log(e)}}>Include</Button>
-          <Button size="small" color="secondary" startIcon={<FunctionsRoundedIcon/>} onClick={quantify()}>Quantify</Button>
+          <Button size="small" color="secondary" startIcon={<FunctionsRoundedIcon/>} 
+                  disabled={!((minLoss >= 0) && maxLoss && (minInc >= 0) && maxInc)}
+                  onClick={() => {quantify(minInc, maxInc, minLoss, maxLoss, confInc, confLoss)}}>Quantify</Button>
         </CardActions>
       </Card>
     )
