@@ -8,6 +8,7 @@ import {
 } from '@mui/material'
 import { useState } from 'react'
 import Accordion from '@mui/material/Accordion'
+import Link from '@mui/material/Link'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
@@ -51,7 +52,7 @@ export default function Controls() {
     var {control, threat, adopted} = props
 
     return (
-      <Card sx={{ flex: '1 0 calc(25% - 1em)', minWidth: '300px' }} variant="outlined">
+      <Card sx={{ flex: '1 0 calc(33% - 1em)', minWidth: '300px' }} variant="outlined">
         <CardContent>
           <Box sx={{ display: 'flex', justifyContent: 'space-between'}}>
             <Typography sx={{ fontSize: 12, textTransform: 'uppercase', opacity: '.5' }} color="text.secondary" gutterBottom>
@@ -65,7 +66,7 @@ export default function Controls() {
           <Typography variant="h5" component="div" color="secondary" sx={{ mb: '.5em', opacity: 1 }}>
             {control.title}
           </Typography>
-          <Typography variant="body2" sx={{ maxHeight: '10em', overflowY: 'scroll' }}>
+          <Typography variant="body2" sx={{ textAlign: 'justify', maxHeight: '10em', overflowY: 'scroll' }}>
             {control.description}
           </Typography>
         </CardContent>
@@ -98,27 +99,39 @@ export default function Controls() {
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 sx={{ textTransform: 'capitalize' }}>
-                <PolylineIcon sx={{ mr: '.5em' }}></PolylineIcon>
-                "{threat.threat.Threat}"
+                <PolylineIcon color="secondary" sx={{ mr: '.5em' }}></PolylineIcon>
+                {threat.threat.Threat}
                 <Typography color="secondary" sx={{ml: '.5em', mr: '.5em'}}>@</Typography>
-                "{threat.targetedAsset.assetDisplayname}" 
+                <Typography sx={{opacity: '.5'}}>
+                  {threat.targetedAsset.assetDisplayname}
+                </Typography>
+
                 <ArrowRightAltIcon color="secondary" sx={{ml: '.5em', mr: '.5em'}}/>
-                {threat.threat['Potential Impact']}
+                <Typography sx={{ opacity: '.5'}}>
+                  {threat.threat['Potential Impact']}
+                </Typography>
+
               </AccordionSummary>
 
               <AccordionDetails>
-                <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>DESCRIPTION</span>{threat.threat.Description}</Typography>
-                <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>CATEGORY</span>{threat.threat['Threat Category']}</Typography>
-                <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>ASSET</span>{threat.targetedAsset['assetDisplayname']} </Typography>
-                <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>ASSET CATEGORY</span>{threat.targetedAsset['assetCategory']}</Typography>
-                <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>ASSET LIFE CYCLE</span>{threat.targetedAsset.assetLifeCycleStage}</Typography>
+                <Box sx={{ display: 'flex', gap: '2em' }}>
+                  <Box sx={{ flex: '4 1'}}>
+                    <Typography sx={{ textAlign: 'justify'}}><Typography color="secondary" style={{display: 'inline', fontFamily: 'monospace', marginRight: '1em'}}>DESCRIPTION</Typography>{threat.threat.Description}</Typography>
+                  </Box>
+                  <Box sx={{ flex: '1 1'}}>
+                    <Typography><Typography color="secondary" style={{display: 'inline', fontFamily: 'monospace', marginRight: '1em'}}>CATEGORY</Typography>{threat.threat['Threat Category']}</Typography>
+                    <Typography><Typography color="secondary" style={{display: 'inline', fontFamily: 'monospace', marginRight: '1em'}}>ASSET</Typography>{threat.targetedAsset['assetDisplayname']} </Typography>
+                    <Typography><Typography color="secondary" style={{display: 'inline', fontFamily: 'monospace', marginRight: '1em'}}>ASSET CATEGORY</Typography>{threat.targetedAsset['assetCategory']}</Typography>
+                    <Typography><Typography color="secondary" style={{display: 'inline', fontFamily: 'monospace', marginRight: '1em'}}>ASSET LIFE CYCLE</Typography>{threat.targetedAsset.assetLifeCycleStage}</Typography>
+                  </Box>
+                </Box>
               </AccordionDetails>
 
               <Accordion>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   sx={{ textTransform: 'capitalize' }}>
-                  <GppGoodIcon sx={{ mr: '.5em'}}></GppGoodIcon>
+                  <GppGoodIcon color="secondary" sx={{ mr: '.5em'}}></GppGoodIcon>
                   Adopted Controls ({threat.controls.length})
                 </AccordionSummary>
                 <AccordionDetails>
@@ -135,12 +148,12 @@ export default function Controls() {
               </Accordion>
               <Accordion>
                 <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  sx={{ textTransform: 'capitalize' }}>
-                  <GppMaybeIcon sx={{ mr: '.5em'}}></GppMaybeIcon>
-                  Suggested Controls for Type "{threat.targetedAsset['assetCategory']}"
+                  expandIcon={<ExpandMoreIcon />}>
+                  <GppMaybeIcon color="secondary" sx={{ mr: '.5em'}}></GppMaybeIcon>
+                  Suggested Controls for {threat.targetedAsset['assetCategory']}
                 </AccordionSummary>
                 <AccordionDetails>
+                  <Typography sx={{ opacity: '.5', mb: '1em' }}>Review the following asset-related controls — Knowledge Base provided by the <Link color="secondary" href="https://owaspai.org/">OWASP AI Exchange</Link></Typography>
                   <Box sx={{ display: 'flex', gap: '1em', flexWrap: 'wrap'}}>
                     {
                       ControlList.filter(control => {

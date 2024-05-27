@@ -1,0 +1,57 @@
+{
+  "Availability": {
+    "tangible": [
+      "Product loss of revenue during disruptive time",
+      "Violation of commercial agreements with customers on delivery time",
+      "Compensations or refunds to customers affected by the downtime",
+      "Incident or Emergency Response",
+      "Quality degradation of products",
+      "Technical Investigation (Analyses)",
+      "Cybersecurity Improvements (Monitoring, Controls, Processes)",
+      "Breach penalties and regulatory fines"
+    ],
+    "intangible": [
+      "Insurance premium increases",
+      "Future lost contract revenue",
+      "Lost value of customer relationships",
+      "Reputation loss"
+    ]
+  },
+  "Integrity": {
+    "tangible": [
+      "Damage to critical components",
+      "Quality degradation of products",
+      "Violation of standards and regulations in safety and pollution",
+      "Violation of commercial agreements with customers on product specifications",
+      "Technical Investigation (Analyses)",
+      "Cybersecurity Improvements (Monitoring, Controls, Processes)",
+      "Breach penalties and regulatory fines"
+    ],
+    "intangible": [
+      "Insurance premium increases",
+      "Future lost contract revenue",
+      "Lost value of customer relationships",
+      "Reputation loss"
+    ]
+  },
+  "Confidentiality": {
+    "tangible": [
+      "Violation of commercial agreements with customers on product specifications",
+      "Customer breach notification",
+      "Post-mortem breach protection",
+      "Theft of Intellectual Property (IP).",
+      "Direct costs associated with managing external communications or brand monitoring following an incident",
+      "Violation of standards and regulations in privacy or data protection (regulatory compliance/penalty).",
+      "Technical Investigation (Analyses)",
+      "Cybersecurity Improvements (Monitoring, Controls, Processes)"
+
+    ],
+    "intangible": [
+      "Increased cost to raise debt",
+      "Insurance premium increases",
+      "Future lost contract revenue",
+      "Lost value of customer relationships",
+      "Reputation loss"
+    ]
+  }
+}

@@ -142,7 +142,11 @@ function Analyze() {
                       {k.Description}
                       <AccordionActions>
                         <Button color="secondary" onClick={(e) => {
-                          addToThreatModel({threat: k, targetedAsset: asset, controls: []}) 
+                          addToThreatModel({
+                            id: Math.random()*1e17,
+                            threat: k,
+                            targetedAsset: asset,
+                            controls: []}) 
                         }}>Add to Threat Model</Button>
                       </AccordionActions>
                     </AccordionDetails>

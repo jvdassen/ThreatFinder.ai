@@ -6,6 +6,7 @@ import Controls from './pages/Controls'
 import Stats from './pages/Stats'
 import Goals from './pages/Goals'
 import Instructions from './pages/Instructions'
+import Risks from './pages/Risks'
 
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
@@ -192,6 +193,7 @@ function App() {
           {view === 'goals' && <Goals />}
           {view === 'analyze' && <Analyze />}
           {view === 'controls' && <Controls />}
+          {view === 'risks' && <Risks />}
         </Box>
       </Box>
     </ThemeProvider>
