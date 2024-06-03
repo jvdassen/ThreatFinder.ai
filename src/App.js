@@ -67,7 +67,10 @@ function App() {
 
   const drawer = (
     <div>
-      <Toolbar>
+      <Toolbar
+         sx={{
+              backgroundImage: 'url(/public/noise4.png)',
+         }}>
         <Typography
           variant="h6"
           noWrap
@@ -149,7 +152,7 @@ function App() {
       <Box sx={{ display: 'flex' }}>
         <Box
           component="nav"
-          sx={{ width: { sm: drawerWidth },  flexShrink: { sm: 0 } }}
+          sx={{ width: { sm: drawerWidth },  flexShrink: { sm: 0 }, backgroundImage: 'url(noise4.png)' }}
           aria-label="mailbox folders"
         >
           <Drawer
