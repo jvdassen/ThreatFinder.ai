@@ -27,7 +27,7 @@ import threatTaxonomy from './ThreatTaxonomy.json'
 
 export default Analyze
 
-function Analyze() {
+function Analyze({ onNrThreats }) {
   var [selectedModel] = useState(localStorage.getItem('selectedModel') || '')
   try {
     var loaded = JSON.parse(localStorage.getItem('storedModels')) || []
@@ -50,12 +50,15 @@ function Analyze() {
   }
 
   var [threatModel, setThreatModel] = useState(loadedTM)
+  onNrThreats(threatModel.length)
+
   function addToThreatModel (newThreat) {
     threatModel.push(newThreat)
     setThreatModel([...threatModel])
     var storedThreatModels = JSON.parse(localStorage.getItem('threatModels')) || {} 
     storedThreatModels[selectedModel] = threatModel
     localStorage.setItem('threatModels', JSON.stringify(storedThreatModels))
+    onNrThreats(threatModel.length)
   }
 
   var keyProp = selectedModelInfo.keyProp
@@ -162,9 +165,9 @@ function Analyze() {
 
     function assetGroup(group, groupIsKey) {
       // should all be the same, check the first
-      var category = group[0].assetCategory
+      var category = group[0]?.assetCategory
       console.log(category)
-      if (propFilter[category]) {
+      if (propFilter[category] && category) {
         return (
           <>
             <Paper sx={{ p: '1em' }} elevation={groupIsKey ? 0 : 0}>
@@ -411,8 +414,7 @@ export function ThreatModel (props) {
 
                 <AccordionDetails>
                   <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>DESCRIPTION</span>{threat.threat.Description}</Typography>
-                  <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>CATEGORY</span>{threat.threat['Threat Category']}</Typography>
-                  <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>ASSET</span>{threat.targetedAsset['assetDisplayname']} </Typography>
+                  <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>CATEGORY</span>{threat.threat['Threat Category']}</Typography> <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>ASSET</span>{threat.targetedAsset['assetDisplayname']} </Typography>
                   <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>ASSET CATEGORY</span>{threat.targetedAsset['assetCategory']}</Typography>
                   <Typography><span style={{fontStyle: 'italic', marginRight: '1em', opacity: '.5'}}>ASSET LIFE CYCLE</span>{threat.targetedAsset.assetLifeCycleStage}</Typography>
                 </AccordionDetails>

@@ -5,7 +5,7 @@ import { List, ListItem, ListItemText, ListSubheader, Typography } from '@mui/ma
 
 export default Stats
 
-function Stats({ diagram }) {
+function Stats({ diagram, nrAssets }) {
   var [asset, setAsset] = useState([])
 
   useEffect(() => {
@@ -18,6 +18,7 @@ function Stats({ diagram }) {
       var a = [...d.querySelectorAll('[assetname]')]
       var assets = a.map(e => e.getAttribute('assetname'))
       setAsset(assets)
+      nrAssets(assets.length)
       } catch (e) {
 
       }

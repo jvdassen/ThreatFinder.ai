@@ -33,8 +33,9 @@ function formatDate(date) {
   return formattedDate;
 }
 
-function Scenarios() {
+function Scenarios({ onModelSelected }) {
   const [selectedModel, selectModel] = useState(localStorage.getItem('selectedModel') || '')
+  onModelSelected(selectedModel)
 
   const [newName, setNewName] = useState('')
   const [newDesc, setNewDesc] = useState('')
@@ -50,6 +51,7 @@ function Scenarios() {
   const [models, setModels] = useState(storedModels)
 
   const [selectedModelInfo, selectModelInfo] = useState(storedModels.find(m => m.id === selectedModel))
+
 
   const elevation = 1
 

@@ -4,7 +4,7 @@ import DrawIO from './pages/DrawIOMix'
 import Analyze from './pages/Analyze'
 import Controls from './pages/Controls'
 import Stats from './pages/Stats'
-import Goals from './pages/Goals'
+import Scenarios from './pages/Scenarios'
 import Instructions from './pages/Instructions'
 import Risks from './pages/Risks'
 
@@ -35,6 +35,25 @@ function App() {
 
   const [view, setView] = useState('goals')
   const [diagram, setDiagram] = useState({})
+
+  const [selectedModel, setSelectedModel] = useState('')
+  const [nrAssets, setNrAssets] = useState(0)
+  const [nrThreats, setNrThreats] = useState(0)
+
+  function updateSelectedModel (newModelSelection) {
+    console.log('newModelSelection', newModelSelection)
+    setSelectedModel(newModelSelection)
+  }
+
+  function updateNrAssets(newNrAssets) {
+    console.log('updateNrAssets', newNrAssets)
+    setNrAssets(newNrAssets)
+  }
+ 
+  function updateNrThreats(newNrThreats) {
+    console.log('newNrThreats', newNrThreats)
+    setNrThreats(newNrThreats)
+  }
 
   function receiveDiagram (diagram) {
     setDiagram(diagram)
@@ -105,8 +124,8 @@ function App() {
             {view === 'goals' && <EditIcon sx={{ fontSize: 15 }} />}
           </ListItemButton>
         </ListItem>
-        <ListItem key={'model'} disablePadding onClick={() => setView('model')}>
-          <ListItemButton>
+        <ListItem key={'model'} disablePadding >
+          <ListItemButton disabled={!selectedModel} onClick={() => setView('model')}>
             <ListItemIcon>
               <ArchitectureIcon color="secondary"/>
             </ListItemIcon>
@@ -115,8 +134,8 @@ function App() {
             {view === 'model' && <EditIcon sx={{ fontSize: 15 }} />}
           </ListItemButton>
         </ListItem>
-        <ListItem key={'analyze'} disablePadding onClick={() => setView('analyze')}>
-          <ListItemButton>
+        <ListItem key={'analyze'} disablePadding>
+          <ListItemButton disabled={!nrAssets} onClick={() => setView('analyze')}>
             <ListItemIcon>
               <FunctionsOutlinedIcon color="secondary"/>
             </ListItemIcon>
@@ -125,8 +144,8 @@ function App() {
             {view === 'analyze' && <EditIcon sx={{ fontSize: 15 }} />}
           </ListItemButton>
         </ListItem>
-        <ListItem key={'controls'} disablePadding onClick={() => setView('controls')}>
-          <ListItemButton>
+        <ListItem key={'controls'} disablePadding>
+          <ListItemButton  disabled={!nrThreats} onClick={() => setView('controls')}>
             <ListItemIcon>
               <SecurityOutlinedIcon color="secondary"/>
             </ListItemIcon>
@@ -135,8 +154,8 @@ function App() {
             {view === 'controls' && <EditIcon sx={{ fontSize: 15 }} />}
           </ListItemButton>
         </ListItem>
-        <ListItem key={'Risks'} disablePadding onClick={() => setView('risks')}>
-          <ListItemButton>
+        <ListItem key={'Risks'} disablePadding>
+          <ListItemButton disabled={!nrThreats} onClick={() => setView('risks')}>
             <ListItemIcon>
               <CandlestickChartRoundedIcon color="secondary"/>
             </ListItemIcon>
@@ -154,7 +173,7 @@ function App() {
         <Instructions/>
       </ListItem>
     </List>
-    <Stats diagram={diagram}/>
+    <Stats diagram={diagram} nrAssets={updateNrAssets}/>
     </div>
   )
 
@@ -190,9 +209,9 @@ function App() {
         <Box
           component="main"
           sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` }, height: '100vh' }}>
+          {view === 'goals' && <Scenarios onModelSelected={(selectedModel) => { updateSelectedModel(selectedModel) }}/>}
           {view === 'model' && <DrawIO  sendDiagram={receiveDiagram}/>}
-          {view === 'goals' && <Goals />}
-          {view === 'analyze' && <Analyze />}
+          {view === 'analyze' && <Analyze onNrThreats={updateNrThreats}/>}
           {view === 'controls' && <Controls />}
           {view === 'risks' && <Risks />}
         </Box>
