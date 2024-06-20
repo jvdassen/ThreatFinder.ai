@@ -101,7 +101,7 @@ function App() {
               <FlagIcon color="secondary"/>
             </ListItemIcon>
             <ListItemText primary={'Scenarios'} />
-            {['model', 'analyze', 'controls'].includes(view) && <CheckIcon sx={{ fontSize: 15 }} />}
+            {['risks', 'model', 'analyze', 'controls'].includes(view) && <CheckIcon sx={{ fontSize: 15 }} />}
             {view === 'goals' && <EditIcon sx={{ fontSize: 15 }} />}
           </ListItemButton>
         </ListItem>
@@ -111,7 +111,7 @@ function App() {
               <ArchitectureIcon color="secondary"/>
             </ListItemIcon>
             <ListItemText primary={'Model'} />
-            {['analyze', 'controls'].includes(view) && <CheckIcon sx={{ fontSize: 15 }} />}
+            {['risks', 'analyze', 'controls'].includes(view) && <CheckIcon sx={{ fontSize: 15 }} />}
             {view === 'model' && <EditIcon sx={{ fontSize: 15 }} />}
           </ListItemButton>
         </ListItem>
@@ -121,7 +121,7 @@ function App() {
               <FunctionsOutlinedIcon color="secondary"/>
             </ListItemIcon>
             <ListItemText primary={'Analyze'} />
-            {['controls'].includes(view) && <CheckIcon sx={{ fontSize: 15 }} />}
+            {['risks', 'controls'].includes(view) && <CheckIcon sx={{ fontSize: 15 }} />}
             {view === 'analyze' && <EditIcon sx={{ fontSize: 15 }} />}
           </ListItemButton>
         </ListItem>
@@ -131,6 +131,7 @@ function App() {
               <SecurityOutlinedIcon color="secondary"/>
             </ListItemIcon>
             <ListItemText primary={'Controls'} />
+            {['risks'].includes(view) && <CheckIcon sx={{ fontSize: 15 }} />}
             {view === 'controls' && <EditIcon sx={{ fontSize: 15 }} />}
           </ListItemButton>
         </ListItem>
