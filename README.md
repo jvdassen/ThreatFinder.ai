@@ -1,6 +1,6 @@
 # ThreatFinder.ai
 
-Threat Modeling AI-based systems. A running instance can be found [here](https://threatfinder-ai.pages.dev/).
+Threat Modeling AI-based systems. A running instance can be found [here](https://threatfinder-ai.pages.dev/), and a full demonstration can be seen [here](https://youtu.be/cPt8cyAjtmQ).
 
 ## Available Scripts
 
