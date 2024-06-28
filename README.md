@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# ThreatFinder.ai
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Threat Modeling AI-based systems. A running instance can be found [here](https://threatfinder-ai.pages.dev/).
 
 ## Available Scripts
 
