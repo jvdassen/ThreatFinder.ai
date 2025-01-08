@@ -153,8 +153,7 @@ function Scenarios({ onModelSelected }) {
                 </Typography>
                 <AccordionActions>
                   <Button variant="contained" disabled={selectedModel === model.id} onClick={() => { selectModel(model.id) }}>Load</Button>
-                  <div>
-                    <Button variant="contained" onClick={() => handleClickOpen(model.id)}>Delete</Button> 
+                  <Button variant="contained" onClick={() => handleClickOpen(model.id)}>Delete</Button>
                     <Dialog
                       open={open}
                       onClose={handleCancel}
@@ -176,7 +175,6 @@ function Scenarios({ onModelSelected }) {
                         </Button>
                       </DialogActions>
                     </Dialog>
-                  </div>
                 </AccordionActions>
               </AccordionDetails>
             </Accordion>
