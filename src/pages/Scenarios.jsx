@@ -19,6 +19,11 @@ import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
 import AddIcon from '@mui/icons-material/Add'
 import { BarChart } from '@mui/x-charts/BarChart'
 import { LineChart } from '@mui/x-charts/LineChart'
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 export default Scenarios
 
@@ -41,6 +46,7 @@ function Scenarios({ onModelSelected }) {
   const [newDesc, setNewDesc] = useState('')
   const [newKeyProp, setNewKeyProp] = useState('')
   const [newKeyAsset, setNewKeyAsset] = useState('')
+  const [open, setOpen] = useState(false)
 
   try {
     var loaded = JSON.parse(localStorage.getItem('storedModels')) || []
@@ -99,6 +105,27 @@ function Scenarios({ onModelSelected }) {
     setModels(storedModels)
   }
 
+  const handleClickOpen = (id) => {
+    setOpen(true);
+    selectModel(id)
+  };
+
+  const handleCancel = () => {
+    setOpen(false);
+  };
+
+  function handleDelete() {
+    console.log(selectedModel)
+    var storedModels = JSON.parse(localStorage.getItem('storedModels')) || []
+    const updatedModels = storedModels.filter((model) => model.id !== selectedModel)
+    localStorage.setItem('storedModels', JSON.stringify(updatedModels))
+    setModels(updatedModels)
+    selectModel('')
+    setNewName('')
+    setNewDesc('')
+    selectModelInfo('')
+    setOpen(false)
+  };
 
   function Saved(props) {
     var storedModels = props.storedModels.sort((a, b) => a.date < b.date)
@@ -124,7 +151,33 @@ function Scenarios({ onModelSelected }) {
                 <Typography>
                   {model.description}
                 </Typography>
-                <AccordionActions><Button variant="contained" disabled={selectedModel === model.id} onClick={() => { selectModel(model.id) }}>Load</Button></AccordionActions>
+                <AccordionActions>
+                  <Button variant="contained" disabled={selectedModel === model.id} onClick={() => { selectModel(model.id) }}>Load</Button>
+                  <div>
+                    <Button variant="contained" onClick={() => handleClickOpen(model.id)}>Delete</Button> 
+                    <Dialog
+                      open={open}
+                      onClose={handleCancel}
+                      aria-labelledby="alert-dialog-title"
+                      aria-describedby="alert-dialog-description"
+                    >
+                      <DialogTitle id="alert-dialog-title">
+                        {"Delete Model"}
+                      </DialogTitle>
+                      <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                          This action deletes the threat model diagram and associated risk analysis. Are you sure?
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button variant="contained" onClick={handleCancel} autoFocus>Cancel</Button>
+                        <Button variant="contained" onClick={handleDelete} >
+                          Delete
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
+                  </div>
+                </AccordionActions>
               </AccordionDetails>
             </Accordion>
           )
