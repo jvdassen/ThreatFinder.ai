@@ -135,7 +135,7 @@ function App() {
           </ListItemButton>
         </ListItem>
         <ListItem key={'analyze'} disablePadding>
-          <ListItemButton disabled={!nrAssets} onClick={() => setView('analyze')}>
+          <ListItemButton disabled={!nrAssets | !selectedModel} onClick={() => setView('analyze')}>
             <ListItemIcon>
               <FunctionsOutlinedIcon color="secondary"/>
             </ListItemIcon>
@@ -145,7 +145,7 @@ function App() {
           </ListItemButton>
         </ListItem>
         <ListItem key={'controls'} disablePadding>
-          <ListItemButton  disabled={!nrThreats} onClick={() => setView('controls')}>
+          <ListItemButton  disabled={!nrThreats | !selectedModel} onClick={() => setView('controls')}>
             <ListItemIcon>
               <SecurityOutlinedIcon color="secondary"/>
             </ListItemIcon>
@@ -155,7 +155,7 @@ function App() {
           </ListItemButton>
         </ListItem>
         <ListItem key={'Risks'} disablePadding>
-          <ListItemButton disabled={!nrThreats} onClick={() => setView('risks')}>
+          <ListItemButton disabled={!nrThreats | !selectedModel} onClick={() => setView('risks')}>
             <ListItemIcon>
               <CandlestickChartRoundedIcon color="secondary"/>
             </ListItemIcon>
