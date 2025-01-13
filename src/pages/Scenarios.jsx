@@ -47,6 +47,7 @@ function Scenarios({ onModelSelected }) {
   const [newKeyProp, setNewKeyProp] = useState('')
   const [newKeyAsset, setNewKeyAsset] = useState('')
   const [open, setOpen] = useState(false)
+  const [importModelId, setImportModelId] = useState('')
 
   try {
     var loaded = JSON.parse(localStorage.getItem('storedModels')) || []
@@ -105,6 +106,16 @@ function Scenarios({ onModelSelected }) {
     setModels(storedModels)
   }
 
+  function importModel() {
+    if (importModelId) {
+      const modelToImport = models.find(model => model.id === importModelId);
+      console.log(modelToImport)
+      if (modelToImport) {
+        selectModel(modelToImport.id);
+      }
+    }
+  }
+
   const handleClickOpen = (id) => {
     setOpen(true);
     selectModel(id)
@@ -115,7 +126,6 @@ function Scenarios({ onModelSelected }) {
   };
 
   function handleDelete() {
-    console.log(selectedModel)
     var storedModels = JSON.parse(localStorage.getItem('storedModels')) || []
     const updatedModels = storedModels.filter((model) => model.id !== selectedModel)
     localStorage.setItem('storedModels', JSON.stringify(updatedModels))
@@ -248,8 +258,31 @@ function Scenarios({ onModelSelected }) {
                   <FormHelperText>Optional: Define the most critical asset</FormHelperText>
                 </FormControl>
               </Box>
-
-              <Button variant="contained" onClick={createModel} >Create</Button>
+              <Box sx={{ display: 'flex', gap: '1em' }}>
+                <Button variant="contained" onClick={createModel} autoFocus>Create</Button>
+                <FormControl sx={{ m: 0, minWidth: 120, flexGrow: 1 }}>
+                  <InputLabel id="import-model"><em>Select Model</em></InputLabel>
+                  <Select
+                    labelId="import-model"
+                    id="import-model-helper"
+                    value={importModelId}
+                    onChange={(e) => { setImportModelId(e.target.value) }}
+                    label="Import Model">
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    {models.map(model => (
+                      <MenuItem key={model.id} value={model.id}>
+                        {model.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  <FormHelperText>Select a model to import</FormHelperText>
+                </FormControl>
+                <Button variant="contained" onClick={importModel}>
+                  Import
+                </Button>
+                </Box>
             </Box>
           </AccordionDetails>
         </Accordion>

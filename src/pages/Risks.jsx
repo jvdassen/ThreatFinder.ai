@@ -61,18 +61,145 @@ export default function Controls() {
 
     var [quantification, setQuant] = useState({})
 
-    async function quantify (minInc, maxInc, minLoss, maxLoss, confInc, confLoss) {
+    // async function quantify (minInc, maxInc, minLoss, maxLoss, confInc, confLoss) {
+    //   console.log('quantification using', arguments)
+    //   var quantificationRes = await fetch('https://threatfinderai-quant.comsyslab.xyz/quant?' + new URLSearchParams({
+    //     minInc: minInc,
+    //     maxInc: maxInc,
+    //     minLoss: minLoss,
+    //     maxLoss: maxLoss,
+    //     confInc: confInc,
+    //     confLoss: confLoss
+    //   }))
+    //   var quantification = await quantificationRes.json()
+    //   console.log(quantification)
+    //   setQuant(quantification)
+    //   setQuantified(true)
+    // }
+
+    // local quntification function with reduced number of samples
+    // based code generated using Qwen2.5-Coder-32B-Instruct & ChatGPT
+    function quantify(minInc, maxInc, minLoss, maxLoss, confInc, confLoss) {
       console.log('quantification using', arguments)
-      var quantificationRes = await fetch('https://threatfinderai-quant.comsyslab.xyz/quant?' + new URLSearchParams({
-        minInc: minInc,
-        maxInc: maxInc,
-        minLoss: minLoss,
-        maxLoss: maxLoss,
-        confInc: confInc,
-        confLoss: confLoss
-      }))
-      var quantification = await quantificationRes.json()
-      console.log(quantification)
+      
+      const numSamples = 10000;
+      const ranges = [
+        [minInc, maxInc, confInc],
+        [minLoss, maxLoss, confLoss]
+      ]
+
+      function riskLoss(x) {
+        const Inc = x[0];
+        const Loss = x[1];
+        // number of occurances x loss potential, gives risk loss $ number
+        // confidence for number of occurances and loss potential is already considered
+        // while generating the random series
+        return Inc * Loss;
+      }
+
+      const monteCarloSim = (func, ranges, numSamples = 1000) => {
+        const samples = Array.from({ length: numSamples }, () =>
+          Array.from({ length: ranges.length }, (_, i) => {
+            const [low, high, confidence] = ranges[i];
+            return (Math.random() * (high - low) + low) * confidence;
+          })
+        );
+        // Calcluate risk loss for each sample
+        const results = samples.map(sample => func(sample));
+        return results;
+      };
+      
+      const results = monteCarloSim(riskLoss, ranges, numSamples);
+      
+      // mean and standard deviation from simulation result
+      // Approximate normal distribution curve 
+      const mean = results.reduce((a, b) => a + b, 0) / results.length;
+      const variance =
+        results.reduce((sum, value) => sum + (value - mean) ** 2, 0) / results.length;
+      const stdDev = Math.sqrt(variance);
+
+      // Define the range for the normal distribution
+      const range = [Math.min(...results), Math.max(...results)];
+      const numBins = 30; // Number of bins
+
+      // generate normal distribution values based on mean and standard deviation
+      // Generate a new set of values that follow a normal distribution within the specified range
+
+      const generateNormalDistribution = (mean, stdDev, numSamples, range) => {
+        const [low, high] = range;
+        const samples = [];
+        while (samples.length < numSamples) {
+          // Box-Muller transform to generate a normal distribution
+          let u1 = Math.random();
+          let u2 = Math.random();
+          let z0 = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
+          let value = mean + stdDev * z0;
+
+          // Truncate values to the specified range
+          if (value >= low && value <= high) {
+            samples.push(value);
+          }
+        }
+        return samples;
+      };
+
+      const normalDistributedValues = generateNormalDistribution(mean, stdDev, 1000, range)
+      // const normalDistributedValues = results
+    
+      const minResult = Math.min(...normalDistributedValues);
+      const maxResult = Math.max(...normalDistributedValues);
+      const binWidth = (maxResult - minResult) / numBins;
+
+      const bins = Array.from({ length: numBins }, (_, i) => ({
+        start: (minResult + i * binWidth).toFixed(2),
+        end: (minResult + (i + 1) * binWidth).toFixed(2),
+        count: 0,
+      }));
+        
+      // Count the frequency of results in each bin
+      normalDistributedValues.forEach(result => {
+        for (let bin of bins) {
+          if (result >= bin.start && result < bin.end) {
+            bin.count++;
+            break;
+          }
+        }
+      });
+
+      // Normalize the bin counts
+      const totalSamples = normalDistributedValues.length;
+      const normalizedCounts = bins.map(bin => bin.count / totalSamples / binWidth);
+
+      // Create chart data for histogram
+      const histogramData = bins.map(bin => ({
+        value: (parseFloat(bin.start) + parseFloat(bin.end)) / 2,
+        count: bin.count,
+        label: `${bin.start} - ${bin.end}`,
+        normalizedCount: normalizedCounts[bins.indexOf(bin)],
+      }));
+      
+      // descending order
+      // const sortedResults = histogramData.sort((a, b) => b.value - a.value);
+      // const midIndex = Math.floor(sortedResults.length / 2);
+      // const firstHalf = sortedResults.slice(0, midIndex);
+      // const secondHalf = sortedResults.slice(midIndex);
+      // // Reverse the second half to make it descending
+      // const secondHalfDescending = [...secondHalf].reverse();
+      // const sortedAndReversedValues = [...firstHalf, ...secondHalfDescending];
+      
+      // const sortedHistogramData = histogramData.sort((a, b) => a.value - b.value);
+
+      // Generate normal distribution curve
+      // const xValues = Array.from({ length: numSamples }, (_, i) =>
+      //   minResult + (maxResult - minResult) * (i / (numSamples - 1))
+      // );
+      // const normalCurve = xValues.map(x => normalDistribution(x, meanArea, stdArea, range));
+
+      const quantification = {
+        hist: histogramData.map(data => data.count),
+        bin_edges: histogramData.map(data => data.value.toFixed(2)),
+        label: histogramData.map(data => data.label)
+      }
       setQuant(quantification)
       setQuantified(true)
     }
@@ -135,9 +262,11 @@ export default function Controls() {
             quantified &&
             <Box sx={{ display: 'flex' }}>
               <BarChart
-                xAxis={[{ scaleType: 'band', barGapRatio: 0.1, data: quantification.bin_edges }]}
-                series={[{ color: '#8278d9', label: 'Exposure', data: quantification.hist }]}
-                height={300} />
+                  xAxis={[{ scaleType: 'band', barGapRatio: 0.1, label: 'Exposure', data: quantification.bin_edges }]}
+                  series={[
+                    { color: '#8278d9', type: 'bar', label: 'Count', data: quantification.hist},
+                  ]}
+                  height={300}/>
             </Box>
 
           }
