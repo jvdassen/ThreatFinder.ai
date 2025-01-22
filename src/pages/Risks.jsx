@@ -30,23 +30,27 @@ export default function Controls() {
     var [selectedModel] = useState(localStorage.getItem("selectedModel") || "");
     var loadedTM =
       JSON.parse(localStorage.getItem("threatModels"))[selectedModel] || [];
-    console.log(loadedTM);
+    // console.log(loadedTM);
   } catch (e) {
     console.warn("error parsing threats from storage", e);
     loadedTM = [];
   }
 
   try {
-    // var loadedRiskScenarios =
-    //   JSON.parse(localStorage.getItem("riskScenarios"))[selectedModel] || [];
-    var loadedRiskScenarios = JSON.parse(
-      localStorage.getItem("riskScenarios")
-    ).filter((m) => m.model === selectedModel);
+    // var loadedRiskScenarios = JSON.parse(
+    //   localStorage.getItem("riskScenarios")
+    // ).filter((m) => m.model === selectedModel);
+    const riskScenarios = JSON.parse(
+      localStorage.getItem("riskScenarios") || "[]"
+    );
+    const loadedRiskScenarios = riskScenarios.filter(
+      (scenario) => scenario.model === selectedModel
+    );
   } catch (e) {
     console.warn("error parsing risks from storage", e);
     loadedRiskScenarios = [];
   }
-  console.log(loadedRiskScenarios);
+  // console.log(loadedRiskScenarios);
   const [riskName, setRiskName] = useState("");
 
   //var [threatModel, _] = useState(loadedTM)
@@ -422,9 +426,6 @@ export default function Controls() {
   }
 
   function handleSaveRisk() {
-    console.log(selectedModel);
-    console.log("selectedThreat", selectedThreat);
-    console.log("riskName", riskName);
     var newRisk = {
       threat: selectedThreat,
       riskname: riskName,
@@ -533,7 +534,6 @@ export default function Controls() {
               variant="outlined"
               helperText="Name the Strategic Risk"
               onChange={(e) => {
-                console.log(e.target.value);
                 setRiskName(e.target.value);
               }}
             />
