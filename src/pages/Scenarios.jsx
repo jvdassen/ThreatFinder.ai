@@ -126,15 +126,31 @@ function Scenarios({ onModelSelected }) {
   };
 
   function handleDelete() {
-    var storedModels = JSON.parse(localStorage.getItem('storedModels')) || []
-    const updatedModels = storedModels.filter((model) => model.id !== selectedModel)
-    localStorage.setItem('storedModels', JSON.stringify(updatedModels))
-    setModels(updatedModels)
-    selectModel('')
-    setNewName('')
-    setNewDesc('')
-    selectModelInfo('')
-    setOpen(false)
+    // deleting threats
+    var loadedTMs = JSON.parse(localStorage.getItem("threatModels"));
+    loadedTMs = Object.keys(loadedTMs)
+      .filter((key) => key !== selectedModel)
+      .reduce((obj, key) => {
+        obj[key] = loadedTMs[key];
+        return obj;
+      }, {});
+    localStorage.setItem("threatModels", JSON.stringify(loadedTMs));
+    // deleting risk scenarios
+    var updatedRiskScenarios = JSON.parse(
+      localStorage.getItem("riskScenarios")
+    ).filter((m) => m.model !== selectedModel);
+    localStorage.setItem("riskScenarios", JSON.stringify(updatedRiskScenarios));
+    var storedModels = JSON.parse(localStorage.getItem("storedModels")) || [];
+    const updatedModels = storedModels.filter(
+      (model) => model.id !== selectedModel
+    );
+    localStorage.setItem("storedModels", JSON.stringify(updatedModels));
+    setModels(updatedModels);
+    selectModel("");
+    setNewName("");
+    setNewDesc("");
+    selectModelInfo("");
+    setOpen(false);
   };
 
   function Saved(props) {

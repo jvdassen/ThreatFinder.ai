@@ -27,39 +27,46 @@ import ImpactList from './Impacts.json'
 
 export default function Controls() {
   try {
-    var [selectedModel] = useState(localStorage.getItem('selectedModel') || '')
-    var loadedTM = JSON.parse(localStorage.getItem('threatModels'))[selectedModel] || []
-    console.log(loadedTM)
+    var [selectedModel] = useState(localStorage.getItem("selectedModel") || "");
+    var loadedTM =
+      JSON.parse(localStorage.getItem("threatModels"))[selectedModel] || [];
+    console.log(loadedTM);
   } catch (e) {
-    console.warn('error parsing threats from storage', e)
-    loadedTM = []
+    console.warn("error parsing threats from storage", e);
+    loadedTM = [];
   }
 
   try {
-    var loadedRiskScenarios = JSON.parse(localStorage.getItem('riskScenarios'))[selectedModel] || []
+    // var loadedRiskScenarios =
+    //   JSON.parse(localStorage.getItem("riskScenarios"))[selectedModel] || [];
+    var loadedRiskScenarios = JSON.parse(
+      localStorage.getItem("riskScenarios")
+    ).filter((m) => m.model === selectedModel);
   } catch (e) {
-    console.warn('error parsing risks from storage', e)
-    loadedRiskScenarios = []
+    console.warn("error parsing risks from storage", e);
+    loadedRiskScenarios = [];
   }
+  console.log(loadedRiskScenarios);
+  const [riskName, setRiskName] = useState("");
 
   //var [threatModel, _] = useState(loadedTM)
-  var [risks, setRisks] = useState(loadedRiskScenarios)
+  var [risks, setRisks] = useState(loadedRiskScenarios);
 
-  var [selectedThreat, setSelectedThreat] = useState({})
+  var [selectedThreat, setSelectedThreat] = useState({});
 
-  function ImpactCard (props) {
-    var { impact } = props
-    var [quantified, setQuantified] = useState(false)
-    var [minInc, setMinInc] = useState(0)
-    var [maxInc, setMaxInc] = useState()
+  function ImpactCard(props) {
+    var { impact } = props;
+    var [quantified, setQuantified] = useState(false);
+    var [minInc, setMinInc] = useState(0);
+    var [maxInc, setMaxInc] = useState();
 
-    var [minLoss, setMinLoss] = useState(0)
-    var [maxLoss, setMaxLoss] = useState()
+    var [minLoss, setMinLoss] = useState(0);
+    var [maxLoss, setMaxLoss] = useState();
 
-    var [confInc, setConfInc] = useState(0.95)
-    var [confLoss, setConfLoss] = useState(0.95)
+    var [confInc, setConfInc] = useState(0.95);
+    var [confLoss, setConfLoss] = useState(0.95);
 
-    var [quantification, setQuant] = useState({})
+    var [quantification, setQuant] = useState({});
 
     // async function quantify (minInc, maxInc, minLoss, maxLoss, confInc, confLoss) {
     //   console.log('quantification using', arguments)
@@ -80,13 +87,13 @@ export default function Controls() {
     // local quntification function with reduced number of samples
     // based code generated using Qwen2.5-Coder-32B-Instruct & ChatGPT
     function quantify(minInc, maxInc, minLoss, maxLoss, confInc, confLoss) {
-      console.log('quantification using', arguments)
-      
+      console.log("quantification using", arguments);
+
       const numSamples = 10000;
       const ranges = [
         [minInc, maxInc, confInc],
-        [minLoss, maxLoss, confLoss]
-      ]
+        [minLoss, maxLoss, confLoss],
+      ];
 
       function riskLoss(x) {
         const Inc = x[0];
@@ -105,17 +112,18 @@ export default function Controls() {
           })
         );
         // Calcluate risk loss for each sample
-        const results = samples.map(sample => func(sample));
+        const results = samples.map((sample) => func(sample));
         return results;
       };
-      
+
       const results = monteCarloSim(riskLoss, ranges, numSamples);
-      
+
       // mean and standard deviation from simulation result
-      // Approximate normal distribution curve 
+      // Approximate normal distribution curve
       const mean = results.reduce((a, b) => a + b, 0) / results.length;
       const variance =
-        results.reduce((sum, value) => sum + (value - mean) ** 2, 0) / results.length;
+        results.reduce((sum, value) => sum + (value - mean) ** 2, 0) /
+        results.length;
       const stdDev = Math.sqrt(variance);
 
       // Define the range for the normal distribution
@@ -132,7 +140,8 @@ export default function Controls() {
           // Box-Muller transform to generate a normal distribution
           let u1 = Math.random();
           let u2 = Math.random();
-          let z0 = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
+          let z0 =
+            Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
           let value = mean + stdDev * z0;
 
           // Truncate values to the specified range
@@ -143,9 +152,14 @@ export default function Controls() {
         return samples;
       };
 
-      const normalDistributedValues = generateNormalDistribution(mean, stdDev, 1000, range)
+      const normalDistributedValues = generateNormalDistribution(
+        mean,
+        stdDev,
+        1000,
+        range
+      );
       // const normalDistributedValues = results
-    
+
       const minResult = Math.min(...normalDistributedValues);
       const maxResult = Math.max(...normalDistributedValues);
       const binWidth = (maxResult - minResult) / numBins;
@@ -155,9 +169,9 @@ export default function Controls() {
         end: (minResult + (i + 1) * binWidth).toFixed(2),
         count: 0,
       }));
-        
+
       // Count the frequency of results in each bin
-      normalDistributedValues.forEach(result => {
+      normalDistributedValues.forEach((result) => {
         for (let bin of bins) {
           if (result >= bin.start && result < bin.end) {
             bin.count++;
@@ -168,16 +182,18 @@ export default function Controls() {
 
       // Normalize the bin counts
       const totalSamples = normalDistributedValues.length;
-      const normalizedCounts = bins.map(bin => bin.count / totalSamples / binWidth);
+      const normalizedCounts = bins.map(
+        (bin) => bin.count / totalSamples / binWidth
+      );
 
       // Create chart data for histogram
-      const histogramData = bins.map(bin => ({
+      const histogramData = bins.map((bin) => ({
         value: (parseFloat(bin.start) + parseFloat(bin.end)) / 2,
         count: bin.count,
         label: `${bin.start} - ${bin.end}`,
         normalizedCount: normalizedCounts[bins.indexOf(bin)],
       }));
-      
+
       // descending order
       // const sortedResults = histogramData.sort((a, b) => b.value - a.value);
       // const midIndex = Math.floor(sortedResults.length / 2);
@@ -186,7 +202,7 @@ export default function Controls() {
       // // Reverse the second half to make it descending
       // const secondHalfDescending = [...secondHalf].reverse();
       // const sortedAndReversedValues = [...firstHalf, ...secondHalfDescending];
-      
+
       // const sortedHistogramData = histogramData.sort((a, b) => a.value - b.value);
 
       // Generate normal distribution curve
@@ -196,141 +212,284 @@ export default function Controls() {
       // const normalCurve = xValues.map(x => normalDistribution(x, meanArea, stdArea, range));
 
       const quantification = {
-        hist: histogramData.map(data => data.count),
-        bin_edges: histogramData.map(data => data.value.toFixed(2)),
-        label: histogramData.map(data => data.label)
-      }
-      setQuant(quantification)
-      setQuantified(true)
+        hist: histogramData.map((data) => data.count),
+        bin_edges: histogramData.map((data) => data.value.toFixed(2)),
+        label: histogramData.map((data) => data.label),
+      };
+      setQuant(quantification);
+      setQuantified(true);
     }
 
     return (
-      <Card sx={{ flex: '1 0 calc(50% - 1em)', minWidth: '300px' }} variant="outlined">
+      <Card
+        sx={{ flex: "1 0 calc(50% - 1em)", minWidth: "300px" }}
+        variant="outlined"
+      >
         <CardContent>
-          <Typography variant="h7" component="div" sx={{ mb: '.5em', opacity: 1 }}>
+          <Typography
+            variant="h7"
+            component="div"
+            sx={{ mb: ".5em", opacity: 1 }}
+          >
             {impact}
           </Typography>
 
-          <Typography sx={{ opacity: .5, fontFamily: 'mono', textTransform: 'uppercase'}}>
+          <Typography
+            sx={{
+              opacity: 0.5,
+              fontFamily: "mono",
+              textTransform: "uppercase",
+            }}
+          >
             Expected incidents
           </Typography>
-          <Box sx={{ display: 'flex', gap: '.5em', mb:'.5em'}}>
+          <Box sx={{ display: "flex", gap: ".5em", mb: ".5em" }}>
             <NumberInput
-              sx={{ flexGrow: 1}}
+              sx={{ flexGrow: 1 }}
               value={minInc}
-              onChange={(e) => {setMinInc(e.target.value)}}
-              startAdornment={<InputAdornment>min</InputAdornment>}/>
+              onChange={(e) => {
+                setMinInc(e.target.value);
+              }}
+              startAdornment={<InputAdornment key={minInc}>min</InputAdornment>}
+            />
             <NumberInput
-              sx={{ flexGrow: 1}}
+              sx={{ flexGrow: 1 }}
               value={maxInc}
-              onChange={(e) => {setMaxInc(e.target.value)}}
-              startAdornment={<InputAdornment>max</InputAdornment>}/>
+              onChange={(e) => {
+                setMaxInc(e.target.value);
+              }}
+              startAdornment={<InputAdornment key={maxInc}>max</InputAdornment>}
+            />
           </Box>
 
-          <Typography sx={{ opacity: .5, fontFamily: 'mono', textTransform: 'uppercase'}}>
+          <Typography
+            sx={{
+              opacity: 0.5,
+              fontFamily: "mono",
+              textTransform: "uppercase",
+            }}
+          >
             Expected loss per occurrence
           </Typography>
-          <Box sx={{ display: 'flex', gap: '.5em', mb:'.5em'}}>
+          <Box sx={{ display: "flex", gap: ".5em", mb: ".5em" }}>
             <NumberInput
-              sx={{ flexGrow: 1}}
+              sx={{ flexGrow: 1 }}
               value={minLoss}
-              onChange={(e) => {setMinLoss(e.target.value)}}
-              startAdornment={<InputAdornment>min</InputAdornment>}/>
+              onChange={(e) => {
+                setMinLoss(e.target.value);
+              }}
+              startAdornment={
+                <InputAdornment key={minLoss}>min</InputAdornment>
+              }
+            />
             <NumberInput
-              sx={{ flexGrow: 1}}
+              sx={{ flexGrow: 1 }}
               value={maxLoss}
-              onChange={(e) => {setMaxLoss(e.target.value)}}
-              startAdornment={<InputAdornment>max</InputAdornment>}/>
+              onChange={(e) => {
+                setMaxLoss(e.target.value);
+              }}
+              startAdornment={
+                <InputAdornment key={maxLoss}>max</InputAdornment>
+              }
+            />
           </Box>
 
-          <Typography sx={{ opacity: .5, fontFamily: 'mono', textTransform: 'uppercase'}}>
+          <Typography
+            sx={{
+              opacity: 0.5,
+              fontFamily: "mono",
+              textTransform: "uppercase",
+            }}
+          >
             Confidence
           </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '.5em'}}>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: ".5em" }}>
             <NumberInput
-              sx={{ flexGrow: 1}}
+              sx={{ flexGrow: 1 }}
               value={confInc}
-              onChange={(e) => {setConfInc(e.target.value)}}
-              startAdornment={<InputAdornment>Incidents</InputAdornment>}/>
+              onChange={(e) => {
+                setConfInc(e.target.value);
+              }}
+              startAdornment={
+                <InputAdornment key={confInc}>Incidents</InputAdornment>
+              }
+            />
             <NumberInput
-              sx={{ flexGrow: 1}}
+              sx={{ flexGrow: 1 }}
               value={confLoss}
-              onChange={(e) => {setConfLoss(e.target.value)}}
-              startAdornment={<InputAdornment>Losses</InputAdornment>}/>
+              onChange={(e) => {
+                setConfLoss(e.target.value);
+              }}
+              startAdornment={
+                <InputAdornment key={confLoss}>Losses</InputAdornment>
+              }
+            />
           </Box>
-          {
-            quantified &&
-            <Box sx={{ display: 'flex' }}>
+          {quantified && (
+            <Box sx={{ display: "flex" }}>
               <BarChart
-                  xAxis={[{ scaleType: 'band', barGapRatio: 0.1, label: 'Exposure', data: quantification.bin_edges }]}
-                  series={[
-                    { color: '#8278d9', type: 'bar', label: 'Count', data: quantification.hist},
-                  ]}
-                  height={300}/>
+                xAxis={[
+                  {
+                    scaleType: "band",
+                    barGapRatio: 0.1,
+                    label: "Exposure",
+                    data: quantification.bin_edges,
+                  },
+                ]}
+                series={[
+                  {
+                    color: "#8278d9",
+                    type: "bar",
+                    label: "Count",
+                    data: quantification.hist,
+                  },
+                ]}
+                height={300}
+              />
             </Box>
-
-          }
+          )}
         </CardContent>
         <CardActions>
-          <Button size="small" variant="outlined" color="secondary" disabled={quantified} startIcon={<AddIcon/>} onClick={(e) => {console.log(e)}}>Include</Button>
-          <Button size="small" color="secondary" startIcon={<FunctionsRoundedIcon/>} 
-                  disabled={!((minLoss >= 0) && maxLoss && (minInc >= 0) && maxInc)}
-                  onClick={() => {quantify(minInc, maxInc, minLoss, maxLoss, confInc, confLoss)}}>Quantify</Button>
+          <Button
+            size="small"
+            variant="outlined"
+            color="secondary"
+            disabled={quantified}
+            startIcon={<AddIcon />}
+            onClick={(e) => {
+              console.log(e);
+            }}
+          >
+            Include
+          </Button>
+          <Button
+            size="small"
+            color="secondary"
+            startIcon={<FunctionsRoundedIcon />}
+            disabled={!(minLoss >= 0 && maxLoss && minInc >= 0 && maxInc)}
+            onClick={() => {
+              quantify(minInc, maxInc, minLoss, maxLoss, confInc, confLoss);
+            }}
+          >
+            Quantify
+          </Button>
         </CardActions>
       </Card>
-    )
+    );
   }
 
-  function Impacts (props) {
-    var { threat } = props
-    var threatInModel = loadedTM.find(t => t.id === threat)
-    if(threatInModel) {
-      var impact = threatInModel.threat['Potential Impact']
-      console.log(impact)
+  function Impacts(props) {
+    var { threat } = props;
+    var threatInModel = loadedTM.find((t) => t.id === threat);
+
+    if (threatInModel) {
+      // var impact = threatInModel.threat['Potential Impact']
+      var impacts = threatInModel.threat["Potential Impact"].split(", ");
+      // console.log(impacts);
       return (
         <>
-          <Typography sx={{mt: '1em', mb: '1em'}}>Impacts potentially related to the <Typography sx={{display: 'inline'}} color="secondary">{impact}</Typography> of <Typography color="secondary" sx={{ display: 'inline'}}>{threatInModel.targetedAsset.assetDisplayname}</Typography></Typography>
-          <Typography variant="h4">Tangible</Typography>
-          <Box sx={{display: 'flex', flexWrap: 'wrap', gap: '1em'}}>
-          {
-            ImpactList[impact].tangible.map((impact, i) => {
-              return (
-                <ImpactCard impact={impact} key={i}></ImpactCard>
-              )
-            })
-          }
-          </Box>
-          <Typography variant="h4">Intangible</Typography>
-          <Box sx={{display: 'flex', flexWrap: 'wrap', gap: '1em'}}>
-          {
-            ImpactList[impact].intangible.map((impact, i) => {
-              return (
-                <ImpactCard impact={impact} key={i}></ImpactCard>
-              )
-            })
-          }
-          </Box>
+          {impacts.map(function renderImpact(impact) {
+            return (
+              <>
+                <Typography sx={{ mt: "1em", mb: "1em" }}>
+                  Impacts potentially related to the{" "}
+                  <Typography sx={{ display: "inline" }} color="secondary">
+                    {impact}
+                  </Typography>{" "}
+                  of{" "}
+                  <Typography color="secondary" sx={{ display: "inline" }}>
+                    {threatInModel.targetedAsset.assetDisplayname}
+                  </Typography>
+                </Typography>
+                <Typography variant="h4">Tangible</Typography>
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: "1em" }}>
+                  {ImpactList[impact].tangible.map((impact, i) => {
+                    return <ImpactCard impact={impact} key={i}></ImpactCard>;
+                  })}
+                </Box>
+                <Typography variant="h4">Intangible</Typography>
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: "1em" }}>
+                  {ImpactList[impact].intangible.map((impact, i) => {
+                    return <ImpactCard impact={impact} key={i}></ImpactCard>;
+                  })}
+                </Box>
+              </>
+            );
+          })}
         </>
-      )
+      );
     }
+  }
+
+  function handleSaveRisk() {
+    console.log(selectedModel);
+    console.log("selectedThreat", selectedThreat);
+    console.log("riskName", riskName);
+    var newRisk = {
+      threat: selectedThreat,
+      riskname: riskName,
+      model: selectedModel,
+    };
+    const updatedRiskScenarios = [...risks, newRisk];
+    setRisks(updatedRiskScenarios);
+    localStorage.setItem("riskScenarios", JSON.stringify(updatedRiskScenarios));
   }
 
   return (
     <>
-      <Typography level="title-lg" variant='h4'>
+      <Typography level="title-lg" variant="h4">
         Formulate Risk Scenarios
       </Typography>
       <Typography variant="subtitle">
         Assess Impacts and Communicate Strategic Risk Exposure
       </Typography>
 
-
-      <Box sx={{ mt: '1em' }}>
+      <Box sx={{ mt: "1em" }}>
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            sx={{ textTransform: 'capitalize' }}>
-            <AddIcon sx={{ height: '1rem', marginTop: '3px' }} />
+            sx={{ textTransform: "capitalize" }}
+          >
+            <AddIcon sx={{ height: "1rem", marginTop: "3px" }} />
+            <Typography>Existing Risk Scenarios</Typography>
+          </AccordionSummary>
+          {risks.map(function renderThreat(risk) {
+            // console.log(risk);
+            var threatInModel = loadedTM.find((t) => t.id === risk.threat);
+            // console.log(threatInModel);
+            return (
+              <AccordionDetails key={risk.riskname}>
+                <Box
+                  sx={{
+                    flexDirection: "row",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      flexDirection: "row",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Typography kx={{ textTransform: "inherit" }}>
+                      Threat: {threatInModel.threat.Threat}
+                    </Typography>
+                    <span style={{ margin: "0 .5em" }}>;</span>
+                    <Typography>Scenario: {risk.riskname}</Typography>
+                  </Box>
+                </Box>
+              </AccordionDetails>
+            );
+          })}
+        </Accordion>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            sx={{ textTransform: "capitalize" }}
+          >
+            <AddIcon sx={{ height: "1rem", marginTop: "3px" }} />
             <Typography>Create new Risk Scenario</Typography>
           </AccordionSummary>
 
@@ -343,46 +502,50 @@ export default function Controls() {
                 label="Threat"
                 value={selectedThreat}
                 color="secondary"
-                onChange={(event) => {setSelectedThreat(event.target.value)}}>
-                {
-                  loadedTM.map(function renderThreats (threat) {
-                    return (
-                      <MenuItem value={threat.id} key={threat.id}>
-                        {threat.threat.Threat}
-                        <Typography color="secondary" sx={{ml: '.5em', mr: '.5em', display: 'inline'}}>@</Typography>
-                        {threat.targetedAsset.assetDisplayname}
-                      </MenuItem>
-                    )
-                  })
-                }
+                onChange={(event) => {
+                  setSelectedThreat(event.target.value);
+                }}
+              >
+                {loadedTM.map(function renderThreats(threat) {
+                  return (
+                    <MenuItem value={threat.id} key={threat.id}>
+                      {threat.threat.Threat}
+                      <Typography
+                        color="secondary"
+                        sx={{ ml: ".5em", mr: ".5em", display: "inline" }}
+                      >
+                        @
+                      </Typography>
+                      {threat.targetedAsset.assetDisplayname}
+                    </MenuItem>
+                  );
+                })}
               </Select>
-              <FormHelperText sx={{ mb: '1em' }}>The threat for which you wish to model the residual risk</FormHelperText>
+              <FormHelperText sx={{ mb: "1em" }}>
+                The threat for which you wish to model the residual risk
+              </FormHelperText>
             </FormControl>
-            <TextField  fullWidth label="Scenario Name" required color="secondary"
-                        variant="outlined" helperText="Name the Strategic Risk" 
-                        onChange={(e) => { console.log(e.target.value) }} />
+            <TextField
+              fullWidth
+              label="Scenario Name"
+              required
+              color="secondary"
+              variant="outlined"
+              helperText="Name the Strategic Risk"
+              onChange={(e) => {
+                console.log(e.target.value);
+                setRiskName(e.target.value);
+              }}
+            />
+            <Button variant="contained" onClick={handleSaveRisk} autoFocus>
+              Save
+            </Button>
             <Impacts threat={selectedThreat}></Impacts>
           </AccordionDetails>
         </Accordion>
-
-        { risks.map(function renderThreat (threat) {
-          console.log(threat)
-          return (
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ textTransform: 'capitalize' }}>
-              </AccordionSummary>
-
-              <AccordionDetails>
-              </AccordionDetails>
-            </Accordion>
-          )
-        })
-        }
       </Box>
     </>
-  )
+  );
 }
 
 const NumberInput = forwardRef(function CustomInput(

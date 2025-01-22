@@ -1,0 +1,81 @@
+[
+  {
+    "Threat Category": "Runtime Application Security Threat",
+    "Threat": "Compromised open source dependencies to exploit vulnerabilities",
+    "Description": "A external or internal threat actor who has access to an LLM powered application using compromised upstream open source dependencies can enable exploits through vulnerabilities, resulting in reduced confidentiality, integrity and/or availability of LLM system and connected resources",
+    "Potential Impact": "Integrity, Availability, Confidentiality",
+    "Affected assets": ["Model", "Data"],
+    "Permalink": "https://awslabs.github.io/threat-composer/workspaces/Threat%20Composer/threatPacks/GenAIChatBot"
+  },
+  {
+    "Threat Category": "Runtime Application Security Threat",
+    "Threat": "Overly dependent on LLM outputs",
+    "Description": "A LLM-powered application user who is overly dependent on LLM outputs can make unsupported decisions based on incorrect data or recommendations, resulting in reduced integrity of connected and downstream systems and data",
+    "Potential Impact": "Integrity",
+    "Affected assets": ["Model"],
+    "Permalink": "https://awslabs.github.io/threat-composer/workspaces/Threat%20Composer/threatPacks/GenAIChatBot"
+  },
+  {
+    "Threat Category": "Runtime Application Security Threat",
+    "Threat": "Insecure Output Handling resulting in RCE/privilege escalation",
+    "Description": "A malicious user able to influence LLM outputs can craft malicious payloads, which leads to unchecked to downstream function payloads, resulting in reduced achieving remote code execution or privilege escalation of connected and downstream systems and data",
+    "Potential Impact": "Confidentiality, Integrity",
+    "Affected assets": ["Model"]
+  },
+  {
+    "Threat Category": "Runtime Application Security Threat",
+    "Threat": "Insecure Output Handling resulting in XSS or code injection",
+    "Description": "A malicious user able to interact with an LLM system can exploit insufficient output encoding, which leads to achieve XSS or code injection, resulting in reduced confidentiality and/or integrity of user data",
+    "Potential Impact": "Integrity, Confidentiality",
+    "Affected assets": ["Model"]
+  },
+  {
+    "Threat Category": "Runtime Application Security Threat",
+    "Threat": "Direct Prompt Injection",
+    "Description": "A malicious user able to submit content to an LLM system can embed malicious prompts in that content, which leads to manipulate the LLM into undertaking harmful actions, resulting in reduced compromising integrity and availability of LLM system and connected resources.",
+    "Potential Impact": "Integrity",
+    "Affected assets": ["Model"]
+  },
+  {
+    "Threat Category": "Runtime Application Security Threat",
+    "Threat": "Exploiting LLM plugins vulnerabilities for RCE",
+    "Description": "A malicious user permitted to enable third-party LLM plugins can exploit plugin vulnerabilities, which leads to emote code execution, resulting in reduced confidentiality, integrity and/or availability of connected and downstream systems and data.",
+    "Potential Impact": "Confidentiality, Integrity, Availability",
+    "Affected assets": ["Model", "Data"]
+  },
+  {
+    "Threat Category": "Runtime Application Security Threat",
+    "Threat": "Exploiting LLM plugins or agents vulnerabilities for unauthorized data access",
+    "Description": "A malicious user who enables compromised LLM plugins or agents in an LLM system can manipulate it via indirect or direct prompt injection, which leads to access unauthorized functionality or data, resulting in reduced confidentiality and/or integrity of connected and downstream systems and data.",
+    "Potential Impact": "Confidentiality, Integrity, Availability",
+    "Affected assets": ["Model", "Data"]
+  },
+  {
+    "Threat Category": "Runtime Application Security Threat",
+    "Threat": "Direct System Prompt Injection",
+    "Description": "A malicious user with ability to interact with an LLM system can overwrite the system prompt with a crafted prompts, which leads to force unintended actions from the LLM, negatively impacting LLM system and connected resources.",
+    "Potential Impact": "Integrity",
+    "Affected assets": ["Model"]
+  },
+  {
+    "Threat Category": "Threat through Use",
+    "Threat": "Unrestricted LLM API usaged resulting in high financial loss",
+    "Description": "A malicious user who is able to access an LLM API can submit expensive requests, which leads to high hosting costs, resulting in reduced incurring financial losses of the LLM service provider.",
+    "Potential Impact": "Integrity",
+    "Affected assets": ["Model"]
+  },
+  {
+    "Threat Category": "Threat through Use",
+    "Threat": "Abuse resources hosting LLM application to impact availability of the system",
+    "Description": "A malicious user with access to submit LLM requests can abuse request batching systems, which leads to overwhelm resources with queued jobs, resulting in reduced availability of the LLM inference API.",
+    "Potential Impact": "Availability",
+    "Affected assets": ["Model", "Data"]
+  },
+  {
+    "Threat Category": "Development-time Threat",
+    "Threat": "Data Poisoning",
+    "Description": "A third-party data supplier may intentionally or unintentionally provide poisoned training data can contain manipulation, bias or malicious content, resulting in reduced integrity and/or effectiveness of the LLM model.",
+    "Potential Impact": "Integrity",
+    "Affected assets": ["Model", "Data"]
+  }
+]
