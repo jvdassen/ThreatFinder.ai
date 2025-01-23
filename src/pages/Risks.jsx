@@ -36,21 +36,15 @@ export default function Controls() {
     loadedTM = [];
   }
 
-  try {
-    // var loadedRiskScenarios = JSON.parse(
-    //   localStorage.getItem("riskScenarios")
-    // ).filter((m) => m.model === selectedModel);
-    const riskScenarios = JSON.parse(
-      localStorage.getItem("riskScenarios") || "[]"
-    );
-    const loadedRiskScenarios = riskScenarios.filter(
-      (scenario) => scenario.model === selectedModel
-    );
-  } catch (e) {
-    console.warn("error parsing risks from storage", e);
-    loadedRiskScenarios = [];
-  }
-  // console.log(loadedRiskScenarios);
+  // var loadedRiskScenarios = JSON.parse(
+  //   localStorage.getItem("riskScenarios")
+  // ).filter((m) => m.model === selectedModel);
+  const riskScenarios = JSON.parse(
+    localStorage.getItem("riskScenarios") || "[]"
+  );
+  const loadedRiskScenarios = riskScenarios.filter(
+    (scenario) => scenario.model === selectedModel
+  );
   const [riskName, setRiskName] = useState("");
 
   //var [threatModel, _] = useState(loadedTM)
