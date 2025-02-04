@@ -1,6 +1,17 @@
 # ThreatFinder.ai
 
-Threat Modeling AI-based systems. A running instance can be found [here](https://threatfinder-ai.pages.dev/), and a full demonstration can be seen [here](https://youtu.be/cPt8cyAjtmQ).
+Threat Modeling AI-based systems. 
+
+### Running Instance
+A running instance can be found [here](https://threatfinder-ai.pages.dev/).
+
+### Demonstration
+Full demonstration provided [on YouTube](https://youtu.be/cPt8cyAjtmQ).
+
+### Papers
+Two manuscripts on ThreatFinder.ai are available:
+* *ThreatFinderAI: Automated Threat Modeling Applied to LLM System Integration* [ifip-dl](https://opendl.ifip-tc6.org/db/conf/cnsm/cnsm2024/1571048380.pdf)
+* *Asset-centric Threat Modeling for AI-based Systems* [arxiv](https://arxiv.org/abs/2403.06512)
 
 ## Available Scripts
 
