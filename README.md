@@ -1,6 +1,6 @@
 # ThreatFinder.ai
 
-Threat Modeling AI-based systems. 
+Architectural Threat Modeling of AI-based systems. 
 
 ### Running Instance
 A running instance can be found [here](https://threatfinder-ai.pages.dev/).
